@@ -1,6 +1,8 @@
-"""Adapters package — concrete infra FORBIDDEN in this phase.
+"""Concrete infra adapters are forbidden in this package until separately authorized.
 
-No SQLite, Postgres, NATS, MQTT, cloud SDKs, or filesystem event stores here
-until separately authorized after Transition Report approval.
-Adapters will depend inward on ports only (Hexagonal).
+Only `memory` doubles for conformance/dev are permitted.
 """
+
+from ark_core.adapters.memory import FixedClock, MemoryConfig, MemoryIdentity, SystemClock
+
+__all__ = ["SystemClock", "FixedClock", "MemoryIdentity", "MemoryConfig"]
