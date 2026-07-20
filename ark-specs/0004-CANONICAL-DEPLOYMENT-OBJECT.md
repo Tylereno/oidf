@@ -27,9 +27,10 @@ Define the technology-agnostic Canonical Deployment Object: the authoritative st
 1. Every Deployment SHALL have exactly one CDO identity (Working assumption from glossary: Deployment ID ≡ CDO ID).
 2. The CDO SHALL declare the Deployment’s managed Asset set and structural relationships needed for orchestration.
 3. The CDO SHALL reference or embed planned Future State intent at a granularity sufficient for Dependency evaluation—without treating plan as Current State.
-4. Current State of Deployment and Assets SHALL NOT be stored as mutable fields that bypass Event history; Current State is derived from Events.
+4. Current State of Deployment and Assets SHALL NOT be stored as authoritative mutable fields that bypass Event history; Current State is derived from Events. Non-authoritative projection caches are permitted if rebuildable by Replay (ADR-0009).
 5. The CDO SHALL be versioned (see 0010) so sync and replay interpret it correctly.
 6. The CDO specification SHALL be expressible in a strict IDL later with zero ambiguity about types, nullability, and required fields.
+7. Transition evaluation SHALL pin concrete CDO (and Configuration) revisions at evaluate time and record those pins on result Events (ADR-0008).
 
 ## Constraints
 
@@ -74,7 +75,7 @@ CDO
 
 1. A CDO change that alters Asset membership, structure, or transition policy refs SHALL produce a new CDO revision.
 2. CDO revision publication SHALL emit an Event (e.g. DeploymentRevised) so history remains complete.
-3. State Engines SHALL evaluate transitions against a defined CDO revision (pinned or explicitly latest per policy).
+3. State Engines SHALL evaluate transitions against a concrete CDO revision resolved at evaluate time. “Latest” means pin-at-evaluate-time; the pin MUST be recorded on the result Event (ADR-0008).
 4. Historical replay SHALL use the CDO revision applicable at event time, negotiated via Versioning (0010).
 
 ## Interfaces (Abstract)

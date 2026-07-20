@@ -30,6 +30,7 @@ Define ARK’s security architecture: Zero Trust posture, immutable audit, Signe
 4. Role-based authorization SHALL gate Evidence submission, Config changes, and Transitions.
 5. Security controls SHALL function air-gapped using local verification material.
 6. SyncBatches SHALL be integrity-protected; failed verification → quarantine.
+7. Consequential actions (transition, config revise, sync import) SHALL deny by default when authorization is missing or expired.
 
 ## Constraints
 
@@ -52,7 +53,8 @@ Define ARK’s security architecture: Zero Trust posture, immutable audit, Signe
 
 - Principals have roles (data).
 - Roles grant permissions on actions: `evidence.submit`, `evidence.validate`, `transition.request`, `config.revise`, `sync.import`, `plugin.admin`.
-- State Engine and Event Engine enforce checks before accepting consequential operations.
+- State Engine and Event Engine enforce checks by calling the Core `Authorize` policy port before accepting consequential operations (ADR-0007).
+- `Authorize` evaluates Identity assertions + versioned Configuration policy data. This RFC does **not** add a Security Engine to Core.
 - Enterprise role sources sync inward via Plugins into Configuration policy data (0009/0011).
 
 ## Signed Events
@@ -83,8 +85,10 @@ Air-gapped Edge rejects `transition.request` from an expired cached grant. Inspe
 ## Open Questions
 
 1. Algorithm suite (e.g. signature schemes) — **ADR required before implementation.**
-2. Is Deny-by-default absolute for all actions in v1?  
-   **Working assumption:** yes for transition/config/sync import; read-only local projections may be broader per policy.
+
+## Phase 2 Amendments
+
+- ADR-0007 Authorize port; deny-by-default for consequential actions locked.
 
 ## Future Extensions
 

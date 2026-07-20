@@ -86,7 +86,7 @@ No other top-level product repositories are authorized by this RFC.
 - Identity Interfaces
 - Versioning
 - Configuration
-- Lifecycle
+- Lifecycle composition policy (startup/shutdown/health ordering — not a domain engine; ADR-0005)
 
 **Does not contain:**
 - Transport protocols

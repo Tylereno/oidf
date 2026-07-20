@@ -69,25 +69,28 @@ Event
 
 ## Illustrative Event Types
 
-Normative initial set (names locked; payloads Phase 3):
+Normative initial Core set (names locked; payloads Phase 3):
 
 | Type | Emitted when |
 |---|---|
-| DeploymentCreated | Deployment/CDO established |
+| DeploymentCreated | Deployment/CDO established (bootstrap per ADR-0010) |
 | DeploymentRevised | CDO revision published |
+| TransitionRequested | External/capability intent to attempt a transition (ADR-0001) |
 | EvidenceSubmitted | Evidence received |
 | EvidenceValidated | Evidence accepted by validator |
 | EvidenceRejected | Evidence failed validation |
-| TransitionRejected | State Engine rejected attempt |
-| StateAdvanced | Successful State Transition |
-| InspectionFailed | Domain inspection failure recorded as fact |
+| TransitionRejected | State Engine rejected attempt (ADR-0003) |
+| StateAdvanced | Successful State Transition (**sole** transition-success authority; ADR-0002) |
+| InspectionFailed | Domain inspection failure recorded as fact (Evidence-class fact; does not itself advance State) |
 | PermitExpired | Permit expiry fact recorded |
-| AssetCommissioned | Convenience/domain event if distinct from StateAdvanced (see Open Questions) |
 | TelemetryReceived | Telemetry fact ingested (does not imply State advance) |
 | MaterialDelivered | Delivery fact recorded |
 | ScheduleUpdated | External schedule fact mirrored via Plugin |
 | PluginError | Plugin failure surfaced for observation |
 | SyncBatchCommitted | Sync acceptance boundary |
+| ConfigurationRevised | Configuration document revision published |
+
+Domain convenience labels such as “AssetCommissioned” are **projections** of `StateAdvanced` plus machine metadata—not normative Core event types (ADR-0002).
 
 Additional types require an RFC or controlled registry extension via Configuration governance—not ad-hoc Core commits.
 
@@ -110,14 +113,16 @@ Additional types require an RFC or controlled registry extension via Configurati
 
 ## Examples
 
-Evidence arrives → `EvidenceSubmitted` → validator Plugin emits `EvidenceValidated` → caller requests transition → `StateAdvanced`. Each step is a distinct Event; none overwrite prior Events.
+Evidence arrives → `EvidenceSubmitted` → validator Plugin emits `EvidenceValidated` → caller publishes `TransitionRequested` → State Engine appends `StateAdvanced` or `TransitionRejected`. Each step is a distinct Event; none overwrite prior Events.
 
 ## Open Questions
 
-1. Should domain convenience events like `AssetCommissioned` exist separately from `StateAdvanced`, or be projections only?  
-   **Working assumption:** `StateAdvanced` is normative; domain aliases may be derived projections to avoid duplicate authority.
-2. Multi-timestamp (`occurred_at` vs `recorded_at`) conflict in Evidence: which feeds Transition guards?  
-   **Working assumption:** guards use validated Evidence content and State Engine evaluation time rules defined per machine; envelope times support audit/sync.
+1. Multi-timestamp (`occurred_at` vs `recorded_at`) conflict in Evidence: which feeds Transition guards?  
+   **Working assumption (unchanged):** guards use validated Evidence content and State Engine evaluation time rules defined per machine; envelope times support audit/sync.
+
+## Phase 2 Amendments
+
+- ADR-0001, ADR-0002, ADR-0003, ADR-0010. Idempotency key IDL deferred (0014 G2).
 
 ## Future Extensions
 

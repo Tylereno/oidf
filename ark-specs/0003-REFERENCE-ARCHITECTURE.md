@@ -24,8 +24,8 @@ Define the Level 2 reference architecture for ARK: the microkernel, its engines,
 
 ## Requirements
 
-1. ARK Core SHALL be a microkernel composed only of: State Engine, Event Engine, Plugin Runtime, Synchronization Engine, Identity Interfaces, Versioning, Configuration, and Lifecycle coordination among these.
-2. All cross-capability control SHALL occur through Events.
+1. ARK Core SHALL be a microkernel composed only of: State Engine, Event Engine, Plugin Runtime, Synchronization Engine, Identity Interfaces, Versioning, and Configuration. Lifecycle composition policy coordinates these engines but is not a separate domain engine (ADR-0005).
+2. All **cross-capability** control SHALL occur through Events (ADR-0001). In-Core engines MAY use synchronous ports with each other. External transition intent SHALL enter as `TransitionRequested`.
 3. State progression SHALL require sufficient Evidence; user gestures alone SHALL NOT advance State.
 4. The system SHALL operate Connected, Intermittently Connected, or Fully Air-Gapped without loss of local orchestration authority.
 5. Plugins SHALL integrate external systems and non-core functions; none of those integrations SHALL reside in Core.
@@ -49,7 +49,7 @@ Define the Level 2 reference architecture for ARK: the microkernel, its engines,
                               (Events only)
                                       |
  +-------------------- ARK Core (microkernel) ---------------------+
- |  Identity Interfaces   Configuration   Versioning   Lifecycle   |
+ |  Identity Interfaces   Configuration   Versioning   (Lifecycle composition) |
  |                                                                 |
  |   Event Engine  <-->  State Engine  <-->  Plugin Runtime        |
  |         ^                                                       |
@@ -88,9 +88,10 @@ Define the Level 2 reference architecture for ARK: the microkernel, its engines,
 
 1. Evidence is submitted (typically via Plugin or authorized principal).
 2. Event Engine records EvidenceSubmitted (and later EvidenceValidated as applicable).
-3. State Engine evaluates Transition rules, Evidence sufficiency, and Dependencies.
-4. On success: State advances; StateAdvanced (or equivalent) is emitted; history persists.
-5. On failure: transition is rejected; Current State unchanged; rejection is observable.
+3. An authorized principal or capability publishes `TransitionRequested` (ADR-0001).
+4. State Engine evaluates Transition rules, Evidence sufficiency, Dependencies, and `Authorize`.
+5. On success: State advances; `StateAdvanced` is emitted with revision pins; history persists.
+6. On failure: `TransitionRejected` is emitted; Current State unchanged.
 
 ### Cross-capability communication
 
@@ -118,7 +119,7 @@ Define the Level 2 reference architecture for ARK: the microkernel, its engines,
 |---|---|---|---|
 | EventPublish | Event Engine | Core engines, Plugins (via Runtime/SDK) | Append immutable Events |
 | EventSubscribe | Event Engine | Core engines, Plugins | React to Events |
-| TransitionEvaluate | State Engine | Authorized callers via Core | Attempt evidence-gated transition |
+| TransitionEvaluate | State Engine | In-Core only (ADR-0001) | Internal evaluation port; external callers publish `TransitionRequested` |
 | PluginHost | Plugin Runtime | Plugins | Lifecycle, isolation, contract binding |
 | SyncExchange | Synchronization Engine | Peers (Cloud/Edge) | Exchange Event sets |
 | Identify | Identity Interfaces | All engines | Attribute actors to actions |
@@ -140,9 +141,11 @@ An ERP Plugin crashes. Plugin Runtime contains the failure. State Engine and Eve
 ## Open Questions
 
 1. Are Digital Twin projections a Core-owned read model or a Plugin capability?  
-   **Working assumption:** Core guarantees Event history sufficiency for twin derivation; materializing rich twin views MAY be a Plugin or reference projection outside Core, to keep Core small.
-2. Is Lifecycle a separate engine or a coordination responsibility of Core composition?  
-   **Working assumption:** Lifecycle is Core composition policy (startup, shutdown, engine health), not a ninth domain engine.
+   **Resolved direction (ADR-0009 + prior assumption):** Core guarantees Event history sufficiency for twin derivation; rich twin materialization MAY be a Plugin or reference projection outside Core.
+
+## Phase 2 Amendments
+
+- ADR-0001 Event boundaries; ADR-0005 Lifecycle composition.
 
 ## Future Extensions
 

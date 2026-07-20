@@ -33,7 +33,7 @@ Define Core Identity Interfaces: abstract contracts for principals, attribution,
 
 - No Auth0/Okta/AzureAD/Keycloak types in Core.
 - Identity Interfaces MUST NOT become a user directory implementation inside Core.
-- Authorization decisions consume identity + policy; Identity Interfaces provide identity assertions, not all policy evaluation (Security engine/policy module may sit as Core policy evaluation configuration—see Open Questions).
+- Authorization decisions consume identity + policy; Identity Interfaces provide identity assertions. Policy evaluation uses the Core `Authorize` port (ADR-0007), not a Security Engine.
 
 ## Concepts
 
@@ -68,10 +68,12 @@ Inspector authenticates via site-local credential Plugin → IdentityAssertion f
 
 ## Open Questions
 
-1. Is authorization evaluation inside Core Configuration/Security policy module or a Plugin?  
-   **Working assumption:** policy evaluation for Transition authorization is Core-adjacent configuration evaluated by State Engine using data from Identity Interfaces; enterprise role directories remain Plugins that sync policy data inward.
-2. Principal ID format?  
+1. Principal ID format?  
    **Deferred to Phase 3 IDL.**
+
+## Phase 2 Amendments
+
+- ADR-0007 Authorize port.
 
 ## Future Extensions
 

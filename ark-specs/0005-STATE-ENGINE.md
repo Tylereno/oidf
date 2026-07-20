@@ -72,12 +72,14 @@ Given subject S, requested transition T, context C:
 1. Load MachineDefinition for S (via Configuration + CDO policy refs).
 2. Derive Current State of S from Event history.
 3. If T.from ≠ Current State → reject (`InvalidTransition`).
-4. Verify authorization for actor in C.
+4. Verify authorization for actor in C via the Core `Authorize` policy port (ADR-0007).
 5. Verify Dependencies in T against derived world state + Evidence store projections.
 6. Verify Evidence requirements (presence + validation status).
-7. If any check fails → reject; emit observable rejection Event or structured rejection record.
-8. If all pass → append StateAdvanced (name illustrative); Current State becomes T.to by projection.
+7. If any check fails → reject; append `TransitionRejected` (ADR-0003). Preview/dry-run MUST NOT append.
+8. If all pass → append `StateAdvanced`; record CDO + Configuration revision pins (ADR-0008); Current State becomes T.to by projection.
 9. Return success with transition identity and Event identity.
+
+External callers do not invoke this algorithm via a public sync RPC as the control plane. They publish `TransitionRequested` (ADR-0001). An in-Core adapter may call `EvaluateTransition` after appending/reading that Event.
 
 Steps 1–8 MUST be free of wall-clock nondeterminism except for recording timestamps; decision logic MUST NOT depend on unreproducible entropy.
 
@@ -97,10 +99,10 @@ Steps 1–8 MUST be free of wall-clock nondeterminism except for recording times
 
 | Interface | Purpose |
 |---|---|
-| EvaluateTransition(subject, transition, actor, cdo_revision) | Attempt transition |
-| GetCurrentState(subject) | Derived Current State |
+| EvaluateTransition(subject, transition, actor, cdo_revision) | **Internal** Core port (ADR-0001) |
+| GetCurrentState(subject) | Derived Current State (projection; ADR-0009) |
 | GetMachine(subject) | Resolve MachineDefinition |
-| PreviewTransition(subject, transition) | Dry-run validation without commit |
+| PreviewTransition(subject, transition) | Dry-run validation without append |
 
 ## Examples
 
@@ -115,9 +117,11 @@ Same Asset, missing `InspectionPass`. Engine rejects; Current State remains `Ins
 ## Open Questions
 
 1. Hierarchical state machines (nested regions): required in v1 or deferred?  
-   **Working assumption:** flat machines in v1; hierarchy allowed later without changing Evidence-gated principles.
-2. Are rejection records mandatory Events or may they be side-channel logs?  
-   **Working assumption:** rejections MUST be durable and syncable; prefer Events for uniformity.
+   **Working assumption (unchanged):** flat machines in v1; hierarchy allowed later without changing Evidence-gated principles.
+
+## Phase 2 Amendments
+
+- ADR-0001, ADR-0003, ADR-0007, ADR-0008, ADR-0010.
 
 ## Future Extensions
 

@@ -29,6 +29,7 @@ Specify offline-tolerant Synchronization between Cloud Control Plane, Edge Nodes
 4. Conflict Resolution SHALL be deterministic given the same inputs.
 5. Sync SHALL negotiate versions (0010); incompatible peers SHALL fail closed with explicit error.
 6. Air-gapped operation SHALL remain fully functional for local authority.
+7. v1 SHALL assign primary write affinity for each Deployment to one Edge Node (ADR-0004). Conflict Resolution remains mandatory for recovery from affinity breaches and partitioned ingest anomalies.
 
 ## Constraints
 
@@ -74,7 +75,7 @@ When two histories diverge:
 4. State is re-derived after merge via Replay; if a previously accepted local transition becomes invalid under merged history, emit a compensating observation Event and mark divergence for operator workflow—**never silently drop history**.
 5. CDO revision conflicts resolve by revision number + content hash; divergent content at same revision number is a hard fault.
 
-**Working assumption:** prefer preserve-all-events + deterministic order over last-writer-wins deleting facts.
+**Normative (ADR-0004):** preserve-all-events + deterministic order; no last-writer-wins deletion of facts.
 
 ## Replay
 
@@ -101,16 +102,18 @@ When two histories diverge:
 
 Edge advances 40 Transitions offline. On connect, ExportBatch sends Events; Control Plane ImportBatch merges; both Replay to identical subject States for shared Deployments.
 
-### Divergent Evidence order
+### Affinity breach / partitioned ingest (recovery)
 
-Two Edges accept different Evidence order for same Asset while partitioned. Merge sorts deterministically; State Engine Replay yields one Current State; operators inspect TransitionRejected/compensation Events if plan constraints break.
+If Evidence for the same Asset is incorrectly accepted on a non-primary Edge (misconfiguration or Plugin path error), ImportBatch merge sorts deterministically; Replay yields one Current State; operators inspect compensation / divergence markers. This is recovery, not supported multi-writer mode.
 
 ## Open Questions
 
-1. Deployment affinity: can two Edges concurrently advance the same Asset by design?  
-   **Working assumption:** v1 assigns primary write affinity per Deployment to one Edge; others are read/forward unless explicitly authorized multi-writer mode (future).
-2. Sneakernet batch format identical to online SyncBatch?  
-   **Working assumption:** yes—same SyncBatch abstraction.
+1. Sneakernet batch format identical to online SyncBatch?  
+   **Resolved (prior assumption locked):** yes—same SyncBatch abstraction.
+
+## Phase 2 Amendments
+
+- ADR-0004 write affinity.
 
 ## Future Extensions
 

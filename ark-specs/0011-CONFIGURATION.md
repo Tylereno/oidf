@@ -52,7 +52,7 @@ Specify Configuration as a Core capability: declarative data that changes behavi
 
 ## Determinism Rule
 
-State Transition evaluation SHALL pin the Configuration revision used, and record that pin in the resulting Event metadata so Replay is reproducible.
+State Transition evaluation SHALL pin the Configuration revision used, and record that pin in the resulting Event metadata so Replay is reproducible (ADR-0008). “Latest” means pin-at-evaluate-time.
 
 ## Interfaces (Abstract)
 

@@ -1,9 +1,9 @@
 # 0002 — Ubiquitous Language Glossary
 
-**Status:** Proposed (to be locked)  
+**Status:** Locked (Phase 2 amendments via ADR-0006)  
 **Phase:** 0.5  
 **Depends on:** 0000-CONSTITUTION, 0001-REPOSITORY-TOPOLOGY  
-**Authority:** Once locked, all subsequent RFCs MUST use these definitions. Contradictions require an ADR amending this glossary.
+**Authority:** Locked. All subsequent RFCs MUST use these definitions. Contradictions require an ADR amending this glossary.
 
 ## Purpose
 
@@ -62,7 +62,7 @@ An Asset is a distinct managed entity within a Deployment whose condition is tra
 
 **MUST:**
 - Exist in one—and only one—State at a time.
-- Belong to exactly one Deployment for lifecycle purposes (see Open Questions).
+- Belong to exactly one Deployment at any time (ADR-0006). Transfer is a modeled transition sequence, not shared mutable ownership.
 - Advance only through deterministic, evidence-validated transitions.
 
 **MUST NOT:**
@@ -365,14 +365,11 @@ Divergence between approved specs and implementations or between RFCs. Treated a
 
 ## Open Questions
 
-1. **Asset membership:** May an Asset participate in more than one Deployment over its life, or is membership immutable?  
-   **Working assumption for later RFCs:** an Asset’s lifecycle membership is singular at any time; transfer is a modeled transition, not shared mutable ownership.
-
-2. **Evidence authority:** Who may declare Evidence types—Core config, a dedicated evidence Plugin, or Deployment-level config?  
+1. **Evidence authority:** Who may declare Evidence types—Core config, a dedicated evidence Plugin, or Deployment-level config?  
    **Deferred** to Evidence/Plugin RFCs. Vocabulary only requires that Evidence be typed, attributable, and immutable.
 
-3. **Deployment vs CDO identity:** Is the Deployment ID identical to the CDO ID?  
-   **Working assumption:** yes, one identifier names both the aggregate and its canonical object.
+2. **Deployment vs CDO identity:** Is the Deployment ID identical to the CDO ID?  
+   **Locked working assumption (unchanged):** yes, one identifier names both the aggregate and its canonical object.
 
 ## Future Extensions
 

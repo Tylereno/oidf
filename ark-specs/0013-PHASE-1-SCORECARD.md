@@ -45,13 +45,15 @@ No score below 8.
 4. Normative schemas live in `ark-specs`; nodes cache for offline.
 5. Deny-by-default for consequential actions.
 
-## Items Deferred to Phase 2+
+## Items Deferred After Phase 2
 
-- Contradiction sweep across 0001–0012
 - IDL selection and interface definitions (Phase 3)
 - Crypto algorithm ADR
 - Plugin packaging ADR
-- Asset multi-Deployment membership final rule (glossary open question)
+- Evidence-type authority registry owner
+- Transition idempotency IDL fields (rule sketch in 0014 G2)
+
+Contradiction sweep completed in 0014.
 
 ## Recommendation
 
