@@ -50,7 +50,7 @@
           "authority": {
             "type": "string",
             "enum": ["policy", "operator", "system"],
-            "description": "Who authorized a continuity/safety transition. Assist is never authority."
+            "description": "Who authorized a continuity/safety transition. Assist is never authority (ADR-0019)."
           },
           "suggestion_only": {
             "type": "boolean",
@@ -72,8 +72,10 @@
                 "kind": {
                   "enum": [
                     "power_tier_changed",
+                    "backhaul_mode_changed",
                     "service_action",
-                    "watchdog_recovery"
+                    "watchdog_recovery",
+                    "config_committed"
                   ]
                 }
               },
@@ -82,7 +84,20 @@
             "then": {
               "required": ["authority"],
               "properties": {
-                "suggestion_only": { "not": { "const": true } }
+                "suggestion_only": { "not": { "const": true } },
+                "actor": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["kind"],
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": ["policy", "operator", "system"],
+                      "description": "Assist cannot act on continuity/shed events (ADR-0019)."
+                    },
+                    "id": { "type": "string" }
+                  }
+                }
               }
             }
           },
@@ -93,15 +108,37 @@
             },
             "then": {
               "required": ["suggestion_only"],
+              "not": { "required": ["authority"] },
               "properties": {
                 "suggestion_only": { "const": true },
                 "actor": {
                   "type": "object",
+                  "additionalProperties": false,
+                  "required": ["kind"],
                   "properties": {
-                    "kind": { "const": "assist" }
+                    "kind": { "const": "assist" },
+                    "id": { "type": "string" }
                   }
                 }
               }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "actor": {
+                  "type": "object",
+                  "properties": { "kind": { "const": "assist" } },
+                  "required": ["kind"]
+                }
+              },
+              "required": ["actor"]
+            },
+            "then": {
+              "properties": {
+                "kind": { "const": "assist_suggestion" }
+              },
+              "not": { "required": ["authority"] }
             }
           }
         ]
