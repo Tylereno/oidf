@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ark.dev/schemas/state/transition_rejected.json",
+  "title": "TransitionRejectedPayload",
+  "x-ark-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "subject_kind",
+    "subject_id",
+    "transition_id",
+    "from_state",
+    "to_state",
+    "reason_code",
+    "pins",
+    "idempotency_key"
+  ],
+  "properties": {
+    "subject_kind": { "type": "string", "enum": ["Deployment", "Asset"] },
+    "subject_id": { "$ref": "../common/identifier.json" },
+    "transition_id": { "type": "string", "minLength": 1 },
+    "from_state": { "type": "string", "minLength": 1 },
+    "to_state": { "type": "string", "minLength": 1 },
+    "reason_code": {
+      "type": "string",
+      "enum": [
+        "InvalidTransition",
+        "MissingEvidence",
+        "DependencyUnsatisfied",
+        "Unauthorized",
+        "IdempotencyConflict",
+        "MachineNotFound",
+        "CdoRevisionMismatch"
+      ]
+    },
+    "reason_detail": { "type": "string" },
+    "pins": { "$ref": "../common/revision_pin.json" },
+    "idempotency_key": { "type": "string", "minLength": 1, "maxLength": 128 }
+  }
+}

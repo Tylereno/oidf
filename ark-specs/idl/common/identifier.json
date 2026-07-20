@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ark.dev/schemas/common/identifier.json",
+  "title": "ArkIdentifier",
+  "description": "Opaque stable identifier within a trust domain.",
+  "x-ark-schema-version": "1.0.0",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 128,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:~-]*$"
+}

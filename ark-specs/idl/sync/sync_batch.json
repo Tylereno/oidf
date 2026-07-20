@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ark.dev/schemas/sync/sync_batch.json",
+  "title": "SyncBatch",
+  "x-ark-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "batch_id",
+    "sender_node_id",
+    "protocol_version",
+    "events",
+    "content_hash"
+  ],
+  "properties": {
+    "batch_id": { "$ref": "../common/identifier.json" },
+    "sender_node_id": { "$ref": "../common/identifier.json" },
+    "protocol_version": { "type": "string", "const": "1.0.0" },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "../event/envelope.json" }
+    },
+    "cdo_revisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["deployment_id", "revision", "content_hash"],
+        "properties": {
+          "deployment_id": { "$ref": "../common/identifier.json" },
+          "revision": { "type": "integer", "minimum": 1 },
+          "content_hash": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "summary_clock": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "affinity_epochs": {
+      "type": "object",
+      "description": "Deployment ID → fencing epoch claimed by sender (ADR-0014).",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "content_hash": { "type": "string", "minLength": 1 },
+    "signature": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ark.dev/schemas/identity/identity_assertion.json",
+  "title": "IdentityAssertion",
+  "x-ark-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["principal_id", "issued_at", "expires_at", "issuer"],
+  "properties": {
+    "principal_id": { "$ref": "../common/identifier.json" },
+    "issued_at": { "$ref": "../common/timestamp.json" },
+    "expires_at": { "$ref": "../common/timestamp.json" },
+    "issuer": { "type": "string", "minLength": 1 },
+    "roles": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}
