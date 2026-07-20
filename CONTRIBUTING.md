@@ -25,6 +25,14 @@ PRs that touch `core_schemas/` must keep IDL green:
 ```bash
 pip install 'jsonschema>=4.0'
 python tooling/validate_json_schemas.py core_schemas/idl
+python tooling/validate_architecture_examples.py
+python -m unittest tooling.test_field_tooling -v
 ```
+
+Field helpers:
+
+- `ledger_generator.py` — schema-valid ledgers; rejects empty `evidence_refs` on commission/energize
+- `state_validator.py` — schema + optional machine checks
+- `sat_event_log.py` — create / append / validate SAT logs
 
 GitHub Action: `.github/workflows/json-schema.yml`.
