@@ -1,4 +1,19 @@
-"""Application services package — intentionally empty until transition approval.
+"""Phase 6 application services — production Core logic behind ports.
 
-Do not place business logic here before the Phase 5→6 Transition Report is approved.
+No concrete infrastructure adapters (Postgres/NATS/MQTT/cloud).
+In-memory doubles live under ark_core.adapters.memory for tests/dev only.
 """
+
+from ark_core.app.authorize_service import AuthorizeService
+from ark_core.app.event_service import EventService
+from ark_core.app.kernel import CoreKernel
+from ark_core.app.state_service import StateEngineService
+from ark_core.app.sync_service import SyncEngineService
+
+__all__ = [
+    "AuthorizeService",
+    "EventService",
+    "StateEngineService",
+    "SyncEngineService",
+    "CoreKernel",
+]

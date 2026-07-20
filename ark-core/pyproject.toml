@@ -1,9 +1,12 @@
 [project]
 name = "ark-core"
-version = "0.0.0"
-description = "ARK production microkernel — ports scaffold (Phase 6)"
+version = "0.1.0"
+description = "ARK production microkernel — Phase 6 application services"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -11,3 +14,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
