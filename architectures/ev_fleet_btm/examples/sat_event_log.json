@@ -4,6 +4,30 @@
   "subject_id": "dep-redacted-ev-fleet-btm-001",
   "events": [
     {
+      "event_id": "sat-redacted-install-clearance-001",
+      "gate_id": "ev_fleet_btm.install_clearance_review",
+      "occurred_at": "2026-07-20T20:48:00Z",
+      "result": "pass",
+      "evidence_type": "InspectionPass",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-grounding-bonding-001",
+      "gate_id": "ev_fleet_btm.grounding_bonding_review",
+      "occurred_at": "2026-07-20T20:49:00Z",
+      "result": "pass",
+      "evidence_type": "InsulationResistanceOk",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
       "event_id": "sat-redacted-bess-precommission-001",
       "gate_id": "ev_fleet_btm.bess_precommission",
       "occurred_at": "2026-07-20T20:50:00Z",
@@ -21,6 +45,18 @@
       "occurred_at": "2026-07-20T20:51:00Z",
       "result": "pass",
       "evidence_type": "InspectionPass",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-integrated-run-001",
+      "gate_id": "ev_fleet_btm.integrated_run_support",
+      "occurred_at": "2026-07-20T20:52:00Z",
+      "result": "pass",
+      "evidence_type": "ThermalStable",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
         "status": "REDACTED"

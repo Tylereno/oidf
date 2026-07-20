@@ -38,6 +38,30 @@
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-ups-ridethrough-001",
+      "gate_id": "hyperscale_island.ups_ridethrough_review",
+      "occurred_at": "2026-07-20T20:53:00Z",
+      "result": "pass",
+      "evidence_type": "ThermalStable",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-resync-return-001",
+      "gate_id": "hyperscale_island.resync_return",
+      "occurred_at": "2026-07-20T20:54:00Z",
+      "result": "pass",
+      "evidence_type": "GridVoltageInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
     }
   ]
 }

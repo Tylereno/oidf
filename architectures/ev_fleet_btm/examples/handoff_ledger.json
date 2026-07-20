@@ -21,8 +21,11 @@
         "ev-redacted-002"
       ],
       "sat_event_ids": [
+        "sat-redacted-install-clearance-001",
+        "sat-redacted-grounding-bonding-001",
         "sat-redacted-bess-precommission-001",
-        "sat-redacted-charger-loop-001"
+        "sat-redacted-charger-loop-001",
+        "sat-redacted-integrated-run-001"
       ],
       "notes": "Redacted worked example; source telemetry and site identifiers removed."
     }

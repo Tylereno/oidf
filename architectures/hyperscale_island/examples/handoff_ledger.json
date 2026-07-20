@@ -24,7 +24,9 @@
       "sat_event_ids": [
         "sat-redacted-fc-string-001",
         "sat-redacted-phase-sync-001",
-        "sat-redacted-island-xfer-001"
+        "sat-redacted-island-xfer-001",
+        "sat-redacted-ups-ridethrough-001",
+        "sat-redacted-resync-return-001"
       ],
       "notes": "Redacted worked example; source telemetry and site identifiers removed."
     }

@@ -1,0 +1,63 @@
+{
+  "$schema": "../../core_schemas/architecture_sat_gate_map.json",
+  "pack_id": "remote_resilient_microgrid",
+  "spec_version": "1.0.0",
+  "gate_namespace": "remote_resilient_microgrid",
+  "gates": [
+    {
+      "gate_id": "remote_resilient_microgrid.diesel_baseline",
+      "safety_gate": "Generator protective relays, overspeed paths, and load-bank baseline demonstrated.",
+      "sat_protocol_step": 1,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["InspectionPass"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "Human-observed baseline is acceptable for the starter pack; instrumented Evidence is preferred later."
+    },
+    {
+      "gate_id": "remote_resilient_microgrid.cots_inverter_join",
+      "safety_gate": "COTS inverter anti-island and transfer sequence verified.",
+      "sat_protocol_step": 2,
+      "required_result": "pass",
+      "evidence_catalogs": ["solar-inverter-commissioning"],
+      "evidence_types": ["AntiIslandingOk", "GridVoltageInBand", "FrequencyInBand"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "Anti-islanding Evidence is the primary machine assertion for this gate."
+    },
+    {
+      "gate_id": "remote_resilient_microgrid.hybrid_handoff",
+      "safety_gate": "Diesel and storage handoff completed with evidence-gated transitions.",
+      "sat_protocol_step": 3,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning", "solar-inverter-commissioning"],
+      "evidence_types": ["InspectionPass", "CellVoltageInBand", "GridVoltageInBand"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "Records the analog-to-digital handoff point for mixed legacy assets."
+    },
+    {
+      "gate_id": "remote_resilient_microgrid.ddil_drill",
+      "safety_gate": "Offline ledger integrity checked after disconnect and reconnect.",
+      "sat_protocol_step": 4,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["InspectionPass"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "The SAT outcome should cite local ledger progress through the DDIL window."
+    },
+    {
+      "gate_id": "remote_resilient_microgrid.owner_handoff_export",
+      "safety_gate": "Mission-owner handoff export generated from ledger and SAT log artifacts.",
+      "sat_protocol_step": 5,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["InspectionPass"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "Handoff is a structured export, not a screenshot dump."
+    }
+  ]
+}

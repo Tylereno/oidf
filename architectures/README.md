@@ -1,6 +1,6 @@
 # Architecture blueprints
 
-Deliverable-centric packs. Each pack has overview, SAT protocol, and safety gates.
+Deliverable-centric packs. Each pack has overview, SAT protocol, safety gates, and a machine-readable SAT gate map.
 
 | Pack | Intent |
 |---|---|
@@ -14,6 +14,8 @@ Each pack includes a **redacted worked example** under `examples/`:
 
 - `handoff_ledger.json`
 - `sat_event_log.json`
+
+Each pack also includes `sat_gate_map.json`, which declares the SAT `gate_id` namespace, expected Evidence types, required result for handoff examples, and ledger transition linkage.
 
 Validate:
 
