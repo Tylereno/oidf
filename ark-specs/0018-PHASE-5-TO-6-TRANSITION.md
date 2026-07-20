@@ -1,6 +1,7 @@
 # RFC 0018 — Phase 5-to-6 Transition Report
 
-**Status:** Awaiting Approval  
+**Status:** Approved  
+**Approved-By:** User directive 2026-07-20  
 **Date:** 2026-07-20  
 **Roles:** Core Architect · Governance Guardian · Red Team Lead  
 **Baseline:** `ARK-SPEC-BASELINE-2026.07.20`  
@@ -111,6 +112,6 @@ Production Core application services (when approved) MUST pass TS-0001–TS-0020
 
 ## Approval Gate
 
-**Request:** Approve this Transition Report to authorize writing production application services behind the ports (still without concrete infra adapters unless separately approved).
+**Status: APPROVED** (user directive 2026-07-20).
 
-Until approval: no production application code beyond this ports scaffold.
+Authorized next step: implement production application services behind the ports in `ark_core.app`. Concrete infrastructure adapters (Postgres/NATS/MQTT/cloud) remain separately gated unless explicitly authorized.
