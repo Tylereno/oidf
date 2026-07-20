@@ -21,6 +21,15 @@ pip install -e ark-core[dev]
 pytest ark-core/tests -q
 ```
 
+## Commissioning gate demo
+
+```bash
+pip install -e ark-core
+python ark-core/examples/commission_gate_demo.py
+```
+
+See [`examples/README.md`](./examples/README.md).
+
 ## Rules
 
 - Core contains zero knowledge of storage/transport/cloud products.

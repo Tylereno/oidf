@@ -5,14 +5,17 @@
 
 ## Responsibility
 
-User and operator documentation.
+User and operator documentation. Explains the platform; does not govern it.
 
 ## Boundaries
 
-- Explains the platform; does not govern it.
 - On conflict with `ark-specs`, `ark-specs` wins.
 - Must not become the source of truth for architecture or interfaces.
 
-## Status
+## Contents
 
-Topology reserved. Content follows approved specifications.
+| Doc | Audience |
+|---|---|
+| [`methodology.md`](./methodology.md) | Hiring panels, bids, capability statements — commissioning thesis and honest scope |
+
+Operator runbooks and installer guides land here after production adapters exist.
