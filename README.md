@@ -35,7 +35,8 @@ Normative RFCs and JSON Schema IDL that Keel consumes live under `docs/normative
 ## Honest status
 
 - Normative RFCs, IDL, and evidence catalogs: **strong (lab)**
-- Public wiki / manifesto / AHJ guides: **skeleton — fill as wedge hardens**
+- Manifesto / offline sovereignty / attestation doctrine: **Phase 2 complete** (`docs/manifesto_and_thesis/`)
+- AHJ compliance pack: **Phase 2 complete** (`docs/ahj/`)
 - Keel lighthouse e2e: runs from **`Tylereno/keel`**, pinned to this repo’s contracts
 - Not a SaaS, not Procore, not VITO
 
