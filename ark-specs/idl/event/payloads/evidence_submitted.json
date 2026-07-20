@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ark.dev/schemas/event/payloads/evidence_submitted.json",
+  "title": "EvidenceSubmittedPayload",
+  "x-ark-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidence_id", "evidence_type", "subject_kind", "subject_id"],
+  "properties": {
+    "evidence_id": { "$ref": "../../common/identifier.json" },
+    "evidence_type": { "type": "string", "minLength": 1 },
+    "subject_kind": { "type": "string", "enum": ["Deployment", "Asset"] },
+    "subject_id": { "$ref": "../../common/identifier.json" },
+    "artifact_uri": { "type": "string", "minLength": 1 },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

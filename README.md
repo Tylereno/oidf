@@ -6,15 +6,24 @@ Autonomous Resilient Kernel — offline-first deployment operating system for ph
 
 ```
 ark/
-├── ark-specs/          # RFCs, architecture, standards (source of truth)
-├── ark-core/           # State engine & microkernel
+├── ark-specs/          # RFCs, ADRs, IDL (source of truth)
+├── ark-core/           # State engine & microkernel (production — Phase 6+)
 ├── ark-sdk/            # Plugin interfaces and developer SDK
 ├── ark-plugins/        # Official plugins
-├── ark-reference/      # Sample implementations
+├── ark-reference/      # Phase 5 reference implementation + conformance tests
 ├── ark-docs/           # User and operator documentation
 └── ark-examples/       # Example deployments and tutorials
 ```
 
-Normative definition: [`ark-specs/0001-REPOSITORY-TOPOLOGY.md`](./ark-specs/0001-REPOSITORY-TOPOLOGY.md)
+## Quick start (reference)
 
-Master charter: [`ark-specs/0000-CONSTITUTION.md`](./ark-specs/0000-CONSTITUTION.md)
+```bash
+pip install -e ark-reference
+pytest ark-reference/tests -q
+```
+
+## Specs
+
+- Charter: [`ark-specs/0000-CONSTITUTION.md`](./ark-specs/0000-CONSTITUTION.md)
+- Topology: [`ark-specs/0001-REPOSITORY-TOPOLOGY.md`](./ark-specs/0001-REPOSITORY-TOPOLOGY.md)
+- IDL: [`ark-specs/idl/`](./ark-specs/idl/)

@@ -9,7 +9,7 @@ RFCs, ADRs, standards, glossary, and interface specifications for ARK.
 
 ## Boundaries
 
-- Contains no application code.
+- Contains no application code (IDL schemas are contracts, not runtime).
 - Must not depend on any code repository.
 - All other repositories consume approved artifacts from here.
 
@@ -32,6 +32,10 @@ RFCs, ADRs, standards, glossary, and interface specifications for ARK.
 | [0012-SECURITY.md](./0012-SECURITY.md) | Security Architecture | 1 |
 | [0013-PHASE-1-SCORECARD.md](./0013-PHASE-1-SCORECARD.md) | Phase 1 Scorecard | 1 |
 | [0014-PHASE-2-CONTRADICTION-REVIEW.md](./0014-PHASE-2-CONTRADICTION-REVIEW.md) | Phase 2 Contradiction Review | 2 |
+| [0015-INTERFACE-DEFINITIONS.md](./0015-INTERFACE-DEFINITIONS.md) | Interface Definitions (IDL) | 3 |
+| [0016-TEST-SPECIFICATIONS.md](./0016-TEST-SPECIFICATIONS.md) | Test Specifications | 4 |
+| [0017-PHASE-5-REFERENCE.md](./0017-PHASE-5-REFERENCE.md) | Phase 5 Reference Notes | 5 |
+| [idl/](./idl/) | JSON Schema contracts | 3 |
 
 ## ADRs
 
@@ -47,7 +51,8 @@ RFCs, ADRs, standards, glossary, and interface specifications for ARK.
 | [ADR-0008](./adrs/ADR-0008-revision-pinning.md) | Evaluate-time revision pinning |
 | [ADR-0009](./adrs/ADR-0009-projection-caches.md) | Projection caches non-authoritative |
 | [ADR-0010](./adrs/ADR-0010-bootstrap-transitions.md) | Bootstrap transitions via machines |
+| [ADR-0011](./adrs/ADR-0011-json-schema-idl.md) | Normative IDL: JSON Schema 2020-12 |
 
 ## Status
 
-Phases 0–2 proposed/accepted in-branch. Phase 3 (interface definitions) requires explicit authorization.
+Phases 0–5 delivered in-branch. Phase 6 (production implementations) requires explicit authorization.

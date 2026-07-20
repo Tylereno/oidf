@@ -1,18 +1,26 @@
-# ark-reference
+# ARK Reference (Phase 5)
 
-**Ownership:** ARK Reference maintainers  
-**Normative authority:** `ark-specs`
+Non-production in-memory microkernel demonstrating approved RFCs.
 
-## Responsibility
+## Scope
 
-Sample implementations demonstrating correct composition of Core, SDK, and plugins.
+- Event Engine (append-only, schema-validated envelopes)
+- State Engine (evidence-gated transitions, idempotency, pins)
+- Authorize policy port (deny by default)
+- Sync merge + CDO hash quarantine
 
-## Boundaries
+## Normative inputs
 
-- Illustrative only; not a production authority.
-- Must not define new architectural contracts.
-- May compose `ark-core`, `ark-sdk`, and `ark-plugins` against approved specs.
+- `../ark-specs/` RFCs and `idl/` JSON Schemas
+- Test specs: `../ark-specs/0016-TEST-SPECIFICATIONS.md`
 
-## Status
+## Run tests
 
-Topology reserved. No implementation until authorized by later phases and approved RFCs.
+```bash
+pip install -e ark-reference jsonschema pytest
+pytest ark-reference/tests -q
+```
+
+## Non-goals
+
+Not a production Core. No durable storage, no network transport, no real Plugins.

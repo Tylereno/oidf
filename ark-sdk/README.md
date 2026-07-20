@@ -1,19 +1,17 @@
 # ark-sdk
 
-**Ownership:** ARK SDK maintainers  
-**Normative authority:** `ark-specs`
-
-## Responsibility
-
-Plugin interfaces and developer SDK for building against ARK without modifying Core.
-
-## Boundaries
-
-- Must not implement Core engines.
-- Must not contain official plugin domain logic or vendor adapters.
-- Must not depend on `ark-plugins`.
-- May depend only on approved contracts in `ark-specs`.
+Developer-facing contracts for ARK Plugins and integrators.
 
 ## Status
 
-Topology reserved. No implementation until authorized by later phases and approved RFCs.
+Phase 5 stub. Normative schemas live in `ark-specs/idl/`. This package will grow typed helpers without becoming a Core dependency (RFC 0001).
+
+## Rules
+
+- SDK adapts to specs; Core does not depend on SDK.
+- Plugins publish/subscribe Events; they do not call State Engine internals.
+- Transition intent: publish `TransitionRequested` (ADR-0001).
+
+## Schema index
+
+See `../ark-specs/0015-INTERFACE-DEFINITIONS.md`.
