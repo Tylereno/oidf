@@ -37,6 +37,30 @@ class LedgerGeneratorTests(unittest.TestCase):
             self.assertNotEqual(proc.returncode, 0)
             self.assertIn("evidence_refs required", proc.stderr)
 
+    def test_schema_rejects_empty_evidence_refs(self):
+        try:
+            import jsonschema
+        except ImportError:
+            self.skipTest("jsonschema not installed")
+        schema = json.loads((ROOT / "core_schemas" / "handoff_ledger.json").read_text())
+        doc = {
+            "ledger_id": "led-empty",
+            "spec_version": "1.0.0",
+            "subject": {"kind": "Asset", "id": "BESS-1"},
+            "created_at": "2026-07-20T00:00:00Z",
+            "entries": [
+                {
+                    "seq": 1,
+                    "occurred_at": "2026-07-20T00:00:00Z",
+                    "from_state": "ReadyForCommission",
+                    "to_state": "Commissioned",
+                    "evidence_refs": [],
+                }
+            ],
+        }
+        errors = list(jsonschema.Draft202012Validator(schema).iter_errors(doc))
+        self.assertTrue(errors, "empty evidence_refs must fail handoff_ledger schema")
+
     def test_writes_schema_valid_ledger(self):
         with tempfile.TemporaryDirectory() as td:
             out = Path(td) / "led.json"
