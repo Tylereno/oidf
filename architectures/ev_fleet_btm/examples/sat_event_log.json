@@ -1,0 +1,31 @@
+{
+  "log_id": "satlog-redacted-ev_fleet_btm-001",
+  "spec_version": "1.0.0",
+  "subject_id": "dep-redacted-ev-fleet-btm-001",
+  "events": [
+    {
+      "event_id": "sat-redacted-bess-precommission-001",
+      "gate_id": "ev_fleet_btm.bess_precommission",
+      "occurred_at": "2026-07-20T20:50:00Z",
+      "result": "pass",
+      "evidence_type": "CellVoltageInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-charger-loop-001",
+      "gate_id": "ev_fleet_btm.charger_loop_estop",
+      "occurred_at": "2026-07-20T20:51:00Z",
+      "result": "pass",
+      "evidence_type": "InspectionPass",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    }
+  ]
+}

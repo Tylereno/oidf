@@ -9,3 +9,15 @@ Deliverable-centric packs. Each pack has overview, SAT protocol, and safety gate
 | [`remote_resilient_microgrid/`](./remote_resilient_microgrid/) | Defense / autonomous edge (legacy diesel + COTS) |
 
 These are **lab blueprints**, not certified designs. Safety gates are checklists — not AHJ approvals.
+
+Each pack includes a **redacted worked example** under `examples/`:
+
+- `handoff_ledger.json`
+- `sat_event_log.json`
+
+Validate:
+
+```bash
+pip install jsonschema
+python tooling/validate_architecture_examples.py
+```
