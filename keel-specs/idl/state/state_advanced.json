@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keel.dev/schemas/state/state_advanced.json",
+  "title": "StateAdvancedPayload",
+  "x-keel-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "subject_kind",
+    "subject_id",
+    "transition_id",
+    "from_state",
+    "to_state",
+    "pins",
+    "idempotency_key"
+  ],
+  "properties": {
+    "subject_kind": { "type": "string", "enum": ["Deployment", "Asset"] },
+    "subject_id": { "$ref": "../common/identifier.json" },
+    "transition_id": { "type": "string", "minLength": 1 },
+    "from_state": { "type": "string", "minLength": 1 },
+    "to_state": { "type": "string", "minLength": 1 },
+    "pins": { "$ref": "../common/revision_pin.json" },
+    "idempotency_key": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "satisfied_evidence_ids": {
+      "type": "array",
+      "items": { "$ref": "../common/identifier.json" }
+    }
+  }
+}

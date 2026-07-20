@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keel.dev/schemas/event/payloads/evidence_validated.json",
+  "title": "EvidenceValidatedPayload",
+  "x-keel-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidence_id", "evidence_type", "subject_kind", "subject_id"],
+  "properties": {
+    "evidence_id": { "$ref": "../../common/identifier.json" },
+    "evidence_type": { "type": "string", "minLength": 1 },
+    "subject_kind": { "type": "string", "enum": ["Deployment", "Asset"] },
+    "subject_id": { "$ref": "../../common/identifier.json" },
+    "validator_id": { "$ref": "../../common/identifier.json" },
+    "valid_from": { "$ref": "../../common/timestamp.json" },
+    "valid_until": { "$ref": "../../common/timestamp.json" }
+  }
+}
