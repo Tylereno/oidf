@@ -33,3 +33,6 @@ jobs:
 
       - name: Validate architecture pack examples
         run: python tooling/validate_architecture_examples.py
+
+      - name: Field tooling unit tests
+        run: python -m unittest tooling.test_field_tooling -v
