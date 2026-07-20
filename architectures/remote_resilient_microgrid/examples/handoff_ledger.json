@@ -24,7 +24,9 @@
       "sat_event_ids": [
         "sat-redacted-diesel-baseline-001",
         "sat-redacted-inverter-join-001",
-        "sat-redacted-ddil-001"
+        "sat-redacted-hybrid-handoff-001",
+        "sat-redacted-ddil-001",
+        "sat-redacted-owner-handoff-export-001"
       ],
       "notes": "Redacted worked example; source telemetry and site identifiers removed."
     }

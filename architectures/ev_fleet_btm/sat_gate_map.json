@@ -1,0 +1,63 @@
+{
+  "$schema": "../../core_schemas/architecture_sat_gate_map.json",
+  "pack_id": "ev_fleet_btm",
+  "spec_version": "1.0.0",
+  "gate_namespace": "ev_fleet_btm",
+  "gates": [
+    {
+      "gate_id": "ev_fleet_btm.bess_precommission",
+      "safety_gate": "BESS pre-commissioning checks completed before charger load support.",
+      "sat_protocol_step": 2,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["CellVoltageInBand", "InsulationResistanceOk", "ThermalStable"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "Machine Evidence should unlock the BESS portion of the commissioning transition."
+    },
+    {
+      "gate_id": "ev_fleet_btm.charger_loop_estop",
+      "safety_gate": "E-stop, interlock, and charger communication loop demonstrated.",
+      "sat_protocol_step": 3,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["InspectionPass", "ContactorClosedFeedback"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "InspectionPass may document the field walkdown; contactor feedback is preferred where available."
+    },
+    {
+      "gate_id": "ev_fleet_btm.install_clearance_review",
+      "safety_gate": "Working clearances, labels, and battery enclosure coordination recorded.",
+      "sat_protocol_step": 1,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["InspectionPass"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "Documents the install walkdown without replacing AHJ inspection."
+    },
+    {
+      "gate_id": "ev_fleet_btm.grounding_bonding_review",
+      "safety_gate": "Grounding and bonding inspection outcome recorded.",
+      "sat_protocol_step": 1,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["InspectionPass", "InsulationResistanceOk"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "A failed field inspection remains a SAT event with result fail or blocked."
+    },
+    {
+      "gate_id": "ev_fleet_btm.integrated_run_support",
+      "safety_gate": "Integrated BESS and charger load step completed before handoff.",
+      "sat_protocol_step": 4,
+      "required_result": "pass",
+      "evidence_catalogs": ["bess-commissioning"],
+      "evidence_types": ["CellVoltageInBand", "ThermalStable", "InspectionPass"],
+      "ledger_transition": "ReadyForCommission -> Commissioned",
+      "example_required": true,
+      "notes": "Shared SAT event IDs may be cited by both BESS and charger ledger entries."
+    }
+  ]
+}

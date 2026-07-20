@@ -28,9 +28,33 @@
       "notes": "Redacted SAT event; raw site identifiers removed."
     },
     {
+      "event_id": "sat-redacted-hybrid-handoff-001",
+      "gate_id": "remote_resilient_microgrid.hybrid_handoff",
+      "occurred_at": "2026-07-20T20:52:00Z",
+      "result": "pass",
+      "evidence_type": "GridVoltageInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
       "event_id": "sat-redacted-ddil-001",
       "gate_id": "remote_resilient_microgrid.ddil_drill",
-      "occurred_at": "2026-07-20T20:52:00Z",
+      "occurred_at": "2026-07-20T20:53:00Z",
+      "result": "pass",
+      "evidence_type": "InspectionPass",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-owner-handoff-export-001",
+      "gate_id": "remote_resilient_microgrid.owner_handoff_export",
+      "occurred_at": "2026-07-20T20:54:00Z",
       "result": "pass",
       "evidence_type": "InspectionPass",
       "actor_id": "actor-redacted-field-tech",
