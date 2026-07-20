@@ -27,6 +27,7 @@ RFCs, ADRs, standards, glossary, and interface specifications for ARK.
 | [0017-PHASE-5-REFERENCE.md](./0017-PHASE-5-REFERENCE.md) | Phase 5 Reference Notes | 5 |
 | [0018-PHASE-5-TO-6-TRANSITION.md](./0018-PHASE-5-TO-6-TRANSITION.md) | Phase 5→6 Transition Report | 5→6 |
 | [0019-PHASE-6-APP-SERVICES.md](./0019-PHASE-6-APP-SERVICES.md) | Phase 6 Application Services | 6 |
+| [0020-PHASE-6-ADAPTERS-PLUGINS.md](./0020-PHASE-6-ADAPTERS-PLUGINS.md) | Adapters, Signed Events, Plugins | 6 |
 | [SPECIFICATION-BASELINE.md](./SPECIFICATION-BASELINE.md) | Locked baseline declaration | 5→6 |
 | [ARCHITECTURAL_FAILURE_MODES.md](./ARCHITECTURAL_FAILURE_MODES.md) | Red Team failure register | 5→6 |
 | [idl/](./idl/) | JSON Schema contracts | 3 |
@@ -41,6 +42,7 @@ RFCs, ADRs, standards, glossary, and interface specifications for ARK.
 | [0014](./adrs/ADR-0014-sync-fencing-ordering.md) | Sync fencing & ordering authority |
 | [0015](./adrs/ADR-0015-node-trust-rotation.md) | Node trust rotation & revocation |
 | [0016](./adrs/ADR-0016-plugin-isolation-allowlists.md) | Plugin isolation floor & allowlists |
+| [0017](./adrs/ADR-0017-signed-events-ed25519.md) | Signed Events cryptography (Ed25519) |
 
 ## Status
 

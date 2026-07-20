@@ -1,28 +1,28 @@
 # ark-core — Production Microkernel (Phase 6)
 
-**Baseline:** `ARK-SPEC-BASELINE-2026.07.20`  
-**Status:** Application services implemented behind ports. No concrete infra adapters.
+**Baseline:** `ARK-SPEC-BASELINE-2026.07.20`
 
 ## Layout
 
 ```
 src/ark_core/
-  baseline.py
-  domain/
-  ports/                 # Hexagonal ports
-  app/                   # State/Event/Sync/Authorize/Kernel services
-  adapters/memory.py     # test/dev doubles only (NOT Postgres/NATS/MQTT)
+  ports/       # Hexagonal ports (incl. EventStorePort, SigningPort)
+  app/         # Event/State/Sync/Authorize/PluginRuntime/Kernel
+  adapters/
+    memory.py           # test doubles
+    file_event_store.py # append-only JSONL durability
+    ed25519_signing.py  # ADR-0017 Signed Events
 ```
 
 ## Run tests
 
 ```bash
-pip install -e ark-core[dev]
+pip install -e 'ark-core[dev]'
 pytest ark-core/tests -q
 ```
 
 ## Rules
 
-- Core contains zero knowledge of storage/transport/cloud products.
-- Plugins never receive StateEngine internal ports.
-- ADR-0012–0016 enforced in app services.
+- Core application code does not import cloud/broker SDKs.
+- Production Plugin Runtime uses subprocess isolation (ADR-0016).
+- High-assurance profiles may set `require_signatures=True` on CoreKernel.
