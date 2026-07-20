@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oidf.dev/schemas/handoff_ledger.json",
+  "title": "OIDFHandoffLedger",
+  "description": "Immutable digital as-built / handoff package for an asset or deployment.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ledger_id", "spec_version", "subject", "created_at", "entries"],
+  "properties": {
+    "ledger_id": { "type": "string", "minLength": 1 },
+    "spec_version": { "type": "string", "const": "1.0.0" },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["Asset", "Deployment"] },
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string" }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "baseline_id": { "type": "string" },
+    "machine_definition_id": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["seq", "occurred_at", "from_state", "to_state", "evidence_refs"],
+        "properties": {
+          "seq": { "type": "integer", "minimum": 1 },
+          "occurred_at": { "type": "string", "format": "date-time" },
+          "from_state": { "type": "string" },
+          "to_state": { "type": "string" },
+          "actor_id": { "type": "string" },
+          "evidence_refs": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "sat_event_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}
