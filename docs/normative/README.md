@@ -18,7 +18,8 @@ Runtime: [`Tylereno/keel`](https://github.com/Tylereno/keel).
 | [0021-LIGHTHOUSE-PILOT.md](./0021-LIGHTHOUSE-PILOT.md) | BESS Lighthouse Pilot Wedge |
 | [0022-PRODUCT-NAMING.md](./0022-PRODUCT-NAMING.md) | OIDF + Keel naming |
 | [EVIDENCE-CATALOG-COMPATIBILITY.md](./EVIDENCE-CATALOG-COMPATIBILITY.md) | Evidence catalog versioning and compatibility rules |
+| [SOVEREIGN-NODE-PROFILE.md](./SOVEREIGN-NODE-PROFILE.md) | OT/DDIL durable site state; AI assistive not authoritative |
 | [SPECIFICATION-BASELINE.md](./SPECIFICATION-BASELINE.md) | Locked baseline |
-| [adrs/](./adrs/) | Architecture Decision Records |
+| [adrs/](./adrs/) | Architecture Decision Records (incl. ADR-0019) |
 
 Wiki guides and manifesto live under `docs/manifesto_and_thesis/` and `docs/guides/` — not here.

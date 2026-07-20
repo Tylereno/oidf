@@ -1,0 +1,47 @@
+{
+  "log_id": "site-lab-001-events",
+  "spec_version": "1.0.0",
+  "site_id": "site-lab-001",
+  "baseline_id": "KEEL-SPEC-BASELINE-2026.07.20",
+  "events": [
+    {
+      "event_id": "evt-001",
+      "occurred_at": "2026-07-20T06:12:30Z",
+      "kind": "backhaul_mode_changed",
+      "actor": { "kind": "system", "id": "link-monitor" },
+      "authority": "system",
+      "from_value": "online",
+      "to_value": "store_forward",
+      "notes": "Missed uplink probes"
+    },
+    {
+      "event_id": "evt-002",
+      "occurred_at": "2026-07-20T06:13:00Z",
+      "kind": "assist_suggestion",
+      "actor": { "kind": "assist", "id": "operator-assist" },
+      "suggestion_only": true,
+      "to_value": "survival",
+      "notes": "Model suggested deeper shed; not committed"
+    },
+    {
+      "event_id": "evt-003",
+      "occurred_at": "2026-07-20T06:13:05Z",
+      "kind": "power_tier_changed",
+      "actor": { "kind": "policy", "id": "shed-v1" },
+      "authority": "policy",
+      "policy_id": "shed-v1",
+      "from_value": "nominal",
+      "to_value": "conservation"
+    },
+    {
+      "event_id": "evt-004",
+      "occurred_at": "2026-07-20T06:13:06Z",
+      "kind": "service_action",
+      "actor": { "kind": "policy", "id": "shed-v1" },
+      "authority": "policy",
+      "policy_id": "shed-v1",
+      "from_value": "crew-dashboard:up",
+      "to_value": "crew-dashboard:down"
+    }
+  ]
+}

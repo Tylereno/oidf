@@ -1,0 +1,42 @@
+{
+  "site_id": "site-lab-001",
+  "spec_version": "1.0.0",
+  "updated_at": "2026-07-20T22:00:00Z",
+  "baseline_id": "KEEL-SPEC-BASELINE-2026.07.20",
+  "label": "Redacted austere lab node",
+  "power": {
+    "tier": "conservation",
+    "soc_percent": 38.5,
+    "bus_voltage_v": 48.2,
+    "policy_id": "shed-v1"
+  },
+  "backhaul": {
+    "mode": "store_forward",
+    "last_uplink_at": "2026-07-20T06:12:00Z"
+  },
+  "health": {
+    "overall": "degraded",
+    "watchdog_ok": true,
+    "notes": "Uplink lost; shed policy active"
+  },
+  "alarms": [
+    {
+      "alarm_id": "backhaul-down",
+      "severity": "warn",
+      "raised_at": "2026-07-20T06:12:30Z",
+      "text": "No uplink; store-and-forward engaged"
+    }
+  ],
+  "services": [
+    { "service_id": "telemetry-logger", "desired": "up", "actual": "up" },
+    { "service_id": "crew-dashboard", "desired": "down", "actual": "down" }
+  ],
+  "last_known_good": {
+    "config_hash": "sha256:redacted",
+    "captured_at": "2026-07-19T18:00:00Z"
+  },
+  "assist": {
+    "enabled": true,
+    "authoritative_for_safety": false
+  }
+}
