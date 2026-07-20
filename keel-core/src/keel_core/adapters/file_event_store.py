@@ -3,13 +3,19 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from threading import Lock
 from typing import Any, Optional
 
 
 class FileEventStore:
-    """Persists each Event as one JSON line. Air-gap friendly. Not a cloud product."""
+    """Persists each Event as one JSON line. Air-gap friendly. Not a cloud product.
+
+    Durability notes:
+    - Each append flushes and fsyncs the file so completed lines survive process death.
+    - On load, blank or corrupt lines (e.g. truncated last line after a crash) are skipped.
+    """
 
     def __init__(self, path: str | Path) -> None:
         self._path = Path(path)
@@ -29,7 +35,13 @@ class FileEventStore:
                 line = line.strip()
                 if not line:
                     continue
-                ev = json.loads(line)
+                try:
+                    ev = json.loads(line)
+                except json.JSONDecodeError:
+                    # Truncated / corrupt line after crash — skip, keep prior good events.
+                    continue
+                if not isinstance(ev, dict) or "id" not in ev:
+                    continue
                 self._events.append(ev)
                 self._by_id[ev["id"]] = ev
 
@@ -44,6 +56,7 @@ class FileEventStore:
                 f.write(json.dumps(event, separators=(",", ":"), sort_keys=True))
                 f.write("\n")
                 f.flush()
+                os.fsync(f.fileno())
             self._events.append(event)
             self._by_id[event["id"]] = event
 
