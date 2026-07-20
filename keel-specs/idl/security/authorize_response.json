@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keel.dev/schemas/security/authorize_response.json",
+  "title": "AuthorizeResponse",
+  "x-keel-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision"],
+  "properties": {
+    "decision": { "type": "string", "enum": ["Allow", "Deny"] },
+    "reason_code": { "type": "string" }
+  }
+}

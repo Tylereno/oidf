@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keel.dev/schemas/common/revision_pin.json",
+  "title": "RevisionPin",
+  "description": "Evaluate-time pins for deterministic replay (ADR-0008).",
+  "x-keel-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["cdo_revision", "config_revision"],
+  "properties": {
+    "cdo_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "config_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "machine_definition_version": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

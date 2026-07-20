@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keel.dev/schemas/cdo/canonical_deployment_object.json",
+  "title": "CanonicalDeploymentObject",
+  "x-keel-schema-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "revision", "schema_version", "assets", "content_hash"],
+  "properties": {
+    "id": { "$ref": "../common/identifier.json" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "name": { "type": "string" },
+    "labels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "class", "machine_definition_id"],
+        "properties": {
+          "id": { "$ref": "../common/identifier.json" },
+          "class": { "type": "string", "minLength": 1 },
+          "machine_definition_id": { "type": "string", "minLength": 1 },
+          "parent_asset_id": { "$ref": "../common/identifier.json" },
+          "external_references": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["system", "foreign_id"],
+              "properties": {
+                "system": { "type": "string", "minLength": 1 },
+                "foreign_id": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "future_state_intents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["subject_id", "intended_state"],
+            "properties": {
+              "subject_id": { "$ref": "../common/identifier.json" },
+              "intended_state": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "deployment_machine_definition_id": { "type": "string", "minLength": 1 },
+    "content_hash": { "type": "string", "minLength": 1 }
+  }
+}
