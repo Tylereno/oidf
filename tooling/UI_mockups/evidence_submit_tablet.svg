@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Static evidence-submit tablet wireframe</title>
+  <desc id="desc">Three static tablet screens showing gate selection, Evidence submission, and submission receipt. The mockup contains no click-to-advance state machine.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f7fb; }
+      .tablet { fill: #111827; }
+      .screen { fill: #ffffff; }
+      .panel { fill: #eef2ff; stroke: #c7d2fe; stroke-width: 2; }
+      .card { fill: #ffffff; stroke: #d1d5db; stroke-width: 2; }
+      .muted { fill: #6b7280; font-size: 15px; font-family: Arial, sans-serif; }
+      .text { fill: #111827; font-size: 17px; font-family: Arial, sans-serif; }
+      .small { fill: #374151; font-size: 13px; font-family: Arial, sans-serif; }
+      .title { fill: #111827; font-weight: 700; font-size: 22px; font-family: Arial, sans-serif; }
+      .label { fill: #4338ca; font-weight: 700; font-size: 13px; font-family: Arial, sans-serif; }
+      .warn { fill: #fff7ed; stroke: #fdba74; stroke-width: 2; }
+      .ok { fill: #ecfdf5; stroke: #86efac; stroke-width: 2; }
+      .button { fill: #e0e7ff; stroke: #818cf8; stroke-width: 2; }
+      .disabled { fill: #f3f4f6; stroke: #d1d5db; stroke-width: 2; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="760"/>
+
+  <g transform="translate(30 40)">
+    <rect class="tablet" x="0" y="0" rx="26" ry="26" width="350" height="660"/>
+    <rect class="screen" x="18" y="24" rx="16" ry="16" width="314" height="612"/>
+    <text class="title" x="36" y="62">A. Gate evidence inbox</text>
+    <text class="muted" x="36" y="88">Asset BESS-SKID-001</text>
+    <rect class="panel" x="36" y="108" width="278" height="72" rx="10"/>
+    <text class="label" x="52" y="132">READ-ONLY STATE</text>
+    <text class="text" x="52" y="158">Installed</text>
+    <text class="small" x="154" y="158">Baseline KEEL-SPEC-...</text>
+
+    <rect class="warn" x="36" y="198" width="278" height="76" rx="10"/>
+    <text class="small" x="52" y="222">Submitting Evidence does not</text>
+    <text class="small" x="52" y="242">advance state. Keel advances only</text>
+    <text class="small" x="52" y="262">after validation and policy checks.</text>
+
+    <text class="label" x="36" y="306">SAT GATES</text>
+    <rect class="card" x="36" y="322" width="278" height="76" rx="10"/>
+    <text class="text" x="52" y="350">bess_precommission</text>
+    <text class="small" x="52" y="374">CellVoltageInBand - machine</text>
+    <rect class="card" x="36" y="414" width="278" height="76" rx="10"/>
+    <text class="text" x="52" y="442">insulation_check</text>
+    <text class="small" x="52" y="466">InsulationResistanceOk - machine</text>
+    <rect class="card" x="36" y="506" width="278" height="76" rx="10"/>
+    <text class="text" x="52" y="534">thermal_stability</text>
+    <text class="small" x="52" y="558">ThermalStable - machine</text>
+  </g>
+
+  <g transform="translate(425 40)">
+    <rect class="tablet" x="0" y="0" rx="26" ry="26" width="350" height="660"/>
+    <rect class="screen" x="18" y="24" rx="16" ry="16" width="314" height="612"/>
+    <text class="title" x="36" y="62">B. Submit Evidence</text>
+    <text class="muted" x="36" y="88">Gate: bess_precommission</text>
+    <rect class="panel" x="36" y="108" width="278" height="96" rx="10"/>
+    <text class="label" x="52" y="132">CATALOG PIN</text>
+    <text class="small" x="52" y="156">bess-commissioning v1.0.0</text>
+    <text class="small" x="52" y="180">Type: CellVoltageInBand</text>
+
+    <text class="label" x="36" y="236">SOURCE</text>
+    <rect class="card" x="36" y="252" width="278" height="60" rx="10"/>
+    <text class="small" x="52" y="286">BMS adapter - instrument BMS-01</text>
+
+    <text class="label" x="36" y="346">ATTACHMENTS</text>
+    <rect class="card" x="36" y="362" width="278" height="92" rx="10"/>
+    <text class="small" x="52" y="394">telemetry_window.json</text>
+    <text class="small" x="52" y="418">sha256: 8f4c... synthetic</text>
+
+    <rect class="ok" x="36" y="478" width="278" height="82" rx="10"/>
+    <text class="small" x="52" y="502">Local validation:</text>
+    <text class="small" x="52" y="524">type exists - source matches</text>
+    <text class="small" x="52" y="546">asset matches - timestamps present</text>
+
+    <rect class="button" x="36" y="586" width="130" height="38" rx="8"/>
+    <text class="small" x="58" y="611">Submit Evidence</text>
+    <rect class="disabled" x="184" y="586" width="130" height="38" rx="8"/>
+    <text class="small" x="210" y="611">No advance</text>
+  </g>
+
+  <g transform="translate(820 40)">
+    <rect class="tablet" x="0" y="0" rx="26" ry="26" width="350" height="660"/>
+    <rect class="screen" x="18" y="24" rx="16" ry="16" width="314" height="612"/>
+    <text class="title" x="36" y="62">C. Receipt</text>
+    <text class="muted" x="36" y="88">Evidence handling result</text>
+    <rect class="ok" x="36" y="108" width="278" height="86" rx="10"/>
+    <text class="label" x="52" y="132">LOCAL VALIDATION ACCEPTED</text>
+    <text class="small" x="52" y="158">Evidence ID ev-20260720-001</text>
+    <text class="small" x="52" y="180">Queued for sync if offline</text>
+
+    <rect class="card" x="36" y="220" width="278" height="112" rx="10"/>
+    <text class="label" x="52" y="244">LINKS</text>
+    <text class="small" x="52" y="270">SAT gate: bess_precommission</text>
+    <text class="small" x="52" y="294">Hash: sha256: 8f4c... synthetic</text>
+    <text class="small" x="52" y="318">Ledger fragment export ready</text>
+
+    <rect class="panel" x="36" y="360" width="278" height="84" rx="10"/>
+    <text class="label" x="52" y="384">READ-ONLY STATE AFTER RESPONSE</text>
+    <text class="text" x="52" y="414">Installed</text>
+    <text class="small" x="142" y="414">No transition recorded here</text>
+
+    <rect class="warn" x="36" y="476" width="278" height="86" rx="10"/>
+    <text class="small" x="52" y="502">Receipt records Evidence handling.</text>
+    <text class="small" x="52" y="524">It is not AHJ approval or utility</text>
+    <text class="small" x="52" y="546">permission to operate.</text>
+
+    <rect class="button" x="36" y="586" width="130" height="38" rx="8"/>
+    <text class="small" x="58" y="611">Export receipt</text>
+    <rect class="button" x="184" y="586" width="130" height="38" rx="8"/>
+    <text class="small" x="204" y="611">View ledger</text>
+  </g>
+
+  <text class="muted" x="360" y="732">Static OIDF mockup: submit Evidence, validate catalogs, export receipts. No click-to-advance state machine.</text>
+</svg>

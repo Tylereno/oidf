@@ -11,4 +11,5 @@ Front-door schemas for field and runtime consumers. Deep IDL (JSON Schema Draft 
 | [`evidence-catalog/`](./evidence-catalog/) | Typed evidence catalogs (BESS, solar inverter, …) |
 
 **Baseline:** `KEEL-SPEC-BASELINE-2026.07.20`  
-**Keel consumption:** pin this commit via submodule or `OIDF_ROOT`.
+**Catalog compatibility:** [`../docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md`](../docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md)  
+**Keel consumption:** pin this commit or an annotated baseline tag via submodule or `OIDF_ROOT`, then record the `baseline_id`, `catalog_id`, and catalog `version` in the project/machine configuration.

@@ -2,7 +2,8 @@
 
 **Status:** Accepted
 **Date:** 2026-07-20
-**Related RFCs:** 0002, 0003, 0010, 0015; ADR-0011, ADR-0012
+**Related RFCs:** 0002, 0003, 0010, 0015; ADR-0011, ADR-0012  
+**Compatibility rules:** [Evidence Catalog Compatibility](../EVIDENCE-CATALOG-COMPATIBILITY.md)
 
 ## Context
 
@@ -16,7 +17,7 @@ The current registries are the evidence catalogs in `core_schemas/evidence-catal
 2. Runtime implementations, including Keel, **consume** OIDF evidence catalogs. They may cache catalogs, pin versions, and reject unknown types, but they do not define canonical Evidence types outside OIDF.
 3. New Evidence types are proposed as OIDF PRs that update `core_schemas/evidence-catalog/` and, when relevant, architecture SAT gate maps, examples, AHJ docs, and validators.
 4. A proposal must state the type name, source class, physical or documentary fact asserted, intended gates/transitions, and why existing types are insufficient.
-5. Compatibility follows RFC 0010 (`docs/normative/0010-VERSIONING.md`): additive new types may be compatible within a catalog version policy; renames, removals, or semantic redefinitions are breaking changes and require a new version plus migration/replay guidance.
+5. Compatibility follows RFC 0010 (`docs/normative/0010-VERSIONING.md`) and [Evidence Catalog Compatibility](../EVIDENCE-CATALOG-COMPATIBILITY.md): additive new types may be compatible within a catalog version policy; renames, removals, or semantic redefinitions are breaking changes and require a new version plus migration/replay guidance.
 6. Runtime-specific aliases or UI labels may exist only as presentation or adapter mappings. They must not change ledger semantics or be treated as canonical registry entries.
 
 ## Alternatives
