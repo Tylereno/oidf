@@ -1,6 +1,6 @@
 # ADR-0005 — Lifecycle Is Composition, Not an Engine
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0000, 0001, 0003, 0014  
 

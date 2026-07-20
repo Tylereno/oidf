@@ -1,6 +1,6 @@
 # ADR-0001 — Event Boundaries vs In-Core Ports
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0000, 0003, 0005, 0006, 0014  
 

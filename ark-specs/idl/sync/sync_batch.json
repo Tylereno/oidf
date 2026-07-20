@@ -37,6 +37,11 @@
       "type": "object",
       "additionalProperties": { "type": "integer", "minimum": 0 }
     },
+    "affinity_epochs": {
+      "type": "object",
+      "description": "Deployment ID → fencing epoch claimed by sender (ADR-0014).",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
     "content_hash": { "type": "string", "minLength": 1 },
     "signature": { "type": "string", "minLength": 1 }
   }

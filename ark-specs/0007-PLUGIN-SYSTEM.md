@@ -1,6 +1,6 @@
 # RFC 0007 — Plugin System
 
-**Status:** Proposed  
+**Status:** Accepted (Specification Baseline)  
 **Phase:** 1  
 **Depends on:** 0000, 0002, 0003, 0006  
 

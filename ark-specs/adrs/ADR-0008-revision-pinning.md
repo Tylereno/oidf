@@ -1,6 +1,6 @@
 # ADR-0008 — Evaluate-Time Revision Pinning
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0004, 0005, 0010, 0011, 0014  
 

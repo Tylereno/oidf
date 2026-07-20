@@ -1,6 +1,6 @@
 # ADR-0003 — Transition Rejections Are Events
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0003, 0005, 0006, 0008, 0014  
 

@@ -1,6 +1,6 @@
 # ADR-0002 — StateAdvanced Is Sole Transition Authority
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0005, 0006, 0014  
 

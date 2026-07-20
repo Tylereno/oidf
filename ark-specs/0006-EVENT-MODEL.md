@@ -1,6 +1,6 @@
 # RFC 0006 — Event Model
 
-**Status:** Proposed  
+**Status:** Accepted (Specification Baseline)  
 **Phase:** 1  
 **Depends on:** 0000, 0002, 0003  
 

@@ -1,6 +1,6 @@
 # ADR-0007 — Authorize as Core Policy Port
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0005, 0009, 0011, 0012, 0014  
 

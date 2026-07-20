@@ -1,6 +1,6 @@
 # ADR-0011 — Normative IDL: JSON Schema 2020-12
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0000, 0004, 0006, 0010, 0015  
 

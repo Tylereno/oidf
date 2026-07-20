@@ -1,6 +1,6 @@
 # ADR-0009 — Projection Caches Are Non-Authoritative
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0004, 0005, 0006, 0014  
 

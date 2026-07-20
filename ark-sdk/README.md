@@ -1,17 +1,28 @@
-# ark-sdk
+# ark-sdk — Plugin & Integrator Contracts (Phase 6 scaffold)
 
-Developer-facing contracts for ARK Plugins and integrators.
+**Baseline:** `ARK-SPEC-BASELINE-2026.07.20`
 
-## Status
+## Purpose
 
-Phase 5 stub. Normative schemas live in `ark-specs/idl/`. This package will grow typed helpers without becoming a Core dependency (RFC 0001).
+Developer-facing surface for Plugins. Mirrors Core Event host rules without exposing State Engine internals (ADR-0001, ADR-0016).
+
+## Layout
+
+```
+ark-sdk/
+├── README.md
+├── pyproject.toml
+└── src/ark_sdk/
+    ├── __init__.py
+    ├── baseline.py
+    ├── types/          # typed dict helpers aligned to IDL (optional aids)
+    └── ports/
+        ├── host_port.py          # PluginHostPort — publish/subscribe/config/health
+        └── capability.py         # CapabilityDescriptor helpers
+```
 
 ## Rules
 
-- SDK adapts to specs; Core does not depend on SDK.
-- Plugins publish/subscribe Events; they do not call State Engine internals.
-- Transition intent: publish `TransitionRequested` (ADR-0001).
-
-## Schema index
-
-See `../ark-specs/0015-INTERFACE-DEFINITIONS.md`.
+- SDK does not depend on adapter implementations.
+- Core MUST NOT depend on SDK packaging.
+- Plugins request transitions only by publishing `TransitionRequested`.

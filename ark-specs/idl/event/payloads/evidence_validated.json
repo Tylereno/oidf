@@ -11,6 +11,8 @@
     "evidence_type": { "type": "string", "minLength": 1 },
     "subject_kind": { "type": "string", "enum": ["Deployment", "Asset"] },
     "subject_id": { "$ref": "../../common/identifier.json" },
-    "validator_id": { "$ref": "../../common/identifier.json" }
+    "validator_id": { "$ref": "../../common/identifier.json" },
+    "valid_from": { "$ref": "../../common/timestamp.json" },
+    "valid_until": { "$ref": "../../common/timestamp.json" }
   }
 }

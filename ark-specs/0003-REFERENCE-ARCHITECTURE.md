@@ -1,6 +1,6 @@
 # RFC 0003 — Reference Architecture
 
-**Status:** Proposed  
+**Status:** Accepted (Specification Baseline)  
 **Phase:** 1  
 **Depends on:** 0000-CONSTITUTION, 0001-REPOSITORY-TOPOLOGY, 0002-UBIQUITOUS-LANGUAGE  
 

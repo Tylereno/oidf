@@ -1,6 +1,6 @@
 # ADR-0010 — Bootstrap Transitions Are Machine-Defined
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0000, 0005, 0006, 0011, 0014  
 

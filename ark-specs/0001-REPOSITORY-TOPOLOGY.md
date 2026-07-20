@@ -1,6 +1,6 @@
 # RFC 0001 — Top-Level Repository Topology
 
-**Status:** Proposed  
+**Status:** Accepted (Specification Baseline)  
 **Phase:** 0  
 **Role:** Repository Architect  
 **Depends on:** 0000-CONSTITUTION  

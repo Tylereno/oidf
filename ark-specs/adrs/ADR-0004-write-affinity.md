@@ -1,6 +1,6 @@
 # ADR-0004 — v1 Deployment Write Affinity
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0008, 0011, 0014  
 

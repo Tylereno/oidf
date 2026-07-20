@@ -1,6 +1,6 @@
 # RFC 0008 — Synchronization Engine & Edge Architecture
 
-**Status:** Proposed  
+**Status:** Accepted (Specification Baseline)  
 **Phase:** 1  
 **Depends on:** 0000, 0002, 0003, 0006, 0010  
 

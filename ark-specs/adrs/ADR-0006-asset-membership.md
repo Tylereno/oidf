@@ -1,6 +1,6 @@
 # ADR-0006 — Singular Asset–Deployment Membership
 
-**Status:** Accepted  
+**Status:** Accepted
 **Date:** 2026-07-20  
 **Related RFCs:** 0002, 0004, 0014  
 
