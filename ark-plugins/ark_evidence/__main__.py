@@ -34,6 +34,11 @@ def validate_evidence(event: dict[str, Any]) -> list[dict[str, Any]]:
         "InspectionPass",
         "TorqueReport",
         "Permit",
+        # BESS lighthouse catalog (RFC 0021)
+        "CellVoltageInBand",
+        "InsulationResistanceOk",
+        "ThermalStable",
+        "ContactorClosedFeedback",
     }
     now = utcnow()
     if ok:
