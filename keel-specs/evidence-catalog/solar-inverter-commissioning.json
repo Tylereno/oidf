@@ -1,0 +1,27 @@
+{
+  "catalog_id": "solar-inverter-commissioning",
+  "version": "1.0.0",
+  "description": "Evidence types for solar / PCS inverter commissioning lighthouse (second domain beyond BESS).",
+  "types": [
+    {
+      "evidence_type": "GridVoltageInBand",
+      "source_class": "machine",
+      "description": "Inverter reports AC grid/export voltage within configured commission band."
+    },
+    {
+      "evidence_type": "FrequencyInBand",
+      "source_class": "machine",
+      "description": "Grid frequency within configured band for required samples."
+    },
+    {
+      "evidence_type": "AntiIslandingOk",
+      "source_class": "machine",
+      "description": "Anti-islanding / grid-tie protection self-test reports OK."
+    },
+    {
+      "evidence_type": "InspectionPass",
+      "source_class": "human",
+      "description": "Optional dual-control human inspection. Never sufficient alone for lighthouse happy path."
+    }
+  ]
+}

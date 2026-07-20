@@ -26,8 +26,22 @@ DEFAULT_RULES = {
         "evidence_type": "ContactorClosedFeedback",
         "equals": True,
     },
+    # Solar / PCS inverter lighthouse (second domain)
+    "grid_voltage_v": {
+        "evidence_type": "GridVoltageInBand",
+        "min": 200.0,
+        "max": 250.0,
+    },
+    "grid_frequency_hz": {
+        "evidence_type": "FrequencyInBand",
+        "min": 59.3,
+        "max": 60.7,
+    },
+    "anti_islanding_ok": {
+        "evidence_type": "AntiIslandingOk",
+        "equals": True,
+    },
 }
-
 DESCRIPTOR = {
     "plugin_id": "keel-telemetry",
     "plugin_version": "0.1.0",
