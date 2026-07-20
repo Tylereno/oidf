@@ -1,0 +1,43 @@
+{
+  "log_id": "satlog-redacted-hyperscale_island-001",
+  "spec_version": "1.0.0",
+  "subject_id": "dep-redacted-hyperscale-island-001",
+  "events": [
+    {
+      "event_id": "sat-redacted-fc-string-001",
+      "gate_id": "hyperscale_island.fuel_cell_string_ready",
+      "occurred_at": "2026-07-20T20:50:00Z",
+      "result": "pass",
+      "evidence_type": "InspectionPass",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-phase-sync-001",
+      "gate_id": "hyperscale_island.bess_phase_sync",
+      "occurred_at": "2026-07-20T20:51:00Z",
+      "result": "pass",
+      "evidence_type": "FrequencyInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-island-xfer-001",
+      "gate_id": "hyperscale_island.island_transfer_drill",
+      "occurred_at": "2026-07-20T20:52:00Z",
+      "result": "pass",
+      "evidence_type": "InspectionPass",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    }
+  ]
+}

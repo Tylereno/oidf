@@ -4,12 +4,14 @@ on:
   pull_request:
     paths:
       - "core_schemas/**"
+      - "architectures/**"
       - "tooling/**"
       - ".github/workflows/json-schema.yml"
   push:
     branches: [main]
     paths:
       - "core_schemas/**"
+      - "architectures/**"
       - "tooling/**"
       - ".github/workflows/json-schema.yml"
 
@@ -28,3 +30,6 @@ jobs:
 
       - name: Validate IDL schemas
         run: python tooling/validate_json_schemas.py core_schemas/idl
+
+      - name: Validate architecture pack examples
+        run: python tooling/validate_architecture_examples.py
