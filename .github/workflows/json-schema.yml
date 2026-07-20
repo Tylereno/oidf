@@ -1,0 +1,30 @@
+name: JSON Schema CI
+
+on:
+  pull_request:
+    paths:
+      - "core_schemas/**"
+      - "tooling/**"
+      - ".github/workflows/json-schema.yml"
+  push:
+    branches: [main]
+    paths:
+      - "core_schemas/**"
+      - "tooling/**"
+      - ".github/workflows/json-schema.yml"
+
+jobs:
+  validate-json-schemas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install jsonschema
+        run: python -m pip install "jsonschema>=4.0"
+
+      - name: Validate IDL schemas
+        run: python tooling/validate_json_schemas.py core_schemas/idl

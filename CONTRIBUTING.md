@@ -17,3 +17,14 @@ Until a public standards body exists, the founder accepts or rejects contract ch
 ## PR checklist
 
 Use [`.github/PULL_REQUEST.md`](./.github/PULL_REQUEST.md). Issue templates cover field failures and hardware edge cases.
+
+## Schema CI
+
+PRs that touch `core_schemas/` must keep IDL green:
+
+```bash
+pip install 'jsonschema>=4.0'
+python tooling/validate_json_schemas.py core_schemas/idl
+```
+
+GitHub Action: `.github/workflows/json-schema.yml`.
