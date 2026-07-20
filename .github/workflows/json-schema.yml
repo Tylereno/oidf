@@ -2,11 +2,6 @@ name: JSON Schema CI
 
 on:
   pull_request:
-    paths:
-      - "core_schemas/**"
-      - "architectures/**"
-      - "tooling/**"
-      - ".github/workflows/json-schema.yml"
   push:
     branches: [main]
     paths:
