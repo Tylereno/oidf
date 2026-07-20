@@ -9,13 +9,16 @@ from ark_core.ports.authorize_port import AuthorizePort
 from ark_core.ports.clock_port import ClockPort
 from ark_core.ports.config_port import ConfigPort
 from ark_core.ports.event_port import EventPort
+from ark_core.ports.event_store_port import EventStorePort
 from ark_core.ports.identity_port import IdentityPort
 from ark_core.ports.plugin_runtime_port import PluginRuntimePort
+from ark_core.ports.signing_port import SigningPort
 from ark_core.ports.state_port import StateEnginePort
 from ark_core.ports.sync_port import SyncEnginePort
 
 __all__ = [
     "EventPort",
+    "EventStorePort",
     "StateEnginePort",
     "PluginRuntimePort",
     "SyncEnginePort",
@@ -23,4 +26,5 @@ __all__ = [
     "AuthorizePort",
     "ConfigPort",
     "ClockPort",
+    "SigningPort",
 ]

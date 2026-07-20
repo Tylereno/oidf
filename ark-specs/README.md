@@ -41,6 +41,7 @@ RFCs, ADRs, standards, glossary, and interface specifications for ARK.
 | [0014](./adrs/ADR-0014-sync-fencing-ordering.md) | Sync fencing & ordering authority |
 | [0015](./adrs/ADR-0015-node-trust-rotation.md) | Node trust rotation & revocation |
 | [0016](./adrs/ADR-0016-plugin-isolation-allowlists.md) | Plugin isolation floor & allowlists |
+| [0017](./adrs/ADR-0017-signed-events-ed25519.md) | Signed Events cryptography (Ed25519) |
 
 ## Status
 
