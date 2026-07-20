@@ -23,6 +23,8 @@ Declare the immutable Phase 0–5 specification baseline for Keel prior to Phase
 | 0017 Phase 5 reference notes | Non-production reference scope |
 | ADR-0001–0011 | Accepted decisions |
 | `idl/` | Machine-readable contracts |
+| `core_schemas/evidence-catalog/` | Canonical Evidence-type catalogs |
+| `EVIDENCE-CATALOG-COMPATIBILITY.md` | Catalog additive/deprecation/removal rules |
 
 ## Hexagonal / Ports & Adapters Compliance Audit
 
@@ -62,8 +64,10 @@ After merge to `main`:
 1. Behavioral changes to baseline RFCs/IDL require a new ADR + RFC amendment.
 2. Phase 6 code MUST reference this Baseline ID in module headers / package metadata.
 3. Conformance claim requires TS-0001–TS-0020 against the locked IDL.
+4. Evidence catalog changes follow [EVIDENCE-CATALOG-COMPATIBILITY.md](./EVIDENCE-CATALOG-COMPATIBILITY.md); Keel pins the OIDF commit or annotated baseline tag plus catalog IDs and versions.
 
 ## Related
 
 - [ARCHITECTURAL_FAILURE_MODES.md](./ARCHITECTURAL_FAILURE_MODES.md)
 - [0018-PHASE-5-TO-6-TRANSITION.md](./0018-PHASE-5-TO-6-TRANSITION.md)
+- [EVIDENCE-CATALOG-COMPATIBILITY.md](./EVIDENCE-CATALOG-COMPATIBILITY.md)

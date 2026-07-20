@@ -20,3 +20,13 @@ Translate OIDF artifacts — evidence catalogs, state machines, SAT logs, and ha
 ## Core idea in one sentence
 
 **OIDF does not replace your code authority — it makes the commissioning narrative replayable so you can see what passed, what failed, and what Evidence unlocked each state change.**
+
+## Maintainer note — catalog changes
+
+When `core_schemas/evidence-catalog/` changes, keep this AHJ pack in sync before release:
+
+- Follow [`../normative/EVIDENCE-CATALOG-COMPATIBILITY.md`](../normative/EVIDENCE-CATALOG-COMPATIBILITY.md) and ADR-0018 for add/deprecate/remove decisions.
+- Update guide 03 or 04 when a BESS or solar/PCS Evidence type is added, deprecated, or reworded.
+- If a new architecture pack introduces local Evidence types that inspectors may see, add a short inspector-language note or FAQ entry.
+- Confirm the examples still show the same `baseline_id`, catalog ID, and catalog version that Keel pins for the project.
+- Re-run the schema and architecture validators listed in `CONTRIBUTING.md`.

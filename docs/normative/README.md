@@ -17,6 +17,7 @@ Runtime: [`Tylereno/keel`](https://github.com/Tylereno/keel).
 | [0001](./0001-REPOSITORY-TOPOLOGY.md)–[0012](./0012-SECURITY.md) | Architecture RFCs |
 | [0021-LIGHTHOUSE-PILOT.md](./0021-LIGHTHOUSE-PILOT.md) | BESS Lighthouse Pilot Wedge |
 | [0022-PRODUCT-NAMING.md](./0022-PRODUCT-NAMING.md) | OIDF + Keel naming |
+| [EVIDENCE-CATALOG-COMPATIBILITY.md](./EVIDENCE-CATALOG-COMPATIBILITY.md) | Evidence catalog versioning and compatibility rules |
 | [SPECIFICATION-BASELINE.md](./SPECIFICATION-BASELINE.md) | Locked baseline |
 | [adrs/](./adrs/) | Architecture Decision Records |
 
