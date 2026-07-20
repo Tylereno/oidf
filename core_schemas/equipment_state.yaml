@@ -1,0 +1,55 @@
+# Canonical equipment state machine (OIDF)
+# Front-door YAML. Normative JSON Schema: idl/state/machine_definition.json
+# Status: lab — refine per architecture pack
+
+id: oidf.equipment.canonical
+version: "1.0.0"
+subject_kind: Asset
+initial_state: Procured
+
+states:
+  - Procured
+  - Delivered
+  - Installed
+  - ReadyForCommission
+  - Commissioned
+  - Energized
+
+terminal_states:
+  - Energized
+
+transitions:
+  - id: procured_to_delivered
+    from: Procured
+    to: Delivered
+    evidence_requirements:
+      - evidence_type: DeliveryAccepted
+
+  - id: delivered_to_installed
+    from: Delivered
+    to: Installed
+    evidence_requirements:
+      - evidence_type: MechanicalInstallComplete
+
+  - id: installed_to_ready
+    from: Installed
+    to: ReadyForCommission
+    evidence_requirements:
+      - evidence_type: PreCommissionChecksPass
+
+  - id: ready_to_commissioned
+    from: ReadyForCommission
+    to: Commissioned
+    evidence_requirements:
+      - evidence_type: SatSuitePass
+        min_count: 1
+
+  - id: commissioned_to_energized
+    from: Commissioned
+    to: Energized
+    evidence_requirements:
+      - evidence_type: EnergizationClearance
+
+notes: |
+  Architecture packs may specialize evidence types (e.g. BESS CellVoltageInBand).
+  Humans may approve policy; they must not click state forward without Evidence.

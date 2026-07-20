@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oidf.dev/schemas/sat_event_log.json",
+  "title": "OIDFSatEventLog",
+  "description": "Schema for logging pass/fail Site Acceptance Test gates.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["log_id", "spec_version", "subject_id", "events"],
+  "properties": {
+    "log_id": { "type": "string", "minLength": 1 },
+    "spec_version": { "type": "string", "const": "1.0.0" },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["event_id", "gate_id", "occurred_at", "result"],
+        "properties": {
+          "event_id": { "type": "string", "minLength": 1 },
+          "gate_id": { "type": "string", "minLength": 1 },
+          "occurred_at": { "type": "string", "format": "date-time" },
+          "result": { "type": "string", "enum": ["pass", "fail", "blocked"] },
+          "evidence_type": { "type": "string" },
+          "actor_id": { "type": "string" },
+          "metrics": { "type": "object" },
+          "failure_code": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

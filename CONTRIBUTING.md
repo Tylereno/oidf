@@ -1,0 +1,19 @@
+# Contributing to OIDF
+
+OIDF is the **format**. Changes here redefine contracts that Keel and field tooling must obey.
+
+## Governance (benevolent dictator)
+
+Until a public standards body exists, the founder accepts or rejects contract changes. Prefer small, evidence-backed PRs.
+
+## Rules
+
+1. **Safety / state compliance** — PRs that change state machines, evidence types, or ledgers must show how invalid advances are still blocked.
+2. **No duplicate SoT** — Machine contracts live in `core_schemas/`. Do not redefine them in Keel or VITO.
+3. **Honest language** — Lab vs production. No CAGE, real coords, mesh IDs, or Tailscale IPs in git.
+4. **Runtime code belongs in Keel** — `Tylereno/keel`. This repo is docs, schemas, architectures, and field tooling only.
+5. **VITO is out of scope** — Edge dashboard / crew runtime → `ark-node`.
+
+## PR checklist
+
+Use [`.github/PULL_REQUEST.md`](./.github/PULL_REQUEST.md). Issue templates cover field failures and hardware edge cases.
