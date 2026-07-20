@@ -26,6 +26,9 @@ jobs:
       - name: Validate IDL schemas
         run: python tooling/validate_json_schemas.py core_schemas/idl
 
+      - name: Validate front-door schemas + site examples
+        run: python tooling/validate_front_door_schemas.py
+
       - name: Validate architecture pack examples
         run: python tooling/validate_architecture_examples.py
 

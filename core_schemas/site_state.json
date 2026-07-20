@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oidf.dev/schemas/site_state.json",
+  "title": "OIDFSiteState",
+  "description": "Durable operational state for a sovereign OT/DDIL edge site (OIDF sovereign-node profile).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["site_id", "spec_version", "updated_at", "power", "backhaul", "health"],
+  "properties": {
+    "site_id": { "type": "string", "minLength": 1 },
+    "spec_version": { "type": "string", "const": "1.0.0" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "baseline_id": { "type": "string" },
+    "label": { "type": "string" },
+    "power": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier"],
+      "properties": {
+        "tier": {
+          "type": "string",
+          "enum": ["nominal", "conservation", "survival"],
+          "description": "Energy shed envelope. Transitions must be policy/operator/system authorized (ADR-0019)."
+        },
+        "soc_percent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "bus_voltage_v": { "type": "number" },
+        "policy_id": { "type": "string" }
+      }
+    },
+    "backhaul": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["online", "degraded", "store_forward", "offline"]
+        },
+        "last_uplink_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["overall", "watchdog_ok"],
+      "properties": {
+        "overall": { "type": "string", "enum": ["ok", "degraded", "critical"] },
+        "watchdog_ok": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "alarms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["alarm_id", "severity", "raised_at", "text"],
+        "properties": {
+          "alarm_id": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "enum": ["info", "warn", "crit"] },
+          "raised_at": { "type": "string", "format": "date-time" },
+          "text": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["service_id", "desired", "actual"],
+        "properties": {
+          "service_id": { "type": "string", "minLength": 1 },
+          "desired": { "type": "string", "enum": ["up", "down"] },
+          "actual": { "type": "string", "enum": ["up", "down", "unknown"] }
+        }
+      }
+    },
+    "last_known_good": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "config_hash": { "type": "string" },
+        "captured_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "assist": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional AI assist surface. Never authoritative for safety actions.",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "authoritative_for_safety": {
+          "type": "boolean",
+          "const": false,
+          "description": "Must be false when present (ADR-0019)."
+        }
+      }
+    }
+  }
+}
