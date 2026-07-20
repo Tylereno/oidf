@@ -17,18 +17,26 @@
       "to_state": "Commissioned",
       "actor_id": "actor-redacted-commissioning-runtime",
       "evidence_refs": [
-        "ev-redacted-001",
-        "ev-redacted-002",
-        "ev-redacted-003"
+        "ev-redacted-fc-interlocks-001",
+        "ev-redacted-gas-detection-loop-001",
+        "ev-redacted-phase-sync-001",
+        "ev-redacted-island-transfer-sequence-001",
+        "ev-redacted-island-voltage-001",
+        "ev-redacted-ups-ridethrough-001",
+        "ev-redacted-resync-return-001",
+        "ev-redacted-return-sync-001"
       ],
       "sat_event_ids": [
         "sat-redacted-fc-string-001",
+        "sat-redacted-gas-detection-001",
         "sat-redacted-phase-sync-001",
         "sat-redacted-island-xfer-001",
+        "sat-redacted-island-voltage-001",
         "sat-redacted-ups-ridethrough-001",
-        "sat-redacted-resync-return-001"
+        "sat-redacted-resync-return-001",
+        "sat-redacted-return-sync-001"
       ],
-      "notes": "Redacted worked example; source telemetry and site identifiers removed."
+      "notes": "Redacted worked example; evidence_refs align to SAT event metrics and source telemetry/site identifiers are removed."
     }
   ]
 }

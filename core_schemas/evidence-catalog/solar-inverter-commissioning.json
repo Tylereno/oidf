@@ -19,6 +19,11 @@
       "description": "Anti-islanding / grid-tie protection self-test reports OK."
     },
     {
+      "evidence_type": "PhaseSyncInTolerance",
+      "source_class": "machine",
+      "description": "PCS or synchronizer reports phase angle, voltage, and frequency deltas within configured close or transfer tolerance."
+    },
+    {
       "evidence_type": "InspectionPass",
       "source_class": "human",
       "description": "Optional dual-control human inspection. Never sufficient alone for lighthouse happy path."

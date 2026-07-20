@@ -8,9 +8,10 @@
       "gate_id": "ev_fleet_btm.install_clearance_review",
       "occurred_at": "2026-07-20T20:48:00Z",
       "result": "pass",
-      "evidence_type": "InspectionPass",
+      "evidence_type": "ClearanceLabelingRecorded",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-clearance-labeling-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -23,6 +24,7 @@
       "evidence_type": "InsulationResistanceOk",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-grounding-ir-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -35,6 +37,33 @@
       "evidence_type": "CellVoltageInBand",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-cell-voltage-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-bess-insulation-001",
+      "gate_id": "ev_fleet_btm.bess_precommission",
+      "occurred_at": "2026-07-20T20:50:30Z",
+      "result": "pass",
+      "evidence_type": "InsulationResistanceOk",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-bess-ir-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-bess-thermal-001",
+      "gate_id": "ev_fleet_btm.bess_precommission",
+      "occurred_at": "2026-07-20T20:50:45Z",
+      "result": "pass",
+      "evidence_type": "ThermalStable",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-bess-thermal-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -44,9 +73,23 @@
       "gate_id": "ev_fleet_btm.charger_loop_estop",
       "occurred_at": "2026-07-20T20:51:00Z",
       "result": "pass",
-      "evidence_type": "InspectionPass",
+      "evidence_type": "ChargerCommunicationLoopOk",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-charger-comms-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-estop-trip-001",
+      "gate_id": "ev_fleet_btm.charger_loop_estop",
+      "occurred_at": "2026-07-20T20:51:30Z",
+      "result": "pass",
+      "evidence_type": "EmergencyStopTripVerified",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-estop-trip-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -59,6 +102,20 @@
       "evidence_type": "ThermalStable",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-integrated-thermal-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-charger-load-step-001",
+      "gate_id": "ev_fleet_btm.integrated_run_support",
+      "occurred_at": "2026-07-20T20:52:30Z",
+      "result": "pass",
+      "evidence_type": "ChargerLoadStepSupported",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-charger-load-step-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."

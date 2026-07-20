@@ -9,11 +9,11 @@
       "safety_gate": "Fuel-cell string start interlocks and fire or gas detection coordination recorded.",
       "sat_protocol_step": 1,
       "required_result": "pass",
-      "evidence_catalogs": ["bess-commissioning"],
-      "evidence_types": ["InspectionPass"],
+      "evidence_catalogs": ["hyperscale_island-local"],
+      "evidence_types": ["FuelCellStartInterlocksOk", "GasDetectionLoopOk"],
       "ledger_transition": "ReadyForCommission -> Commissioned",
       "example_required": true,
-      "notes": "Human inspection is a placeholder until a fuel-cell Evidence catalog is added."
+      "notes": "Pack-local evidence captures concrete fuel-cell permissive and detection-loop facts until a reusable fuel-cell catalog exists."
     },
     {
       "gate_id": "hyperscale_island.bess_phase_sync",
@@ -21,43 +21,43 @@
       "sat_protocol_step": 2,
       "required_result": "pass",
       "evidence_catalogs": ["solar-inverter-commissioning"],
-      "evidence_types": ["FrequencyInBand", "GridVoltageInBand"],
+      "evidence_types": ["PhaseSyncInTolerance", "FrequencyInBand", "GridVoltageInBand"],
       "ledger_transition": "ReadyForCommission -> Commissioned",
       "example_required": true,
-      "notes": "Frequency and voltage Evidence support the synchronization gate."
+      "notes": "Phase, frequency, and voltage machine Evidence support the synchronization gate."
     },
     {
       "gate_id": "hyperscale_island.island_transfer_drill",
       "safety_gate": "Controlled island transition drill passed under the approved EOP.",
       "sat_protocol_step": 3,
       "required_result": "pass",
-      "evidence_catalogs": ["bess-commissioning", "solar-inverter-commissioning"],
-      "evidence_types": ["InspectionPass", "FrequencyInBand", "GridVoltageInBand"],
+      "evidence_catalogs": ["solar-inverter-commissioning", "hyperscale_island-local"],
+      "evidence_types": ["IslandTransferSequenceOk", "FrequencyInBand", "GridVoltageInBand"],
       "ledger_transition": "ReadyForCommission -> Commissioned",
       "example_required": true,
-      "notes": "The ledger should reference this SAT event for the black-start or islanding window."
+      "notes": "The ledger should reference this SAT event for the black-start or islanding window, including transfer sequence telemetry."
     },
     {
       "gate_id": "hyperscale_island.ups_ridethrough_review",
       "safety_gate": "UPS and ride-through expectations are explicit in the machine definition.",
       "sat_protocol_step": 3,
       "required_result": "pass",
-      "evidence_catalogs": ["bess-commissioning"],
-      "evidence_types": ["InspectionPass", "ThermalStable"],
+      "evidence_catalogs": ["hyperscale_island-local"],
+      "evidence_types": ["UpsRideThroughDurationMet"],
       "ledger_transition": "ReadyForCommission -> Commissioned",
       "example_required": true,
-      "notes": "Records that ride-through constraints were reviewed before the island drill is accepted."
+      "notes": "Records measured ride-through duration against the machine-definition requirement before the island drill is accepted."
     },
     {
       "gate_id": "hyperscale_island.resync_return",
       "safety_gate": "Resync and return sequence completed with fail-closed behavior if Evidence is missing.",
       "sat_protocol_step": 4,
       "required_result": "pass",
-      "evidence_catalogs": ["solar-inverter-commissioning"],
-      "evidence_types": ["FrequencyInBand", "GridVoltageInBand", "InspectionPass"],
+      "evidence_catalogs": ["solar-inverter-commissioning", "hyperscale_island-local"],
+      "evidence_types": ["PhaseSyncInTolerance", "FrequencyInBand", "GridVoltageInBand", "ResyncReturnSequenceOk"],
       "ledger_transition": "ReadyForCommission -> Commissioned",
       "example_required": true,
-      "notes": "Return-to-grid Evidence should be captured before handoff export."
+      "notes": "Return-to-grid Evidence should be captured before handoff export; missing sync or return evidence blocks the transition."
     }
   ]
 }
