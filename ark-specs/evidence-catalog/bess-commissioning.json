@@ -1,0 +1,32 @@
+{
+  "catalog_id": "bess-commissioning",
+  "version": "1.0.0",
+  "description": "Default Evidence types for BESS lighthouse pilot (RFC 0021).",
+  "types": [
+    {
+      "evidence_type": "CellVoltageInBand",
+      "source_class": "machine",
+      "description": "BMS reports cell/pack voltage within configured commission band."
+    },
+    {
+      "evidence_type": "InsulationResistanceOk",
+      "source_class": "machine",
+      "description": "Insulation resistance measurement meets minimum threshold."
+    },
+    {
+      "evidence_type": "ThermalStable",
+      "source_class": "machine",
+      "description": "Temperature within band for required consecutive samples."
+    },
+    {
+      "evidence_type": "ContactorClosedFeedback",
+      "source_class": "machine",
+      "description": "Contactor closed confirmed by digital feedback, not command alone."
+    },
+    {
+      "evidence_type": "InspectionPass",
+      "source_class": "human",
+      "description": "Optional dual-control human inspection. Never sufficient alone for lighthouse happy path."
+    }
+  ]
+}
