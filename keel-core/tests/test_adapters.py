@@ -31,6 +31,50 @@ def test_file_event_store_roundtrip(tmp_path: Path):
     assert svc2.get("evt-persist-1")["payload"]["ok"] is True
 
 
+def test_file_event_store_survives_reopen_after_many_appends(tmp_path: Path):
+    path = tmp_path / "events.jsonl"
+    store = FileEventStore(path)
+    for i in range(5):
+        store.append_persisted(
+            {
+                "id": f"evt-{i}",
+                "type": "TelemetryReceived",
+                "payload": {"n": i},
+            }
+        )
+    reloaded = FileEventStore(path)
+    assert len(reloaded.load_all()) == 5
+    assert reloaded.get("evt-4")["payload"]["n"] == 4
+
+
+def test_file_event_store_skips_truncated_trailing_line(tmp_path: Path):
+    """Simulate crash mid-write: good lines remain; truncated tail is ignored."""
+    path = tmp_path / "events.jsonl"
+    store = FileEventStore(path)
+    store.append_persisted({"id": "evt-good-1", "type": "TelemetryReceived", "payload": {}})
+    store.append_persisted({"id": "evt-good-2", "type": "TelemetryReceived", "payload": {}})
+
+    # Append a truncated JSON line as if the process died mid-write.
+    with path.open("a", encoding="utf-8") as f:
+        f.write('{"id":"evt-partial","type":"TelemetryReceived","paylo')
+
+    reloaded = FileEventStore(path)
+    ids = {e["id"] for e in reloaded.load_all()}
+    assert ids == {"evt-good-1", "evt-good-2"}
+    assert reloaded.get("evt-partial") is None
+
+
+def test_file_event_store_idempotent_duplicate_append(tmp_path: Path):
+    path = tmp_path / "events.jsonl"
+    store = FileEventStore(path)
+    ev = {"id": "evt-dup", "type": "TelemetryReceived", "payload": {"x": 1}}
+    store.append_persisted(ev)
+    store.append_persisted(ev)
+    assert len(store.load_all()) == 1
+    reloaded = FileEventStore(path)
+    assert len(reloaded.load_all()) == 1
+
+
 def test_ed25519_sign_verify_on_append():
     signing = Ed25519SigningAdapter()
     signing.generate("P1")
