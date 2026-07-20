@@ -39,6 +39,10 @@ def validate_evidence(event: dict[str, Any]) -> list[dict[str, Any]]:
         "InsulationResistanceOk",
         "ThermalStable",
         "ContactorClosedFeedback",
+        # Solar / PCS inverter lighthouse (second domain)
+        "GridVoltageInBand",
+        "FrequencyInBand",
+        "AntiIslandingOk",
     }
     now = utcnow()
     if ok:
