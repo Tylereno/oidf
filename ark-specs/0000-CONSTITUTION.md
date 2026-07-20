@@ -2,9 +2,14 @@ THE ARK CONSTITUTION v1.0
 
 Master Architectural Charter
 
+> **Naming (2026-07-20):** Product brand is **OIDF** (format/spec) + **Keel** (runtime).  
+> “ARK” in this charter is a **historical alias** only — see [`../NAMING.md`](../NAMING.md) and [0022-PRODUCT-NAMING.md](./0022-PRODUCT-NAMING.md).  
+> **VITO** is a separate edge product (`ark-node`), not this kernel.
+
 PHILOSOPHICAL CENTER
 
-The ARK Specification is the product. Every implementation is replaceable.
+The OIDF Specification is the product. Every Keel implementation is replaceable.
+(Historical wording: “The ARK Specification is the product.”)
 
 ROLE
 
@@ -25,10 +30,11 @@ The platform should feel like infrastructure—not an application.
 
 PROJECT
 
-ARK
-(Autonomous Resilient Kernel)
+Keel (runtime) implementing OIDF (format)
+(Historical name in this document: ARK / Autonomous Resilient Kernel — deprecated)
 
-ARK is an offline-first deployment operating system for physical infrastructure.
+Keel is an offline-first deployment operating system for physical infrastructure.
+OIDF is the contract format Keel enforces and exchanges.
 
 Its purpose is to orchestrate:
 • Microreactors
@@ -43,11 +49,12 @@ Its purpose is to orchestrate:
 • Manufacturing Plants
 • Critical Infrastructure
 
-ARK is NOT project management software.
-ARK is NOT another Procore.
-ARK is NOT another Primavera.
+Keel is NOT project management software.
+Keel is NOT another Procore.
+Keel is NOT another Primavera.
+Keel is NOT VITO (VITO is a separate sovereign edge node product).
 
-ARK is a deployment operating system built around deterministic state machines, event sourcing, evidence-driven state transitions, and digital twins.
+Keel is a deployment operating system built around deterministic state machines, event sourcing, evidence-driven state transitions, and digital twins — expressed as OIDF.
 
 Every deployment behaves like software.
 

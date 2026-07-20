@@ -1,12 +1,13 @@
-# ark-specs
+# ark-specs (OIDF)
 
-**Ownership:** ARK Architecture maintainers  
-**Role:** Source of truth  
-**Baseline:** [`SPECIFICATION-BASELINE.md`](./SPECIFICATION-BASELINE.md) (`ARK-SPEC-BASELINE-2026.07.20`)
+**Ownership:** OIDF / Keel Architecture maintainers  
+**Role:** Source of truth for the **OIDF** format (Keel is the runtime that implements it)  
+**Baseline:** [`SPECIFICATION-BASELINE.md`](./SPECIFICATION-BASELINE.md) (`ARK-SPEC-BASELINE-2026.07.20` — legacy id string)  
+**Naming:** [`../NAMING.md`](../NAMING.md) · [0022-PRODUCT-NAMING.md](./0022-PRODUCT-NAMING.md)
 
 ## Responsibility
 
-RFCs, ADRs, standards, glossary, and interface specifications for ARK.
+RFCs, ADRs, standards, glossary, and interface specifications for **OIDF** (historically branded “ARK” in older docs — deprecated).
 
 ## Boundaries
 
@@ -29,6 +30,7 @@ RFCs, ADRs, standards, glossary, and interface specifications for ARK.
 | [0019-PHASE-6-APP-SERVICES.md](./0019-PHASE-6-APP-SERVICES.md) | Phase 6 Application Services | 6 |
 | [0020-PHASE-6-ADAPTERS-PLUGINS.md](./0020-PHASE-6-ADAPTERS-PLUGINS.md) | Adapters, Signed Events, Plugins | 6 |
 | [0021-LIGHTHOUSE-PILOT.md](./0021-LIGHTHOUSE-PILOT.md) | BESS Lighthouse Pilot Wedge | Field |
+| [0022-PRODUCT-NAMING.md](./0022-PRODUCT-NAMING.md) | OIDF (format) + Keel (runtime); ARK deprecated | Naming |
 | [evidence-catalog/](./evidence-catalog/) | Default Evidence type catalogs | Field |
 | [SPECIFICATION-BASELINE.md](./SPECIFICATION-BASELINE.md) | Locked baseline declaration | 5→6 |
 | [ARCHITECTURAL_FAILURE_MODES.md](./ARCHITECTURAL_FAILURE_MODES.md) | Red Team failure register | 5→6 |
