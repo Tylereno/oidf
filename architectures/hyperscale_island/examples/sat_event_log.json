@@ -8,9 +8,23 @@
       "gate_id": "hyperscale_island.fuel_cell_string_ready",
       "occurred_at": "2026-07-20T20:50:00Z",
       "result": "pass",
-      "evidence_type": "InspectionPass",
+      "evidence_type": "FuelCellStartInterlocksOk",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-fc-interlocks-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-gas-detection-001",
+      "gate_id": "hyperscale_island.fuel_cell_string_ready",
+      "occurred_at": "2026-07-20T20:50:30Z",
+      "result": "pass",
+      "evidence_type": "GasDetectionLoopOk",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-gas-detection-loop-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -20,9 +34,10 @@
       "gate_id": "hyperscale_island.bess_phase_sync",
       "occurred_at": "2026-07-20T20:51:00Z",
       "result": "pass",
-      "evidence_type": "FrequencyInBand",
+      "evidence_type": "PhaseSyncInTolerance",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-phase-sync-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -32,9 +47,23 @@
       "gate_id": "hyperscale_island.island_transfer_drill",
       "occurred_at": "2026-07-20T20:52:00Z",
       "result": "pass",
-      "evidence_type": "InspectionPass",
+      "evidence_type": "IslandTransferSequenceOk",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-island-transfer-sequence-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-island-voltage-001",
+      "gate_id": "hyperscale_island.island_transfer_drill",
+      "occurred_at": "2026-07-20T20:52:30Z",
+      "result": "pass",
+      "evidence_type": "GridVoltageInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-island-voltage-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -44,9 +73,10 @@
       "gate_id": "hyperscale_island.ups_ridethrough_review",
       "occurred_at": "2026-07-20T20:53:00Z",
       "result": "pass",
-      "evidence_type": "ThermalStable",
+      "evidence_type": "UpsRideThroughDurationMet",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-ups-ridethrough-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -56,9 +86,23 @@
       "gate_id": "hyperscale_island.resync_return",
       "occurred_at": "2026-07-20T20:54:00Z",
       "result": "pass",
-      "evidence_type": "GridVoltageInBand",
+      "evidence_type": "ResyncReturnSequenceOk",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-resync-return-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-return-sync-001",
+      "gate_id": "hyperscale_island.resync_return",
+      "occurred_at": "2026-07-20T20:54:30Z",
+      "result": "pass",
+      "evidence_type": "PhaseSyncInTolerance",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-return-sync-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."

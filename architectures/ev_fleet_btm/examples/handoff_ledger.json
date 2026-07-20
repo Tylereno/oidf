@@ -17,17 +17,28 @@
       "to_state": "Commissioned",
       "actor_id": "actor-redacted-commissioning-runtime",
       "evidence_refs": [
-        "ev-redacted-001",
-        "ev-redacted-002"
+        "ev-redacted-clearance-labeling-001",
+        "ev-redacted-grounding-ir-001",
+        "ev-redacted-cell-voltage-001",
+        "ev-redacted-bess-ir-001",
+        "ev-redacted-bess-thermal-001",
+        "ev-redacted-charger-comms-001",
+        "ev-redacted-estop-trip-001",
+        "ev-redacted-integrated-thermal-001",
+        "ev-redacted-charger-load-step-001"
       ],
       "sat_event_ids": [
         "sat-redacted-install-clearance-001",
         "sat-redacted-grounding-bonding-001",
         "sat-redacted-bess-precommission-001",
+        "sat-redacted-bess-insulation-001",
+        "sat-redacted-bess-thermal-001",
         "sat-redacted-charger-loop-001",
-        "sat-redacted-integrated-run-001"
+        "sat-redacted-estop-trip-001",
+        "sat-redacted-integrated-run-001",
+        "sat-redacted-charger-load-step-001"
       ],
-      "notes": "Redacted worked example; source telemetry and site identifiers removed."
+      "notes": "Redacted worked example; evidence_refs align to SAT event metrics and source telemetry/site identifiers are removed."
     }
   ]
 }

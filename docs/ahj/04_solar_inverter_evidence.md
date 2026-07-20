@@ -16,12 +16,14 @@ A second lighthouse domain exists so OIDF is not “the BESS format.” Solar / 
 | `GridVoltageInBand` | machine | Inverter / meter reports AC voltage inside the configured commission band. |
 | `FrequencyInBand` | machine | Frequency inside band for the required samples. |
 | `AntiIslandingOk` | machine | Anti-islanding or grid-tie protection self-test reports OK — not a checkbox that someone “verified islanding.” |
+| `PhaseSyncInTolerance` | machine | PCS or synchronizer reports phase angle, voltage, and frequency deltas inside configured close/transfer tolerance. |
 | `InspectionPass` | human | Optional dual-control; never alone on the happy path. |
 
 ## Utility and AHJ concerns this supports
 
 - Demonstrable protection self-test before declaring ready to export  
 - Traceable commission window for voltage/frequency  
+- Machine-backed synchronization tolerance before close, transfer, or return  
 - Clear separation between **human witness** and **machine measurement**  
 - Ledger export suitable for interconnection closeout packets
 

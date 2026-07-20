@@ -17,18 +17,36 @@
       "to_state": "Commissioned",
       "actor_id": "actor-redacted-commissioning-runtime",
       "evidence_refs": [
-        "ev-redacted-001",
-        "ev-redacted-002",
-        "ev-redacted-003"
+        "ev-redacted-diesel-load-bank-001",
+        "ev-redacted-governor-response-001",
+        "ev-redacted-relay-trip-001",
+        "ev-redacted-anti-islanding-001",
+        "ev-redacted-transfer-switch-001",
+        "ev-redacted-inverter-voltage-001",
+        "ev-redacted-inverter-frequency-001",
+        "ev-redacted-hybrid-sequence-001",
+        "ev-redacted-hybrid-bess-voltage-001",
+        "ev-redacted-hybrid-grid-voltage-001",
+        "ev-redacted-local-ledger-append-001",
+        "ev-redacted-reconnect-sync-001",
+        "ev-redacted-owner-manifest-001"
       ],
       "sat_event_ids": [
         "sat-redacted-diesel-baseline-001",
+        "sat-redacted-governor-response-001",
+        "sat-redacted-relay-trip-001",
         "sat-redacted-inverter-join-001",
+        "sat-redacted-transfer-switch-001",
+        "sat-redacted-inverter-voltage-001",
+        "sat-redacted-inverter-frequency-001",
         "sat-redacted-hybrid-handoff-001",
+        "sat-redacted-hybrid-bess-voltage-001",
+        "sat-redacted-hybrid-grid-voltage-001",
         "sat-redacted-ddil-001",
+        "sat-redacted-reconnect-sync-001",
         "sat-redacted-owner-handoff-export-001"
       ],
-      "notes": "Redacted worked example; source telemetry and site identifiers removed."
+      "notes": "Redacted worked example; analog proof is converted into ledger-linked evidence_refs and source telemetry/site identifiers are removed."
     }
   ]
 }

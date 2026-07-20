@@ -8,9 +8,36 @@
       "gate_id": "remote_resilient_microgrid.diesel_baseline",
       "occurred_at": "2026-07-20T20:50:00Z",
       "result": "pass",
-      "evidence_type": "InspectionPass",
+      "evidence_type": "DieselLoadBankBaselineRecorded",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-diesel-load-bank-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-governor-response-001",
+      "gate_id": "remote_resilient_microgrid.diesel_baseline",
+      "occurred_at": "2026-07-20T20:50:30Z",
+      "result": "pass",
+      "evidence_type": "GovernorFrequencyResponseInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-governor-response-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-relay-trip-001",
+      "gate_id": "remote_resilient_microgrid.diesel_baseline",
+      "occurred_at": "2026-07-20T20:50:45Z",
+      "result": "pass",
+      "evidence_type": "ProtectiveRelayTripVerified",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-relay-trip-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -23,6 +50,46 @@
       "evidence_type": "AntiIslandingOk",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-anti-islanding-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-transfer-switch-001",
+      "gate_id": "remote_resilient_microgrid.cots_inverter_join",
+      "occurred_at": "2026-07-20T20:51:30Z",
+      "result": "pass",
+      "evidence_type": "TransferSwitchPositionVerified",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-transfer-switch-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-inverter-voltage-001",
+      "gate_id": "remote_resilient_microgrid.cots_inverter_join",
+      "occurred_at": "2026-07-20T20:51:45Z",
+      "result": "pass",
+      "evidence_type": "GridVoltageInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-inverter-voltage-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-inverter-frequency-001",
+      "gate_id": "remote_resilient_microgrid.cots_inverter_join",
+      "occurred_at": "2026-07-20T20:51:50Z",
+      "result": "pass",
+      "evidence_type": "FrequencyInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-inverter-frequency-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -32,9 +99,36 @@
       "gate_id": "remote_resilient_microgrid.hybrid_handoff",
       "occurred_at": "2026-07-20T20:52:00Z",
       "result": "pass",
+      "evidence_type": "HybridHandoffSequenceOk",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-hybrid-sequence-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-hybrid-bess-voltage-001",
+      "gate_id": "remote_resilient_microgrid.hybrid_handoff",
+      "occurred_at": "2026-07-20T20:52:30Z",
+      "result": "pass",
+      "evidence_type": "CellVoltageInBand",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-hybrid-bess-voltage-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-hybrid-grid-voltage-001",
+      "gate_id": "remote_resilient_microgrid.hybrid_handoff",
+      "occurred_at": "2026-07-20T20:52:45Z",
+      "result": "pass",
       "evidence_type": "GridVoltageInBand",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-hybrid-grid-voltage-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -44,9 +138,23 @@
       "gate_id": "remote_resilient_microgrid.ddil_drill",
       "occurred_at": "2026-07-20T20:53:00Z",
       "result": "pass",
-      "evidence_type": "InspectionPass",
+      "evidence_type": "LocalLedgerAppendProof",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-local-ledger-append-001",
+        "status": "REDACTED"
+      },
+      "notes": "Redacted SAT event; raw site identifiers removed."
+    },
+    {
+      "event_id": "sat-redacted-reconnect-sync-001",
+      "gate_id": "remote_resilient_microgrid.ddil_drill",
+      "occurred_at": "2026-07-20T20:53:30Z",
+      "result": "pass",
+      "evidence_type": "ReconnectSyncProof",
+      "actor_id": "actor-redacted-field-tech",
+      "metrics": {
+        "evidence_ref": "ev-redacted-reconnect-sync-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
@@ -56,9 +164,10 @@
       "gate_id": "remote_resilient_microgrid.owner_handoff_export",
       "occurred_at": "2026-07-20T20:54:00Z",
       "result": "pass",
-      "evidence_type": "InspectionPass",
+      "evidence_type": "OwnerHandoffManifestGenerated",
       "actor_id": "actor-redacted-field-tech",
       "metrics": {
+        "evidence_ref": "ev-redacted-owner-manifest-001",
         "status": "REDACTED"
       },
       "notes": "Redacted SAT event; raw site identifiers removed."
