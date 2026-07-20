@@ -65,10 +65,24 @@ Keel consumes OIDF catalogs; it does not define canonical Evidence types. For ev
 
 When online, Keel may cache newer OIDF catalogs for authoring or validation previews. During replay and state advancement, it MUST use the catalog version pinned by the machine definition / project configuration, fail closed on unknown required types, and preserve older interpreters for audit retention.
 
+## Pack-local catalogs
+
+Architecture packs MAY cite a pack-local catalog whose `catalog_id` ends in `-local`
+(for example `ev_fleet_btm-local`). Pack-local catalogs:
+
+1. Live under `core_schemas/evidence-catalog/` with filename stem equal to `catalog_id`.
+2. Are first-class registry entries under ADR-0018 (not informal markdown-only names).
+3. MUST resolve in CI: every `sat_gate_map.json` `evidence_catalogs` entry and each
+   listed `evidence_types` name must exist in the cited catalog(s).
+
+Prefer promoting reusable types into shared catalogs (BESS, solar/PCS, …) when the
+fact is no longer pack-specific.
+
 ## PR checklist for catalog changes
 
 - [ ] State whether the change is patch, minor, or major.
 - [ ] Link ADR-0018 and this compatibility document.
 - [ ] Update `core_schemas/evidence-catalog/` and any affected SAT gate maps, examples, AHJ docs, and validator expectations.
+- [ ] If citing a `*-local` catalog, ensure the catalog file exists and CI resolve passes (`python3 tooling/validate_architecture_examples.py`).
 - [ ] Explain Keel pinning impact: no runtime change, cache update only, or required Keel follow-up.
 - [ ] Run `python3 tooling/validate_json_schemas.py core_schemas` and `python3 tooling/validate_architecture_examples.py`.

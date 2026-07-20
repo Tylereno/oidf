@@ -1,0 +1,27 @@
+{
+  "catalog_id": "ev_fleet_btm-local",
+  "version": "1.0.0",
+  "description": "Pack-local Evidence types for EV depot behind-the-meter commissioning (EVSE/depot integration facts not covered by bess-commissioning).",
+  "types": [
+    {
+      "evidence_type": "ClearanceLabelingRecorded",
+      "source_class": "human",
+      "description": "Field walkdown records working clearances, labels, and battery/charger enclosure coordination for the depot layout."
+    },
+    {
+      "evidence_type": "ChargerCommunicationLoopOk",
+      "source_class": "machine",
+      "description": "Charger controller telemetry or commissioning tool confirms the command/status loop is online for the tested EVSE group."
+    },
+    {
+      "evidence_type": "EmergencyStopTripVerified",
+      "source_class": "machine",
+      "description": "E-stop or interlock actuation is observed by the charger controller/safety relay path, not only signed off verbally."
+    },
+    {
+      "evidence_type": "ChargerLoadStepSupported",
+      "source_class": "machine",
+      "description": "Charger load-step request is served while BESS voltage and thermal evidence remain in band."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "catalog_id": "hyperscale_island-local",
+  "version": "1.0.0",
+  "description": "Pack-local Evidence types for hyperscale island / data-center microgrid commissioning (fuel-cell and islanding facts not covered by reusable BESS or solar/PCS catalogs).",
+  "types": [
+    {
+      "evidence_type": "FuelCellStartInterlocksOk",
+      "source_class": "machine",
+      "description": "Fuel-cell controller reports manufacturer start permissives and shutdown interlocks clear for the tested string."
+    },
+    {
+      "evidence_type": "GasDetectionLoopOk",
+      "source_class": "machine",
+      "description": "Gas/fire detection input path reports healthy and coordinated with the fuel-cell shutdown loop."
+    },
+    {
+      "evidence_type": "IslandTransferSequenceOk",
+      "source_class": "machine",
+      "description": "Controller or historian trace confirms the approved island-transfer sequence completed in order."
+    },
+    {
+      "evidence_type": "UpsRideThroughDurationMet",
+      "source_class": "machine",
+      "description": "UPS/runtime telemetry shows ride-through duration met or exceeded the machine-definition threshold during transfer."
+    },
+    {
+      "evidence_type": "ResyncReturnSequenceOk",
+      "source_class": "machine",
+      "description": "Return-to-grid sequence completed with close permissives satisfied and no missing Evidence override."
+    }
+  ]
+}
