@@ -17,6 +17,8 @@ Each pack includes a **redacted worked example** under `examples/`:
 
 Each pack also includes `sat_gate_map.json`, which declares the SAT `gate_id` namespace, expected Evidence types, required result for handoff examples, and ledger transition linkage.
 
+Canonical equipment path: [`../core_schemas/equipment_state.yaml`](../core_schemas/equipment_state.yaml) (`equipment-lifecycle` catalog). Packs specialize `SatSuitePass` on `ReadyForCommission -> Commissioned` via their gate maps; CI fails if a pack is missing from `pack_sat_specialization` or lacks covering gates.
+
 Validate:
 
 ```bash

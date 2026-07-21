@@ -1,0 +1,32 @@
+{
+  "catalog_id": "equipment-lifecycle",
+  "version": "1.0.0",
+  "description": "Umbrella Evidence types for the canonical Procured→Energized equipment path (core_schemas/equipment_state.yaml). Architecture packs specialize ReadyForCommission→Commissioned via sat_gate_map.json citing concrete catalogs; those concrete types satisfy SatSuitePass-class gates without replacing this registry.",
+  "types": [
+    {
+      "evidence_type": "DeliveryAccepted",
+      "source_class": "human",
+      "description": "Receiving inspection or bill-of-lading acceptance confirms the asset arrived as procured; unlocks Procured→Delivered."
+    },
+    {
+      "evidence_type": "MechanicalInstallComplete",
+      "source_class": "human",
+      "description": "Mechanical placement, anchorage, and install walkdown are complete; unlocks Delivered→Installed."
+    },
+    {
+      "evidence_type": "PreCommissionChecksPass",
+      "source_class": "human",
+      "description": "Pre-commission checklist (clearances, labeling, bonding themes) recorded before SAT suite entry; unlocks Installed→ReadyForCommission."
+    },
+    {
+      "evidence_type": "SatSuitePass",
+      "source_class": "machine",
+      "description": "Umbrella class: the architecture pack SAT suite required for ReadyForCommission→Commissioned has passed. Packs specialize with concrete cataloged types via sat_gate_map.json; they do not invent a parallel state language."
+    },
+    {
+      "evidence_type": "EnergizationClearance",
+      "source_class": "human",
+      "description": "Energization clearance after Commissioned; unlocks Commissioned→Energized. Never granted by assist alone."
+    }
+  ]
+}
