@@ -65,6 +65,16 @@ Keel consumes OIDF catalogs; it does not define canonical Evidence types. For ev
 
 When online, Keel may cache newer OIDF catalogs for authoring or validation previews. During replay and state advancement, it MUST use the catalog version pinned by the machine definition / project configuration, fail closed on unknown required types, and preserve older interpreters for audit retention.
 
+## Canonical equipment-lifecycle catalog
+
+`equipment-lifecycle` registers umbrella Evidence types for
+[`core_schemas/equipment_state.yaml`](../../core_schemas/equipment_state.yaml)
+(`DeliveryAccepted`, `MechanicalInstallComplete`, `PreCommissionChecksPass`,
+`SatSuitePass`, `EnergizationClearance`). CI resolves those names against this
+catalog. Architecture packs specialize `SatSuitePass` for
+`ReadyForCommission → Commissioned` via `sat_gate_map.json` citing concrete
+shared or pack-local catalogs; they keep the same state vocabulary.
+
 ## Pack-local catalogs
 
 Architecture packs MAY cite a pack-local catalog whose `catalog_id` ends in `-local`

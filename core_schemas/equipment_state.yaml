@@ -1,11 +1,13 @@
 # Canonical equipment state machine (OIDF)
 # Front-door YAML. Normative JSON Schema: idl/state/machine_definition.json
-# Status: lab — refine per architecture pack
+# Evidence types: evidence-catalog/equipment-lifecycle.json (CI-resolved)
+# Status: lab — packs specialize SAT via architectures/*/sat_gate_map.json
 
 id: oidf.equipment.canonical
 version: "1.0.0"
 subject_kind: Asset
 initial_state: Procured
+evidence_catalog: equipment-lifecycle
 
 states:
   - Procured
@@ -50,14 +52,21 @@ transitions:
     evidence_requirements:
       - evidence_type: EnergizationClearance
 
-notes: |
-  Architecture packs may specialize evidence types (e.g. BESS CellVoltageInBand).
-  Humans may approve policy; they must not click state forward without Evidence.
+# Pack SAT specialization of SatSuitePass (ReadyForCommission → Commissioned).
+# Each pack_id MUST have architectures/<pack_id>/sat_gate_map.json with at least
+# one gate whose ledger_transition is "ReadyForCommission -> Commissioned".
+# Concrete evidence_types on those gates resolve against cited catalogs in CI.
+pack_sat_specialization:
+  transition_id: ready_to_commissioned
+  umbrella_evidence_type: SatSuitePass
+  ledger_transition: "ReadyForCommission -> Commissioned"
+  packs:
+    - ev_fleet_btm
+    - hyperscale_island
+    - remote_resilient_microgrid
 
-  TODO(P1.A): Align this canonical YAML with each architecture pack's SAT gate map /
-  evidence catalogs. Packs currently specialize ReadyForCommission→Commissioned via
-  sat_gate_map.json (and pack-local catalogs), while this file still uses umbrella
-  types (DeliveryAccepted, SatSuitePass, EnergizationClearance) that are not yet
-  registered in core_schemas/evidence-catalog/. Do not invent pack machines here
-  until catalog ↔ equipment_state mapping is designed; track as follow-up rather
-  than silently claiming pack alignment.
+notes: |
+  Humans may approve policy; they must not click state forward without Evidence.
+  Packs specialize SatSuitePass via sat_gate_map.json + concrete catalogs
+  (bess-commissioning, solar-inverter-commissioning, *-local). Project machines
+  MAY pin those catalogs for commissioning while retaining this state vocabulary.

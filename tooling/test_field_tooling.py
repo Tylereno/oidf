@@ -94,6 +94,34 @@ class LedgerGeneratorTests(unittest.TestCase):
             self.assertEqual(val.returncode, 0, val.stderr)
 
 
+class EquipmentStateCatalogTests(unittest.TestCase):
+    def test_equipment_lifecycle_covers_canonical_types(self):
+        try:
+            import yaml
+        except ImportError:
+            self.skipTest("PyYAML not installed")
+        machine = yaml.safe_load(
+            (ROOT / "core_schemas" / "equipment_state.yaml").read_text(encoding="utf-8")
+        )
+        catalog = json.loads(
+            (ROOT / "core_schemas" / "evidence-catalog" / "equipment-lifecycle.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(machine["evidence_catalog"], "equipment-lifecycle")
+        self.assertEqual(catalog["catalog_id"], "equipment-lifecycle")
+        names = {t["evidence_type"] for t in catalog["types"]}
+        for transition in machine["transitions"]:
+            for req in transition.get("evidence_requirements") or []:
+                self.assertIn(req["evidence_type"], names)
+        packs = set(machine["pack_sat_specialization"]["packs"])
+        arch = ROOT / "architectures"
+        declared = {
+            p.name for p in arch.iterdir() if p.is_dir() and (p / "sat_gate_map.json").is_file()
+        }
+        self.assertEqual(packs, declared)
+
+
 class SatEventLogTests(unittest.TestCase):
     def test_create_append_validate(self):
         with tempfile.TemporaryDirectory() as td:

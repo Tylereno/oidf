@@ -3,6 +3,9 @@
 
 Also resolves sat_gate_map evidence_catalogs / evidence_types against
 core_schemas/evidence-catalog/ so ghost *-local catalogs fail CI.
+
+Resolves core_schemas/equipment_state.yaml evidence types against the cited
+equipment-lifecycle catalog and checks pack_sat_specialization gate coverage.
 """
 
 from __future__ import annotations
@@ -13,6 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_DIR = ROOT / "core_schemas" / "evidence-catalog"
+EQUIPMENT_STATE_PATH = ROOT / "core_schemas" / "equipment_state.yaml"
 
 
 def load_json(path: Path) -> dict:
@@ -173,6 +177,133 @@ def validate_gate_map(
     return gate_map, failed
 
 
+def load_equipment_state() -> tuple[dict | None, int]:
+    """Load canonical equipment_state.yaml (PyYAML required in CI)."""
+    if not EQUIPMENT_STATE_PATH.is_file():
+        print(f"FAIL equipment_state: missing {EQUIPMENT_STATE_PATH}")
+        return None, 1
+    try:
+        import yaml
+    except ImportError:
+        print(
+            "FAIL equipment_state: PyYAML not installed (pip install pyyaml)",
+            file=sys.stderr,
+        )
+        return None, 1
+    try:
+        doc = yaml.safe_load(EQUIPMENT_STATE_PATH.read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001
+        print(f"FAIL equipment_state.yaml: {exc}")
+        return None, 1
+    if not isinstance(doc, dict):
+        print("FAIL equipment_state.yaml: root must be a mapping")
+        return None, 1
+    return doc, 0
+
+
+def validate_equipment_state(catalogs: dict[str, set[str]]) -> int:
+    """Ensure equipment_state evidence types and pack SAT links resolve."""
+    doc, failed = load_equipment_state()
+    if doc is None:
+        return failed
+
+    catalog_id = doc.get("evidence_catalog")
+    if not isinstance(catalog_id, str) or not catalog_id:
+        print("FAIL equipment_state.yaml: missing evidence_catalog")
+        return failed + 1
+    if catalog_id not in catalogs:
+        print(
+            f"FAIL equipment_state.yaml: unknown evidence_catalog {catalog_id!r}"
+        )
+        return failed + 1
+
+    resolved = catalogs[catalog_id]
+    required_types: set[str] = set()
+    for transition in doc.get("transitions") or []:
+        if not isinstance(transition, dict):
+            print("FAIL equipment_state.yaml: transition must be object")
+            failed += 1
+            continue
+        for req in transition.get("evidence_requirements") or []:
+            if not isinstance(req, dict):
+                print("FAIL equipment_state.yaml: evidence_requirement must be object")
+                failed += 1
+                continue
+            et = req.get("evidence_type")
+            if not isinstance(et, str) or not et:
+                print("FAIL equipment_state.yaml: missing evidence_type")
+                failed += 1
+                continue
+            required_types.add(et)
+            if et not in resolved:
+                print(
+                    f"FAIL equipment_state.yaml: evidence_type {et!r} not in "
+                    f"catalog {catalog_id!r}"
+                )
+                failed += 1
+
+    spec = doc.get("pack_sat_specialization") or {}
+    if not isinstance(spec, dict) or not spec:
+        print("FAIL equipment_state.yaml: missing pack_sat_specialization")
+        return failed + 1
+
+    umbrella = spec.get("umbrella_evidence_type")
+    ledger_transition = spec.get("ledger_transition")
+    packs = spec.get("packs") or []
+    if umbrella not in required_types:
+        print(
+            f"FAIL equipment_state.yaml: pack_sat_specialization umbrella "
+            f"{umbrella!r} not used in transitions"
+        )
+        failed += 1
+    if not isinstance(ledger_transition, str) or not ledger_transition:
+        print("FAIL equipment_state.yaml: pack_sat_specialization.ledger_transition required")
+        failed += 1
+    if not isinstance(packs, list) or not packs:
+        print("FAIL equipment_state.yaml: pack_sat_specialization.packs must be non-empty")
+        failed += 1
+
+    arch_root = ROOT / "architectures"
+    declared_packs = {
+        p.name for p in arch_root.iterdir() if p.is_dir() and (p / "sat_gate_map.json").is_file()
+    }
+    for pack in packs:
+        if pack not in declared_packs:
+            print(
+                f"FAIL equipment_state.yaml: pack {pack!r} has no "
+                f"architectures/{pack}/sat_gate_map.json"
+            )
+            failed += 1
+            continue
+        gate_map = load_json(arch_root / pack / "sat_gate_map.json")
+        covering = [
+            g
+            for g in gate_map.get("gates") or []
+            if g.get("ledger_transition") == ledger_transition
+        ]
+        if not covering:
+            print(
+                f"FAIL {pack}/sat_gate_map.json: no gate with ledger_transition "
+                f"{ledger_transition!r} (SatSuitePass specialization)"
+            )
+            failed += 1
+
+    missing_from_yaml = sorted(declared_packs - set(packs))
+    for pack in missing_from_yaml:
+        print(
+            f"FAIL equipment_state.yaml: architecture pack {pack!r} missing from "
+            f"pack_sat_specialization.packs"
+        )
+        failed += 1
+
+    if not failed:
+        print(
+            f"OK   equipment_state.yaml: {len(required_types)} types in "
+            f"{catalog_id!r}; {len(packs)} pack SAT specializations"
+        )
+    return failed
+
+
 def validate_gate_links(pack: str, ledger: dict, sat_log: dict, gate_map: dict) -> int:
     failed = 0
     gates_by_id = {gate["gate_id"]: gate for gate in gate_map["gates"]}
@@ -250,6 +381,7 @@ def main() -> int:
         return 2
 
     failed = catalog_failures
+    failed += validate_equipment_state(catalogs)
     for ledger_path in examples:
         sat_path = ledger_path.with_name("sat_event_log.json")
         pack_dir = ledger_path.parent.parent
