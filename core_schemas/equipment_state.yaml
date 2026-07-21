@@ -53,3 +53,11 @@ transitions:
 notes: |
   Architecture packs may specialize evidence types (e.g. BESS CellVoltageInBand).
   Humans may approve policy; they must not click state forward without Evidence.
+
+  TODO(P1.A): Align this canonical YAML with each architecture pack's SAT gate map /
+  evidence catalogs. Packs currently specialize ReadyForCommission→Commissioned via
+  sat_gate_map.json (and pack-local catalogs), while this file still uses umbrella
+  types (DeliveryAccepted, SatSuitePass, EnergizationClearance) that are not yet
+  registered in core_schemas/evidence-catalog/. Do not invent pack machines here
+  until catalog ↔ equipment_state mapping is designed; track as follow-up rather
+  than silently claiming pack alignment.

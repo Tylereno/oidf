@@ -1,0 +1,47 @@
+{
+  "catalog_id": "remote_resilient_microgrid-local",
+  "version": "1.0.0",
+  "description": "Pack-local Evidence types for remote resilient microgrid commissioning (legacy diesel, DDIL, and mission-owner handoff facts not covered by reusable BESS or solar/PCS catalogs).",
+  "types": [
+    {
+      "evidence_type": "DieselLoadBankBaselineRecorded",
+      "source_class": "human",
+      "description": "Redacted load-bank baseline record is attached or referenced as an immutable Evidence item."
+    },
+    {
+      "evidence_type": "GovernorFrequencyResponseInBand",
+      "source_class": "machine",
+      "description": "Instrumented frequency/governor response remains inside the configured band during the load step."
+    },
+    {
+      "evidence_type": "ProtectiveRelayTripVerified",
+      "source_class": "machine",
+      "description": "Relay or overspeed trip path reports the expected trip/clear state during the test."
+    },
+    {
+      "evidence_type": "TransferSwitchPositionVerified",
+      "source_class": "machine",
+      "description": "Switch controller or commissioning input records the expected transfer position, not only a verbal witness."
+    },
+    {
+      "evidence_type": "HybridHandoffSequenceOk",
+      "source_class": "machine",
+      "description": "Controller or ledger trace confirms diesel/storage handoff completed in the approved order."
+    },
+    {
+      "evidence_type": "LocalLedgerAppendProof",
+      "source_class": "machine",
+      "description": "Local ledger accepts SAT events while disconnected from the uplink."
+    },
+    {
+      "evidence_type": "ReconnectSyncProof",
+      "source_class": "machine",
+      "description": "Reconnection sync preserves locally appended event IDs and ordering."
+    },
+    {
+      "evidence_type": "OwnerHandoffManifestGenerated",
+      "source_class": "machine",
+      "description": "Export manifest references the handoff ledger and SAT log artifacts for the mission owner."
+    }
+  ]
+}

@@ -87,13 +87,14 @@
     "assist": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Optional AI assist surface. Never authoritative for safety actions.",
+      "description": "Optional AI assist surface. Never authoritative for safety actions (ADR-0019).",
+      "required": ["authoritative_for_safety"],
       "properties": {
         "enabled": { "type": "boolean" },
         "authoritative_for_safety": {
           "type": "boolean",
           "const": false,
-          "description": "Must be false when present (ADR-0019)."
+          "description": "Required false whenever assist is present (ADR-0019)."
         }
       }
     }

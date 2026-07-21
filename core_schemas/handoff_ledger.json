@@ -37,7 +37,9 @@
           "actor_id": { "type": "string" },
           "evidence_refs": {
             "type": "array",
-            "items": { "type": "string", "minLength": 1 }
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Non-empty Evidence IDs that unlocked this transition. Empty arrays are schema-invalid."
           },
           "sat_event_ids": {
             "type": "array",

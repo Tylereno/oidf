@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Validate architecture pack example ledgers/SAT logs against core schemas."""
+"""Validate architecture pack example ledgers/SAT logs against core schemas.
+
+Also resolves sat_gate_map evidence_catalogs / evidence_types against
+core_schemas/evidence-catalog/ so ghost *-local catalogs fail CI.
+"""
 
 from __future__ import annotations
 
@@ -8,6 +12,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+CATALOG_DIR = ROOT / "core_schemas" / "evidence-catalog"
 
 
 def load_json(path: Path) -> dict:
@@ -25,7 +30,111 @@ def print_schema_errors(label: str, errors) -> None:
         print(f"  - {error.message}")
 
 
-def validate_gate_map(jsonschema, pack_dir: Path, gate_map_schema: dict) -> tuple[dict | None, int]:
+def load_evidence_catalogs() -> tuple[dict[str, set[str]], int]:
+    """Return catalog_id -> evidence_type set. Fail on malformed catalog files."""
+    catalogs: dict[str, set[str]] = {}
+    failed = 0
+    if not CATALOG_DIR.is_dir():
+        print(f"FAIL evidence-catalog: missing directory {CATALOG_DIR}")
+        return catalogs, 1
+
+    for path in sorted(CATALOG_DIR.glob("*.json")):
+        try:
+            doc = load_json(path)
+        except json.JSONDecodeError as exc:
+            print(f"FAIL evidence-catalog/{path.name}: invalid JSON ({exc})")
+            failed += 1
+            continue
+
+        catalog_id = doc.get("catalog_id")
+        types = doc.get("types")
+        if not isinstance(catalog_id, str) or not catalog_id:
+            print(f"FAIL evidence-catalog/{path.name}: missing catalog_id")
+            failed += 1
+            continue
+        if path.stem != catalog_id:
+            print(
+                f"FAIL evidence-catalog/{path.name}: filename stem must match "
+                f"catalog_id {catalog_id!r}"
+            )
+            failed += 1
+        if not isinstance(types, list) or not types:
+            print(f"FAIL evidence-catalog/{path.name}: types[] must be non-empty")
+            failed += 1
+            continue
+
+        type_names: set[str] = set()
+        for entry in types:
+            if not isinstance(entry, dict):
+                print(f"FAIL evidence-catalog/{path.name}: type entry must be object")
+                failed += 1
+                continue
+            name = entry.get("evidence_type")
+            if not isinstance(name, str) or not name:
+                print(f"FAIL evidence-catalog/{path.name}: missing evidence_type")
+                failed += 1
+                continue
+            if name in type_names:
+                print(f"FAIL evidence-catalog/{path.name}: duplicate evidence_type {name!r}")
+                failed += 1
+            type_names.add(name)
+
+        if catalog_id in catalogs:
+            print(f"FAIL evidence-catalog: duplicate catalog_id {catalog_id!r}")
+            failed += 1
+        catalogs[catalog_id] = type_names
+
+    if not failed:
+        print(f"OK   evidence-catalog: {len(catalogs)} catalogs loaded")
+    return catalogs, failed
+
+
+def validate_gate_catalog_refs(
+    pack: str, gate_map: dict, catalogs: dict[str, set[str]]
+) -> int:
+    """Every evidence_catalogs entry and evidence_types name must resolve."""
+    failed = 0
+    for gate in gate_map["gates"]:
+        gate_id = gate["gate_id"]
+        catalog_ids = gate.get("evidence_catalogs") or []
+        evidence_types = gate.get("evidence_types") or []
+
+        if evidence_types and not catalog_ids:
+            print(
+                f"FAIL {pack}/sat_gate_map.json: gate_id {gate_id!r} lists "
+                f"evidence_types but no evidence_catalogs"
+            )
+            failed += 1
+            continue
+
+        resolved: set[str] = set()
+        for catalog_id in catalog_ids:
+            if catalog_id not in catalogs:
+                print(
+                    f"FAIL {pack}/sat_gate_map.json: gate_id {gate_id!r} "
+                    f"unknown evidence catalog {catalog_id!r}"
+                )
+                failed += 1
+                continue
+            resolved |= catalogs[catalog_id]
+
+        for evidence_type in evidence_types:
+            if evidence_type not in resolved:
+                print(
+                    f"FAIL {pack}/sat_gate_map.json: gate_id {gate_id!r} "
+                    f"evidence_type {evidence_type!r} not in cited catalogs "
+                    f"{list(catalog_ids)!r}"
+                )
+                failed += 1
+
+    if not failed:
+        print(f"OK   {pack}: evidence catalog/type resolve")
+    return failed
+
+
+def validate_gate_map(
+    jsonschema, pack_dir: Path, gate_map_schema: dict, catalogs: dict[str, set[str]]
+) -> tuple[dict | None, int]:
     pack = pack_dir.name
     gate_map_path = pack_dir / "sat_gate_map.json"
     if not gate_map_path.is_file():
@@ -56,6 +165,8 @@ def validate_gate_map(jsonschema, pack_dir: Path, gate_map_schema: dict) -> tupl
         if not gate_id.startswith(f"{gate_map['gate_namespace']}."):
             print(f"FAIL {pack}/sat_gate_map.json: gate_id {gate_id!r} outside namespace")
             failed += 1
+
+    failed += validate_gate_catalog_refs(pack, gate_map, catalogs)
 
     if not failed:
         print(f"OK   {pack}/sat_gate_map.json")
@@ -132,17 +243,20 @@ def main() -> int:
     ledger_schema = json.loads((ROOT / "core_schemas/handoff_ledger.json").read_text())
     sat_schema = json.loads((ROOT / "core_schemas/sat_event_log.json").read_text())
     gate_map_schema = load_json(ROOT / "core_schemas/architecture_sat_gate_map.json")
+    catalogs, catalog_failures = load_evidence_catalogs()
     examples = sorted(ROOT.glob("architectures/*/examples/handoff_ledger.json"))
     if not examples:
         print("ERROR: no architecture examples found", file=sys.stderr)
         return 2
 
-    failed = 0
+    failed = catalog_failures
     for ledger_path in examples:
         sat_path = ledger_path.with_name("sat_event_log.json")
         pack_dir = ledger_path.parent.parent
         pack = pack_dir.name
-        gate_map, gate_map_failures = validate_gate_map(jsonschema, pack_dir, gate_map_schema)
+        gate_map, gate_map_failures = validate_gate_map(
+            jsonschema, pack_dir, gate_map_schema, catalogs
+        )
         failed += gate_map_failures
 
         ledger_doc: dict | None = None

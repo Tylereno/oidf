@@ -56,33 +56,135 @@ def main() -> int:
         for err in sorted(validator.iter_errors(instance), key=lambda e: list(e.path)):
             errors.append(f"{example_path}: {err.message}")
 
-    # Negative check: assist must not authorize power_tier_changed
-    bad = {
-        "log_id": "bad",
-        "spec_version": "1.0.0",
-        "site_id": "x",
-        "events": [
+    site_event = json.loads((SCHEMAS / "site_event_log.json").read_text(encoding="utf-8"))
+    site_state = json.loads((SCHEMAS / "site_state.json").read_text(encoding="utf-8"))
+    handoff = json.loads((SCHEMAS / "handoff_ledger.json").read_text(encoding="utf-8"))
+
+    negatives: list[tuple[str, dict, dict]] = [
+        (
+            "assist actor + suggestion_only on power_tier_changed (missing authority)",
+            site_event,
             {
-                "event_id": "e1",
-                "occurred_at": "2026-07-20T00:00:00Z",
-                "kind": "power_tier_changed",
-                "actor": {"kind": "assist"},
-                "suggestion_only": True,
-                "to_value": "survival",
-            }
-        ],
-    }
-    sat = json.loads((SCHEMAS / "site_event_log.json").read_text(encoding="utf-8"))
-    bad_errors = list(Draft202012Validator(sat).iter_errors(bad))
-    if not bad_errors:
-        errors.append("expected rejection of assist-authorized power_tier_changed")
+                "log_id": "bad",
+                "spec_version": "1.0.0",
+                "site_id": "x",
+                "events": [
+                    {
+                        "event_id": "e1",
+                        "occurred_at": "2026-07-20T00:00:00Z",
+                        "kind": "power_tier_changed",
+                        "actor": {"kind": "assist"},
+                        "suggestion_only": True,
+                        "to_value": "survival",
+                    }
+                ],
+            },
+        ),
+        (
+            "assist actor on power_tier_changed even with authority=policy",
+            site_event,
+            {
+                "log_id": "bad",
+                "spec_version": "1.0.0",
+                "site_id": "x",
+                "events": [
+                    {
+                        "event_id": "e1",
+                        "occurred_at": "2026-07-20T00:00:00Z",
+                        "kind": "power_tier_changed",
+                        "actor": {"kind": "assist"},
+                        "authority": "policy",
+                        "to_value": "survival",
+                    }
+                ],
+            },
+        ),
+        (
+            "continuity backhaul_mode_changed without authority",
+            site_event,
+            {
+                "log_id": "bad",
+                "spec_version": "1.0.0",
+                "site_id": "x",
+                "events": [
+                    {
+                        "event_id": "e1",
+                        "occurred_at": "2026-07-20T00:00:00Z",
+                        "kind": "backhaul_mode_changed",
+                        "actor": {"kind": "system"},
+                        "to_value": "offline",
+                    }
+                ],
+            },
+        ),
+        (
+            "assist_suggestion carrying authority",
+            site_event,
+            {
+                "log_id": "bad",
+                "spec_version": "1.0.0",
+                "site_id": "x",
+                "events": [
+                    {
+                        "event_id": "e1",
+                        "occurred_at": "2026-07-20T00:00:00Z",
+                        "kind": "assist_suggestion",
+                        "actor": {"kind": "assist"},
+                        "suggestion_only": True,
+                        "authority": "operator",
+                        "to_value": "survival",
+                    }
+                ],
+            },
+        ),
+        (
+            "assist block without authoritative_for_safety=false",
+            site_state,
+            {
+                "site_id": "x",
+                "spec_version": "1.0.0",
+                "updated_at": "2026-07-20T00:00:00Z",
+                "power": {"tier": "nominal"},
+                "backhaul": {"mode": "online"},
+                "health": {"overall": "ok", "watchdog_ok": True},
+                "assist": {"enabled": True},
+            },
+        ),
+        (
+            "handoff entry with empty evidence_refs",
+            handoff,
+            {
+                "ledger_id": "led-bad",
+                "spec_version": "1.0.0",
+                "subject": {"kind": "Asset", "id": "x"},
+                "created_at": "2026-07-20T00:00:00Z",
+                "entries": [
+                    {
+                        "seq": 1,
+                        "occurred_at": "2026-07-20T00:00:00Z",
+                        "from_state": "ReadyForCommission",
+                        "to_state": "Commissioned",
+                        "evidence_refs": [],
+                    }
+                ],
+            },
+        ),
+    ]
+
+    for label, schema, instance in negatives:
+        bad_errors = list(Draft202012Validator(schema).iter_errors(instance))
+        if not bad_errors:
+            errors.append(f"expected rejection of {label}")
 
     if errors:
         for e in errors:
             print(f"ERROR: {e}", file=sys.stderr)
         return 1
 
-    print(f"OK: {len(FRONT_DOOR)} front-door schemas; examples + ADR-0019 negative check passed")
+    print(
+        f"OK: {len(FRONT_DOOR)} front-door schemas; examples + "
+        f"{len(negatives)} ADR-0019/ledger negative checks passed"
+    )
     return 0
 
 
