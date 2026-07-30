@@ -1,7 +1,400 @@
 oidf_registry:
-  version: 1.0.0
+  version: "1.0.0"
+  description: "Canonical data dictionary for OIDF (Open Integration Data Format) — unified schema for PM platforms and operational telemetry"
   domains:
+    # Domain 1: Containers & Work Items
     containers:
-      project.id: {type: uuid, description: "Canonical project identifier"}
+      project:
+        id: {type: "uuid", description: "Canonical unique project container identifier for cross-platform lookup"}
+        name: {type: "string", description: "Primary display name of the project"}
+        key: {type: "string", description: "Short alphanumeric project key (e.g., PROJ, JIRA)"}
+        description: {type: "string", description: "Long-form project description"}
+        owner_id: {type: "uuid", description: "Reference to actor.user.id who owns the project"}
+        created_at: {type: "timestamp_iso8601", description: "Project creation timestamp"}
+        updated_at: {type: "timestamp_iso8601", description: "Last modification timestamp"}
+        archived_at: {type: "timestamp_iso8601", description: "Archive timestamp if archived"}
+        status: {type: "enum", values: ["active", "archived", "on_hold"], description: "Current project lifecycle status"}
+        source_system_id: {type: "string", description: "Original platform identifier (Jira projectId, Asana gid, etc.)"}
+      epic:
+        id: {type: "uuid", description: "Canonical unique epic identifier"}
+        project_id: {type: "uuid", description: "Parent project reference"}
+        title: {type: "string", description: "Epic display name"}
+        description: {type: "string", description: "Epic detailed description"}
+        color: {type: "string", description: "UI color hex code for epic grouping"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        updated_at: {type: "timestamp_iso8601", description: "Last update timestamp"}
+        start_date: {type: "date_iso8601", description: "Planned start date"}
+        due_date: {type: "date_iso8601", description: "Target completion date"}
+        progress: {type: "integer", description: "Completion percentage 0-100"}
+        source_system_id: {type: "string", description: "Original platform epic identifier"}
+      task:
+        id: {type: "uuid", description: "Canonical unique task identifier"}
+        project_id: {type: "uuid", description: "Parent project reference"}
+        epic_id: {type: "uuid", description: "Parent epic reference (optional)"}
+        title: {type: "string", description: "Task display name/summary"}
+        description: {type: "string", description: "Task detailed description"}
+        type: {type: "enum", values: ["task", "bug", "story", "spike", "chore"], description: "Work item classification"}
+        status: {type: "enum", values: ["backlog", "todo", "in_progress", "review", "blocked", "done", "archived"], description: "Current workflow state"}
+        priority: {type: "enum", values: ["critical", "high", "medium", "low", "none"], description: "Priority ranking"}
+        severity: {type: "enum", values: ["critical", "high", "medium", "low", "info"], description: "Impact severity (for bugs/incidents)"}
+        assignee_id: {type: "uuid", description: "Assigned actor.user.id"}
+        reporter_id: {type: "uuid", description: "Reporting actor.user.id"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        updated_at: {type: "timestamp_iso8601", description: "Last update timestamp"}
+        started_at: {type: "timestamp_iso8601", description: "Work started timestamp"}
+        completed_at: {type: "timestamp_iso8601", description: "Work completed timestamp"}
+        due_date: {type: "date_iso8601", description: "Target due date"}
+        estimate: {type: "string", description: "Effort estimate (story points, hours)"}
+        time_spent: {type: "string", description: "Actual time spent"}
+        source_system_id: {type: "string", description: "Original platform issue identifier"}
+      subtask:
+        id: {type: "uuid", description: "Canonical unique subtask identifier"}
+        parent_task_id: {type: "uuid", description: "Parent task reference"}
+        title: {type: "string", description: "Subtask display name"}
+        status: {type: "enum", values: ["backlog", "todo", "in_progress", "done"], description: "Subtask workflow state"}
+        assignee_id: {type: "uuid", description: "Assigned actor.user.id"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        completed_at: {type: "timestamp_iso8601", description: "Completion timestamp"}
+        source_system_id: {type: "string", description: "Original platform subtask identifier"}
+      sprint:
+        id: {type: "uuid", description: "Canonical unique sprint identifier"}
+        project_id: {type: "uuid", description: "Parent project reference"}
+        name: {type: "string", description: "Sprint display name"}
+        goal: {type: "string", description: "Sprint objective/goal"}
+        state: {type: "enum", values: ["planned", "active", "completed", "cancelled"], description: "Sprint lifecycle state"}
+        start_date: {type: "date_iso8601", description: "Sprint start date"}
+        end_date: {type: "date_iso8601", description: "Sprint end date"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        updated_at: {type: "timestamp_iso8601", description: "Last update timestamp"}
+        completed_at: {type: "timestamp_iso8601", description: "Completion timestamp"}
+        source_system_id: {type: "string", description: "Original platform sprint identifier"}
+      milestone:
+        id: {type: "uuid", description: "Canonical unique milestone identifier"}
+        project_id: {type: "uuid", description: "Parent project reference"}
+        title: {type: "string", description: "Milestone display name"}
+        description: {type: "string", description: "Milestone description"}
+        due_date: {type: "date_iso8601", description: "Target date"}
+        state: {type: "enum", values: ["open", "closed"], description: "Milestone state"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        updated_at: {type: "timestamp_iso8601", description: "Last update timestamp"}
+        closed_at: {type: "timestamp_iso8601", description: "Closure timestamp"}
+        source_system_id: {type: "string", description: "Original platform milestone identifier"}
+      release:
+        id: {type: "uuid", description: "Canonical unique release identifier"}
+        project_id: {type: "uuid", description: "Parent project reference"}
+        name: {type: "string", description: "Release name/version"}
+        description: {type: "string", description: "Release notes/description"}
+        status: {type: "enum", values: ["draft", "released", "archived"], description: "Release status"}
+        release_date: {type: "date_iso8601", description: "Release date"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        source_system_id: {type: "string", description: "Original platform release identifier"}
+
+    # Domain 2: Actor Governance & Identity
+    actors:
+      user:
+        id: {type: "uuid", description: "Canonical unique user identifier"}
+        email: {type: "string", description: "Primary email address"}
+        username: {type: "string", description: "Unique username/handle"}
+        display_name: {type: "string", description: "Full display name"}
+        avatar_url: {type: "string", description: "Profile avatar URL"}
+        timezone: {type: "string", description: "IANA timezone identifier"}
+        locale: {type: "string", description: "Locale code (e.g., en-US)"}
+        active: {type: "boolean", description: "Account active status"}
+        created_at: {type: "timestamp_iso8601", description: "Account creation timestamp"}
+        last_active_at: {type: "timestamp_iso8601", description: "Last activity timestamp"}
+        source_system_id: {type: "string", description: "Original platform user identifier (Jira accountId, Asana gid, GitHub login)"}
+      team:
+        id: {type: "uuid", description: "Canonical unique team identifier"}
+        name: {type: "string", description: "Team display name"}
+        description: {type: "string", description: "Team description"}
+        members: {type: "array", items: "uuid", description: "List of actor.user.id members"}
+        leads: {type: "array", items: "uuid", description: "List of actor.user.id team leads"}
+        created_at: {type: "timestamp_iso8601", description: "Team creation timestamp"}
+        source_system_id: {type: "string", description: "Original platform team identifier"}
+      role:
+        id: {type: "uuid", description: "Canonical unique role identifier"}
+        name: {type: "string", description: "Role name (admin, member, viewer, etc.)"}
+        description: {type: "string", description: "Role description"}
+        permissions: {type: "array", items: "string", description: "Granted permission strings"}
+        scope: {type: "enum", values: ["global", "project", "team"], description: "Role application scope"}
+        source_system_id: {type: "string", description: "Original platform role identifier"}
+      permission:
+        id: {type: "uuid", description: "Canonical unique permission identifier"}
+        key: {type: "string", description: "Permission key (e.g., browse_project, transition_issue)"}
+        description: {type: "string", description: "Permission description"}
+        category: {type: "string", description: "Permission category grouping"}
+        source_system_id: {type: "string", description: "Original platform permission identifier"}
+      auth_scope:
+        id: {type: "uuid", description: "Canonical unique auth scope identifier"}
+        name: {type: "string", description: "Scope name (read, write, admin, etc.)"}
+        description: {type: "string", description: "Scope description"}
+        source_system_id: {type: "string", description: "Original platform scope identifier"}
+      assignee:
+        user_id: {type: "uuid", description: "Reference to actor.user.id"}
+        task_id: {type: "uuid", description: "Reference to container.task.id"}
+        assigned_at: {type: "timestamp_iso8601", description: "Assignment timestamp"}
+        assigned_by: {type: "uuid", description: "Actor who made assignment"}
+
+    # Domain 3: Workflow, States & Lifecycle
     lifecycle:
-      state.current: {type: enum, description: "Current lifecycle state"}
+      status:
+        id: {type: "uuid", description: "Canonical unique status identifier"}
+        name: {type: "string", description: "Status display name"}
+        description: {type: "string", description: "Status description"}
+        category: {type: "enum", values: ["to_do", "in_progress", "done"], description: "Status category for reporting"}
+        color: {type: "string", description: "UI color hex code"}
+        order: {type: "integer", description: "Display order in workflow"}
+        is_default: {type: "boolean", description: "Default status for new items"}
+        source_system_id: {type: "string", description: "Original platform status identifier"}
+      transition:
+        id: {type: "uuid", description: "Canonical unique transition identifier"}
+        from_status_id: {type: "uuid", description: "Source status reference"}
+        to_status_id: {type: "uuid", description: "Target status reference"}
+        name: {type: "string", description: "Transition display name"}
+        conditions: {type: "array", items: "string", description: "Required conditions for transition"}
+        validators: {type: "array", items: "string", description: "Validators to run on transition"}
+        post_functions: {type: "array", items: "string", description: "Post-functions to execute"}
+        source_system_id: {type: "string", description: "Original platform transition identifier"}
+      workflow:
+        id: {type: "uuid", description: "Canonical unique workflow identifier"}
+        name: {type: "string", description: "Workflow name"}
+        description: {type: "string", description: "Workflow description"}
+        status_ids: {type: "array", items: "uuid", description: "Ordered list of status references"}
+        transition_ids: {type: "array", items: "uuid", description: "List of transition references"}
+        source_system_id: {type: "string", description: "Original platform workflow identifier"}
+      severity:
+        level: {type: "enum", values: ["critical", "high", "medium", "low", "info"], description: "Impact severity level"}
+        description: {type: "string", description: "Severity description"}
+        sla_hours: {type: "integer", description: "Target SLA resolution hours"}
+      priority:
+        level: {type: "enum", values: ["critical", "high", "medium", "low", "none"], description: "Priority level"}
+        description: {type: "string", description: "Priority description"}
+        order: {type: "integer", description: "Sort order"}
+      sla:
+        id: {type: "uuid", description: "Canonical unique SLA identifier"}
+        name: {type: "string", description: "SLA name"}
+        description: {type: "string", description: "SLA description"}
+        calendar_id: {type: "uuid", description: "Business calendar reference"}
+        goals:
+          - type: "object"
+            properties:
+              priority: {type: "string"}
+              time_to_respond: {type: "string"}
+              time_to_resolve: {type: "string"}
+        source_system_id: {type: "string", description: "Original platform SLA identifier"}
+      blocker:
+        id: {type: "uuid", description: "Canonical unique blocker identifier"}
+        task_id: {type: "uuid", description: "Blocked task reference"}
+        blocker_task_id: {type: "uuid", description: "Blocking task reference"}
+        description: {type: "string", description: "Blocker description"}
+        created_at: {type: "timestamp_iso8601", description: "Blocker creation timestamp"}
+        resolved_at: {type: "timestamp_iso8601", description: "Blocker resolution timestamp"}
+        source_system_id: {type: "string", description: "Original platform blocker identifier"}
+      resolution:
+        id: {type: "uuid", description: "Canonical unique resolution identifier"}
+        name: {type: "string", description: "Resolution name (Done, Won't Fix, Duplicate, etc.)"}
+        description: {type: "string", description: "Resolution description"}
+        source_system_id: {type: "string", description: "Original platform resolution identifier"}
+      metrics:
+        cycle_time_days: {type: "number", description: "Average cycle time in days"}
+        lead_time_days: {type: "number", description: "Average lead time in days"}
+        throughput_per_week: {type: "number", description: "Items completed per week"}
+        wip_count: {type: "integer", description: "Current work in progress count"}
+        blocker_count: {type: "integer", description: "Current active blocker count"}
+        sla_breach_rate: {type: "number", description: "SLA breach percentage"}
+
+    # Domain 4: Graph Relationships & Dependencies
+    graph:
+      parent_child:
+        parent_id: {type: "uuid", description: "Parent item identifier"}
+        child_id: {type: "uuid", description: "Child item identifier"}
+        relationship_type: {type: "enum", values: ["epic_task", "task_subtask", "project_epic"], description: "Hierarchy relationship type"}
+        source_system_id: {type: "string", description: "Original platform relationship identifier"}
+      blocks:
+        blocker_id: {type: "uuid", description: "Blocking item identifier"}
+        blocked_id: {type: "uuid", description: "Blocked item identifier"}
+        reason: {type: "string", description: "Blocking reason"}
+        created_at: {type: "timestamp_iso8601", description: "Block creation timestamp"}
+        resolved_at: {type: "timestamp_iso8601", description: "Block resolution timestamp"}
+        source_system_id: {type: "string", description: "Original platform block identifier"}
+      relates_to:
+        source_id: {type: "uuid", description: "Source item identifier"}
+        target_id: {type: "uuid", description: "Target item identifier"}
+        relationship_type: {type: "enum", values: ["relates_to", "duplicates", "clones", "caused_by", "split_from"], description: "Relationship type"}
+        description: {type: "string", description: "Relationship description"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        source_system_id: {type: "string", description: "Original platform relationship identifier"}
+      cross_link:
+        source_id: {type: "uuid", description: "Source item identifier"}
+        target_url: {type: "string", description: "External URL reference"}
+        link_type: {type: "enum", values: ["documentation", "design", "monitoring", "deployment", "pull_request", "commit"], description: "Link category"}
+        title: {type: "string", description: "Link display title"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        source_system_id: {type: "string", description: "Original platform link identifier"}
+      attachment:
+        id: {type: "uuid", description: "Canonical unique attachment identifier"}
+        container_id: {type: "uuid", description: "Parent container (task, project, comment) reference"}
+        filename: {type: "string", description: "Original filename"}
+        mime_type: {type: "string", description: "MIME type"}
+        size_bytes: {type: "integer", description: "File size in bytes"}
+        url: {type: "string", description: "Download/access URL"}
+        uploaded_by: {type: "uuid", description: "Uploader actor.user.id"}
+        uploaded_at: {type: "timestamp_iso8601", description: "Upload timestamp"}
+        source_system_id: {type: "string", description: "Original platform attachment identifier"}
+      comment:
+        id: {type: "uuid", description: "Canonical unique comment identifier"}
+        container_id: {type: "uuid", description: "Parent container reference"}
+        author_id: {type: "uuid", description: "Author actor.user.id"}
+        body: {type: "string", description: "Comment text content"}
+        visibility: {type: "enum", values: ["public", "internal", "restricted"], description: "Comment visibility"}
+        created_at: {type: "timestamp_iso8601", description: "Creation timestamp"}
+        updated_at: {type: "timestamp_iso8601", description: "Last edit timestamp"}
+        source_system_id: {type: "string", description: "Original platform comment identifier"}
+      mention:
+        comment_id: {type: "uuid", description: "Parent comment reference"}
+        mentioned_user_id: {type: "uuid", description: "Mentioned actor.user.id"}
+        created_at: {type: "timestamp_iso8601", description: "Mention timestamp"}
+      watcher:
+        task_id: {type: "uuid", description: "Watched task reference"}
+        user_id: {type: "uuid", description: "Watching actor.user.id"}
+        started_at: {type: "timestamp_iso8601", description: "Watch start timestamp"}
+
+    # Domain 5: Dynamic & Custom Fields
+    dynamic:
+      custom_field:
+        id: {type: "uuid", description: "Canonical unique custom field identifier"}
+        key: {type: "string", description: "Custom field key/namespace"}
+        name: {type: "string", description: "Display name"}
+        description: {type: "string", description: "Field description"}
+        field_type: {type: "enum", values: ["string", "number", "boolean", "date", "datetime", "select", "multi_select", "user", "text", "url"], description: "Field data type"}
+        options: {type: "array", items: "object", description: "Options for select/multi_select types"}
+        default_value: {type: "object", description: "Default value"}
+        required: {type: "boolean", description: "Whether field is required"}
+        searchable: {type: "boolean", description: "Whether field is searchable"}
+        contexts: {type: "array", items: "uuid", description: "Applicable project/context identifiers"}
+        source_system_id: {type: "string", description: "Original platform custom field identifier"}
+      custom_field_value:
+        custom_field_id: {type: "uuid", description: "Custom field definition reference"}
+        container_id: {type: "uuid", description: "Container (task, project) reference"}
+        value: {type: "object", description: "Polymorphic field value"}
+        updated_at: {type: "timestamp_iso8601", description: "Last value update timestamp"}
+        updated_by: {type: "uuid", description: "Actor who updated value"}
+      tag:
+        id: {type: "uuid", description: "Canonical unique tag identifier"}
+        name: {type: "string", description: "Tag name (normalized lowercase)"}
+        color: {type: "string", description: "Tag color hex code"}
+        description: {type: "string", description: "Tag description"}
+        container_ids: {type: "array", items: "uuid", description: "Containers this tag is applied to"}
+        source_system_id: {type: "string", description: "Original platform tag identifier"}
+      label:
+        id: {type: "uuid", description: "Canonical unique label identifier"}
+        name: {type: "string", description: "Label name"}
+        color: {type: "string", description: "Label color hex code"}
+        description: {type: "string", description: "Label description"}
+        source_system_id: {type: "string", description: "Original platform label identifier"}
+      component:
+        id: {type: "uuid", description: "Canonical unique component identifier"}
+        project_id: {type: "uuid", description: "Parent project reference"}
+        name: {type: "string", description: "Component name"}
+        description: {type: "string", description: "Component description"}
+        lead_id: {type: "uuid", description: "Component lead actor.user.id"}
+        source_system_id: {type: "string", description: "Original platform component identifier"}
+      version:
+        id: {type: "uuid", description: "Canonical unique version identifier"}
+        project_id: {type: "uuid", description: "Parent project reference"}
+        name: {type: "string", description: "Version name (e.g., 1.0.0)"}
+        description: {type: "string", description: "Version description"}
+        status: {type: "enum", values: ["unreleased", "released", "archived"], description: "Version status"}
+        release_date: {type: "date_iso8601", description: "Planned/actual release date"}
+        start_date: {type: "date_iso8601", description: "Version start date"}
+        source_system_id: {type: "string", description: "Original platform version identifier"}
+      metadata:
+        key: {type: "string", description: "Metadata key"}
+        value: {type: "object", description: "Polymorphic metadata value"}
+        container_id: {type: "uuid", description: "Parent container reference"}
+        source: {type: "string", description: "Origin system of metadata"}
+
+    # Domain 6: Telemetry & Event State
+    telemetry:
+      webhook_event:
+        id: {type: "uuid", description: "Canonical unique webhook event identifier"}
+        provider: {type: "enum", values: ["jira", "asana", "github", "trello"], description: "Source platform"}
+        event_type: {type: "string", description: "Platform event type (jira:issue_created, github:push, etc.)"}
+        payload: {type: "object", description: "Raw event payload"}
+        headers: {type: "object", description: "Webhook headers including signatures"}
+        received_at: {type: "timestamp_iso8601", description: "Event receipt timestamp"}
+        processed_at: {type: "timestamp_iso8601", description: "Event processing completion timestamp"}
+        status: {type: "enum", values: ["received", "processing", "completed", "failed"], description: "Processing status"}
+        error_message: {type: "string", description: "Error details if failed"}
+        retry_count: {type: "integer", description: "Number of processing retries"}
+        signature_valid: {type: "boolean", description: "Cryptographic signature validation result"}
+        source_system_id: {type: "string", description: "Original platform delivery identifier"}
+      event_state:
+        id: {type: "uuid", description: "Canonical unique event state identifier"}
+        aggregate_id: {type: "uuid", description: "Aggregate root identifier (task, project, etc.)"}
+        event_type: {type: "string", description: "Domain event type"}
+        event_version: {type: "integer", description: "Event schema version"}
+        payload: {type: "object", description: "Event payload"}
+        metadata:
+          type: "object"
+          properties:
+            causation_id: {type: "uuid"}
+            correlation_id: {type: "uuid"}
+            user_id: {type: "uuid"}
+            source: {type: "string"}
+        timestamp: {type: "timestamp_iso8601", description: "Event occurrence timestamp"}
+        stored_at: {type: "timestamp_iso8601", description: "Event store persistence timestamp"}
+      system_health:
+        service_name: {type: "string", description: "Service identifier"}
+        status: {type: "enum", values: ["healthy", "degraded", "down", "unknown"], description: "Current health status"}
+        last_check: {type: "timestamp_iso8601", description: "Last health check timestamp"}
+        checks:
+          - type: "object"
+            properties:
+              name: {type: "string"}
+              status: {type: "enum", values: ["pass", "warn", "fail"]}
+              message: {type: "string"}
+              timestamp: {type: "timestamp_iso8601"}
+        uptime_percentage: {type: "number", description: "Current uptime percentage"}
+        latency_p99_ms: {type: "number", description: "P99 latency in milliseconds"}
+        error_rate: {type: "number", description: "Current error rate percentage"}
+      release_feed:
+        id: {type: "uuid", description: "Canonical unique release feed entry"}
+        service: {type: "string", description: "Service name"}
+        version: {type: "string", description: "Released version"}
+        changelog: {type: "string", description: "Changelog summary"}
+        released_at: {type: "timestamp_iso8601", description: "Release timestamp"}
+        deployed_by: {type: "uuid", description: "Deployer actor.user.id"}
+        environment: {type: "string", description: "Deployment environment"}
+        artifacts: {type: "array", items: "string", description: "Artifact URLs/hashes"}
+      payload_signature:
+        event_id: {type: "uuid", description: "Referenced webhook event"}
+        algorithm: {type: "string", description: "Signature algorithm (e.g., HMAC-SHA256)"}
+        signature: {type: "string", description: "Base64-encoded signature"}
+        payload_hash: {type: "string", description: "SHA256 hash of payload"}
+        verified: {type: "boolean", description: "Verification result"}
+        verified_at: {type: "timestamp_iso8601", description: "Verification timestamp"}
+      sync_status:
+        entity_type: {type: "string", description: "Entity type being synced"}
+        entity_id: {type: "uuid", description: "Entity identifier"}
+        source_system: {type: "string", description: "Source system identifier"}
+        last_synced_at: {type: "timestamp_iso8601", description: "Last successful sync timestamp"}
+        sync_hash: {type: "string", description: "Content hash for change detection"}
+        status: {type: "enum", values: ["synced", "pending", "conflict", "error"], description: "Sync status"}
+        error_details: {type: "string", description: "Error details if failed"}
+      audit_log:
+        id: {type: "uuid", description: "Canonical unique audit log entry"}
+        actor_id: {type: "uuid", description: "Actor who performed action"}
+        action: {type: "string", description: "Action performed"}
+        resource_type: {type: "string", description: "Resource type affected"}
+        resource_id: {type: "uuid", description: "Resource identifier"}
+        changes: {type: "object", description: "Before/after change details"}
+        ip_address: {type: "string", description: "Actor IP address"}
+        user_agent: {type: "string", description: "Actor user agent"}
+        timestamp: {type: "timestamp_iso8601", description: "Action timestamp"}
+      rate_limit:
+        service: {type: "string", description: "Service name"}
+        limit: {type: "integer", description: "Request limit"}
+        remaining: {type: "integer", description: "Remaining requests"}
+        reset_at: {type: "timestamp_iso8601", description: "Limit reset timestamp"}
+        scope: {type: "string", description: "Rate limit scope (user, org, global)"}
