@@ -1,0 +1,7 @@
+oidf_registry:
+  version: 1.0.0
+  domains:
+    containers:
+      project.id: {type: uuid, description: "Canonical project identifier"}
+    lifecycle:
+      state.current: {type: enum, description: "Current lifecycle state"}
