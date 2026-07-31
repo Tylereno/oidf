@@ -18,6 +18,7 @@ If this changes state machines, evidence types, ledgers, SAT gates, or architect
 - [ ] `python tooling/validate_json_schemas.py core_schemas/idl`
 - [ ] `python tooling/validate_architecture_examples.py`
 - [ ] `python -m unittest tooling.test_field_tooling -v` or explained why not applicable
+- [ ] `python -m unittest tooling.test_oidf_canonical -v` or explained why not applicable
 
 ## Runtime boundary
 

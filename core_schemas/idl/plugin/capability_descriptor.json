@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://keel.dev/schemas/plugin/capability_descriptor.json",
+  "$id": "https://oidf.dev/schemas/plugin/capability_descriptor.json",
   "title": "CapabilityDescriptor",
   "x-keel-schema-version": "1.0.0",
   "type": "object",

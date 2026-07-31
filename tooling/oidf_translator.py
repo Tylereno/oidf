@@ -57,13 +57,18 @@ class OIDFTranslator:
 
         # Extract changelog if present
         if "changelog" in issue:
-            translated["lifecycle.history"] = self._translate_jira_changelog(issue["changelog"])
+            self._set_nested(translated, "lifecycle.history", self._translate_jira_changelog(issue["changelog"]))
 
         return translated
 
     def translate_asana_task(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """Specialized translation for Asana task objects."""
         translated = self.translate("asana", task)
+
+        # Asana 'name' maps to containers.project.name in the generic table,
+        # but for tasks it should be containers.task.title
+        if "name" in task:
+            self._set_nested(translated, "containers.task.title", task["name"])
 
         # Handle custom fields
         if "custom_fields" in task:
@@ -73,7 +78,7 @@ class OIDFTranslator:
                 value = cf.get("text_value") or cf.get("number_value") or cf.get("enum_value", {}).get("name")
                 if gid and value is not None:
                     custom[gid] = value
-            translated["dynamic.custom_field_value"] = custom
+            self._set_nested(translated, "dynamic.custom_field_value", custom)
 
         return translated
 
@@ -84,18 +89,22 @@ class OIDFTranslator:
         # Extract repository info
         if "repository" in issue:
             repo = issue["repository"]
-            translated["containers.project"] = {
+            self._set_nested(translated, "containers.project", {
                 "id": f"github-repo-{repo.get('id')}",
                 "name": repo.get("full_name"),
                 "source_system_id": str(repo.get("id")),
-            }
+            })
 
         # Extract labels as tags
         if "labels" in issue:
-            translated["dynamic.tag"] = [
-                {"id": f"github-label-{lbl.get('id')}", "name": lbl.get("name"), "color": lbl.get("color")}
+            self._set_nested(translated, "dynamic.tag", [
+                {
+                    "id": f"github-label-{lbl.get('id')}",
+                    "name": lbl.get("name"),
+                    "color": lbl.get("color"),
+                }
                 for lbl in issue["labels"]
-            ]
+            ])
 
         return translated
 

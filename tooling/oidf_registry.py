@@ -32,12 +32,19 @@ class OIDFRegistry:
             self._index_domain(domain_name, domain_data)
 
     def _index_domain(self, domain_name: str, domain_data: Any, prefix: str = "") -> None:
-        """Recursively index all fields in a domain."""
+        """Recursively index all fields in a domain.
+
+        A field definition is a dict whose ``type`` key holds a *string*
+        (e.g. ``"string"``, ``"uuid"``, ``"enum"``).  Nested objects that
+        happen to contain a sub-field named ``type`` (e.g. ``containers.task``
+        has a ``type`` field whose value is a dict) are NOT field definitions
+        and are recursed into instead.
+        """
         if isinstance(domain_data, dict):
             for key, value in domain_data.items():
                 current_path = f"{prefix}.{key}" if prefix else f"{domain_name}.{key}"
-                if isinstance(value, dict) and "type" in value:
-                    # This is a field definition
+                if isinstance(value, dict) and isinstance(value.get("type"), str):
+                    # This is a field definition (type is a string like "uuid", "enum")
                     self.key_index[current_path] = {
                         "domain": domain_name,
                         "path": current_path,
@@ -72,6 +79,7 @@ class OIDFRegistry:
                 "priority": "lifecycle.priority.level",
                 "assignee": "actors.assignee.user_id",
                 "reporter": "actors.user.id",
+                "accountId": "actors.user.id",
                 "created": "containers.task.created_at",
                 "updated": "containers.task.updated_at",
                 "duedate": "containers.task.due_date",

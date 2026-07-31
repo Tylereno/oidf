@@ -34,3 +34,6 @@ jobs:
 
       - name: Field tooling unit tests
         run: python -m unittest tooling.test_field_tooling -v
+
+      - name: OIDF canonical dictionary + translator tests
+        run: python -m unittest tooling.test_oidf_canonical -v
