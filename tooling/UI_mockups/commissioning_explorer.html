@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OIDF Commissioning Explorer — read-only design mockup</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --surface: #ffffff;
+      --ink: #1a1f24;
+      --muted: #5c6670;
+      --accent: #0d5c63;
+      --accent-soft: #d9eef0;
+      --umbrella: #7c4dff;
+      --umbrella-soft: #ede7ff;
+      --machine: #1565c0;
+      --machine-soft: #e3f2fd;
+      --human: #6d4c41;
+      --human-soft: #efebe9;
+      --success: #2e7d32;
+      --success-soft: #e8f5e9;
+      --danger: #c62828;
+      --danger-soft: #ffebee;
+      --border: #d8dde3;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(26, 31, 36, 0.08);
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+      --mono: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .banner {
+      background: #fff3cd;
+      border-bottom: 2px solid #ffc107;
+      padding: 0.85rem 1.25rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    header {
+      padding: 1.5rem 1.25rem 0.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.35rem, 3vw, 1.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    header p.lead {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+    }
+
+    section h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 650;
+    }
+
+    section h3 {
+      margin: 1rem 0 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 650;
+    }
+
+    .pack-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pack-selector label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.85rem;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      background: var(--surface);
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .pack-selector label:focus-within {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .pack-selector input { accent-color: var(--accent); }
+
+    .pack-selector label.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 600;
+    }
+
+    .pack-meta {
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .pack-meta code {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      background: #f0f2f5;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+
+    /* State path */
+    .path-wrap {
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .state-path {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      min-width: min-content;
+      padding: 0.5rem 0;
+    }
+
+    .state-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 7.5rem;
+      max-width: 9rem;
+    }
+
+    .state-btn {
+      width: 100%;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 0.65rem 0.5rem;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .state-btn:hover { border-color: var(--accent); }
+
+    .state-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .state-btn.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .state-btn.terminal { border-style: dashed; }
+
+    .transition-seg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 4.5rem;
+      padding: 0 0.15rem;
+    }
+
+    .transition-btn {
+      border: none;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.35rem 0.25rem;
+      border-radius: 6px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .transition-btn:hover { background: var(--accent-soft); }
+
+    .transition-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .transition-btn.active {
+      background: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    /* Detail panel */
+    .detail-panel {
+      background: #fafbfc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .detail-panel h3 { margin-top: 0; }
+
+    .detail-panel .kind-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .kind-state { background: var(--accent-soft); color: var(--accent); }
+    .kind-transition { background: #fff8e1; color: #f57f17; }
+
+    .evidence-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.75rem 0 0;
+    }
+
+    .evidence-list li {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.6rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .evidence-list li:last-child { border-bottom: none; }
+
+    .ev-type {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .tag-machine { background: var(--machine-soft); color: var(--machine); }
+    .tag-human { background: var(--human-soft); color: var(--human); }
+    .tag-umbrella { background: var(--umbrella-soft); color: var(--umbrella); }
+
+    .blocked-note {
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: var(--danger-soft);
+      border-left: 4px solid var(--danger);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 0.9rem;
+    }
+
+    /* Glossary grid */
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .glossary-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem;
+      background: #fafbfc;
+    }
+
+    .glossary-card h4 {
+      margin: 0 0 0.35rem;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .glossary-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .glossary-card .card-meta {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    /* Events panel */
+    .event-list {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .event-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+      background: #fafbfc;
+    }
+
+    .event-item h4 {
+      margin: 0 0 0.25rem;
+      font-family: var(--mono);
+      font-size: 0.88rem;
+    }
+
+    .event-item p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+
+    .event-item.authoritative {
+      border-color: var(--success);
+      background: var(--success-soft);
+    }
+
+    .event-item.authoritative p { color: #1b5e20; }
+
+    .distinction-box {
+      margin-top: 1rem;
+      padding: 0.85rem;
+      background: var(--accent-soft);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+    }
+
+    .distinction-box strong { color: var(--accent); }
+
+    /* Timeline */
+    .timeline-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline-controls button {
+      font: inherit;
+      font-size: 0.85rem;
+      padding: 0.45rem 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      cursor: pointer;
+    }
+
+    .timeline-controls button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .timeline-controls button.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 600;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--border);
+    }
+
+    .timeline-entry {
+      position: relative;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .timeline-entry::before {
+      content: "";
+      position: absolute;
+      left: -1.72rem;
+      top: 1rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--surface);
+    }
+
+    .timeline-entry.fail::before { background: var(--danger); }
+    .timeline-entry.success-authority::before { background: var(--success); }
+
+    .timeline-entry .evt-type {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .timeline-entry .evt-time {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .timeline-entry p {
+      margin: 0.35rem 0 0;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem 2rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 640px) {
+      .state-path { flex-direction: column; align-items: stretch; }
+      .state-node { max-width: none; min-width: 0; }
+      .transition-seg { flex-direction: row; gap: 0.5rem; padding: 0.25rem 0; }
+      .arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="banner" role="status">
+    Read-only design explorer. It cannot advance an asset or emit an event.
+  </div>
+
+  <header>
+    <h1>OIDF / Keel commissioning explorer</h1>
+    <p class="lead">
+      Explore equipment states, evidence words, and event vocabulary in plain language.
+      This mockup helps product and founder conversations — it is not a runtime.
+    </p>
+  </header>
+
+  <main>
+    <section aria-labelledby="pack-heading">
+      <h2 id="pack-heading">Choose a machine definition</h2>
+      <div class="pack-selector" role="radiogroup" aria-label="Machine definition pack">
+        <label id="label-canonical">
+          <input type="radio" name="pack" value="canonical" checked>
+          Canonical equipment lifecycle
+        </label>
+        <label id="label-bess">
+          <input type="radio" name="pack" value="bess">
+          BESS skid (<code>bess.skid.v1</code>)
+        </label>
+        <label id="label-solar">
+          <input type="radio" name="pack" value="solar">
+          Solar inverter (<code>solar.inverter.v1</code>)
+        </label>
+      </div>
+      <p class="pack-meta" id="pack-meta"></p>
+    </section>
+
+    <section aria-labelledby="path-heading">
+      <h2 id="path-heading">State path</h2>
+      <p style="margin:0 0 0.75rem;font-size:0.88rem;color:var(--muted)">
+        Select a state (node) or transition (arrow label) to see meaning, required evidence, and why advancement stays blocked until validated evidence exists.
+      </p>
+      <div class="path-wrap">
+        <div class="state-path" id="state-path" role="list" aria-label="Equipment state path"></div>
+      </div>
+      <div class="detail-panel" id="detail-panel" aria-live="polite"></div>
+    </section>
+
+    <section aria-labelledby="glossary-heading">
+      <h2 id="glossary-heading">Evidence glossary — “what does this word mean?”</h2>
+      <div class="glossary-grid" id="glossary-grid"></div>
+    </section>
+
+    <section aria-labelledby="events-heading">
+      <h2 id="events-heading">Event vocabulary</h2>
+      <div class="event-list" id="event-list"></div>
+      <div class="distinction-box" id="event-distinction"></div>
+    </section>
+
+    <section aria-labelledby="timeline-heading">
+      <h2 id="timeline-heading">Sample event timeline — BESS path (<code>bess.skid.v1</code>)</h2>
+      <p style="margin:0 0 0.75rem;font-size:0.88rem;color:var(--muted)">
+        Synthetic, read-only sequence illustrating how evidence and transitions relate. No network calls; no state is written.
+      </p>
+      <div class="timeline-controls" role="tablist" aria-label="Timeline scenario">
+        <button type="button" id="btn-happy" class="active" role="tab" aria-selected="true">Happy path: Installed → ReadyForCommission</button>
+        <button type="button" id="btn-fail" role="tab" aria-selected="false">Rejected evidence example</button>
+      </div>
+      <div class="timeline" id="timeline" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    Vocabulary sourced from <code>core_schemas/equipment_state.yaml</code>, evidence catalogs, RFC 0006, and lighthouse machine sketches.
+    OIDF schemas remain normative; Keel remains runtime authority.
+  </footer>
+
+  <script>
+    const EVIDENCE_GLOSSARY = {
+      DeliveryAccepted: {
+        source_class: "human",
+        umbrella: true,
+        description: "Receiving inspection or bill-of-lading acceptance confirms the asset arrived as procured; unlocks Procured→Delivered.",
+        packs: ["canonical"]
+      },
+      MechanicalInstallComplete: {
+        source_class: "human",
+        umbrella: true,
+        description: "Mechanical placement, anchorage, and install walkdown are complete; unlocks Delivered→Installed.",
+        packs: ["canonical"]
+      },
+      PreCommissionChecksPass: {
+        source_class: "human",
+        umbrella: true,
+        description: "Pre-commission checklist (clearances, labeling, bonding themes) recorded before SAT suite entry; unlocks Installed→ReadyForCommission.",
+        packs: ["canonical"]
+      },
+      SatSuitePass: {
+        source_class: "machine",
+        umbrella: true,
+        description: "Umbrella class: the architecture pack SAT suite required for ReadyForCommission→Commissioned has passed. Packs specialize with concrete cataloged types via sat_gate_map.json.",
+        packs: ["canonical"]
+      },
+      EnergizationClearance: {
+        source_class: "human",
+        umbrella: true,
+        description: "Energization clearance after Commissioned; unlocks Commissioned→Energized. Never granted by assist alone.",
+        packs: ["canonical"]
+      },
+      CellVoltageInBand: {
+        source_class: "machine",
+        description: "BMS reports cell/pack voltage within configured commission band.",
+        packs: ["bess"]
+      },
+      InsulationResistanceOk: {
+        source_class: "machine",
+        description: "Insulation resistance measurement meets minimum threshold — not a verbal “megger was fine.”",
+        packs: ["bess"]
+      },
+      ThermalStable: {
+        source_class: "machine",
+        description: "Temperature within band for required consecutive samples before the transition.",
+        packs: ["bess"]
+      },
+      GridVoltageInBand: {
+        source_class: "machine",
+        description: "Inverter reports AC grid/export voltage within configured commission band.",
+        packs: ["solar"]
+      },
+      FrequencyInBand: {
+        source_class: "machine",
+        description: "Grid frequency within configured band for required samples.",
+        packs: ["solar"]
+      },
+      AntiIslandingOk: {
+        source_class: "machine",
+        description: "Anti-islanding / grid-tie protection self-test reports OK — not a checkbox that someone “verified islanding.”",
+        packs: ["solar"]
+      }
+    };
+
+    const STATE_MEANINGS = {
+      Procured: "The asset is on order or contracted but not yet received at site.",
+      Delivered: "The asset has arrived and delivery acceptance is recorded.",
+      Installed: "Mechanical installation is complete; the asset is physically in place but not yet cleared for commissioning tests.",
+      ReadyForCommission: "Pre-commission checks are done; the asset may enter site acceptance testing (SAT) but is not yet commissioned.",
+      Commissioned: "Required commissioning evidence (including pack SAT gates) has passed; the asset is cleared for operational handoff themes.",
+      Energized: "Terminal operational state: energization clearance recorded after commissioning."
+    };
+
+    const PACKS = {
+      canonical: {
+        id: "oidf.equipment.canonical",
+        label: "Canonical equipment lifecycle",
+        source: "core_schemas/equipment_state.yaml",
+        initial_state: "Procured",
+        terminal_states: ["Energized"],
+        states: ["Procured", "Delivered", "Installed", "ReadyForCommission", "Commissioned", "Energized"],
+        transitions: [
+          {
+            id: "procured_to_delivered",
+            from: "Procured",
+            to: "Delivered",
+            evidence: [{ type: "DeliveryAccepted", min_count: 1, source_class: "human" }]
+          },
+          {
+            id: "delivered_to_installed",
+            from: "Delivered",
+            to: "Installed",
+            evidence: [{ type: "MechanicalInstallComplete", min_count: 1, source_class: "human" }]
+          },
+          {
+            id: "installed_to_ready",
+            from: "Installed",
+            to: "ReadyForCommission",
+            evidence: [{ type: "PreCommissionChecksPass", min_count: 1, source_class: "human" }]
+          },
+          {
+            id: "ready_to_commissioned",
+            from: "ReadyForCommission",
+            to: "Commissioned",
+            evidence: [{ type: "SatSuitePass", min_count: 1, source_class: "machine", umbrella: true }]
+          },
+          {
+            id: "commissioned_to_energized",
+            from: "Commissioned",
+            to: "Energized",
+            evidence: [{ type: "EnergizationClearance", min_count: 1, source_class: "human" }]
+          }
+        ],
+        pack_note: "Umbrella evidence types (SatSuitePass, etc.) are catalog classes; architecture packs specialize ReadyForCommission→Commissioned with concrete machine evidence via sat_gate_map.json."
+      },
+      bess: {
+        id: "bess.skid.v1",
+        label: "BESS container skid",
+        source: "Keel lighthouse machine sketch (OIDF bess-commissioning catalog)",
+        initial_state: "Installed",
+        terminal_states: ["Commissioned"],
+        states: ["Installed", "ReadyForCommission", "Commissioned"],
+        transitions: [
+          {
+            id: "installed_to_ready",
+            from: "Installed",
+            to: "ReadyForCommission",
+            evidence: [
+              { type: "CellVoltageInBand", min_count: 1, source_class: "machine" },
+              { type: "InsulationResistanceOk", min_count: 1, source_class: "machine" }
+            ]
+          },
+          {
+            id: "ready_to_commissioned",
+            from: "ReadyForCommission",
+            to: "Commissioned",
+            evidence: [
+              { type: "ThermalStable", min_count: 1, source_class: "machine" }
+            ]
+          }
+        ],
+        pack_note: "Lighthouse BESS wedge: machine-sourced telemetry must validate before state advances. Humans may install sensors and approve policy; they must not click state forward."
+      },
+      solar: {
+        id: "solar.inverter.v1",
+        label: "Solar / PCS inverter",
+        source: "Keel lighthouse machine sketch (OIDF solar-inverter-commissioning catalog)",
+        initial_state: "Installed",
+        terminal_states: ["Commissioned"],
+        states: ["Installed", "ReadyForCommission", "Commissioned"],
+        transitions: [
+          {
+            id: "installed_to_ready",
+            from: "Installed",
+            to: "ReadyForCommission",
+            evidence: [
+              { type: "GridVoltageInBand", min_count: 1, source_class: "machine" },
+              { type: "FrequencyInBand", min_count: 1, source_class: "machine" }
+            ]
+          },
+          {
+            id: "ready_to_commissioned",
+            from: "ReadyForCommission",
+            to: "Commissioned",
+            evidence: [
+              { type: "AntiIslandingOk", min_count: 1, source_class: "machine" }
+            ]
+          }
+        ],
+        pack_note: "Second lighthouse domain: grid-interface facts (voltage, frequency, anti-islanding) before declaring commissioned."
+      }
+    };
+
+    const CORE_EVENTS = [
+      {
+        type: "EvidenceSubmitted",
+        description: "Evidence payload received and appended to the event log. Submission alone does not satisfy gates or advance state.",
+        authoritative: false
+      },
+      {
+        type: "EvidenceValidated",
+        description: "An authorized validator accepted the evidence against catalog rules. Only validated evidence counts toward transition sufficiency.",
+        authoritative: false
+      },
+      {
+        type: "EvidenceRejected",
+        description: "Validator rejected the evidence (failed rules, stale, untrusted source). State remains unchanged; submitter may correct and resubmit.",
+        authoritative: false
+      },
+      {
+        type: "TransitionRequested",
+        description: "External or capability intent to attempt a state transition. The State Engine evaluates evidence and dependencies before deciding.",
+        authoritative: false
+      },
+      {
+        type: "StateAdvanced",
+        description: "Successful state transition — the sole authoritative event meaning the asset moved from one state to the next.",
+        authoritative: true
+      },
+      {
+        type: "TransitionRejected",
+        description: "State Engine rejected the transition attempt (missing evidence, unauthorized, invalid transition). Current state unchanged.",
+        authoritative: false
+      }
+    ];
+
+    const TIMELINES = {
+      happy: [
+        {
+          type: "EvidenceSubmitted",
+          time: "2026-07-20T14:02:00Z",
+          detail: "CellVoltageInBand submitted for asset BESS-DEMO-001 from BMS telemetry adapter.",
+          fail: false
+        },
+        {
+          type: "EvidenceValidated",
+          time: "2026-07-20T14:02:04Z",
+          detail: "Validator accepted CellVoltageInBand — voltages within commission band.",
+          fail: false
+        },
+        {
+          type: "EvidenceSubmitted",
+          time: "2026-07-20T14:05:00Z",
+          detail: "InsulationResistanceOk submitted from test-set / MQTT feed.",
+          fail: false
+        },
+        {
+          type: "EvidenceValidated",
+          time: "2026-07-20T14:05:03Z",
+          detail: "Validator accepted InsulationResistanceOk — threshold met.",
+          fail: false
+        },
+        {
+          type: "TransitionRequested",
+          time: "2026-07-20T14:06:00Z",
+          detail: "Request Installed → ReadyForCommission on bess.skid.v1 / BESS-DEMO-001.",
+          fail: false
+        },
+        {
+          type: "StateAdvanced",
+          time: "2026-07-20T14:06:01Z",
+          detail: "State Engine appended StateAdvanced: Installed → ReadyForCommission. Both required machine evidence types validated.",
+          fail: false,
+          authority: true
+        }
+      ],
+      fail: [
+        {
+          type: "EvidenceSubmitted",
+          time: "2026-07-20T15:10:00Z",
+          detail: "ThermalStable submitted — sensor stream reported out-of-band temperature spike.",
+          fail: false
+        },
+        {
+          type: "EvidenceRejected",
+          time: "2026-07-20T15:10:05Z",
+          detail: "Validator rejected ThermalStable — samples did not remain in band for required window.",
+          fail: true
+        },
+        {
+          type: "TransitionRequested",
+          time: "2026-07-20T15:11:00Z",
+          detail: "Request ReadyForCommission → Commissioned despite missing validated ThermalStable.",
+          fail: false
+        },
+        {
+          type: "TransitionRejected",
+          time: "2026-07-20T15:11:01Z",
+          detail: "State Engine rejected attempt — reason MissingEvidence. Current state remains ReadyForCommission.",
+          fail: true
+        }
+      ]
+    };
+
+    let currentPack = "canonical";
+    let selection = { kind: "state", id: "Procured" };
+
+    function tagHtml(sourceClass, umbrella) {
+      if (umbrella) return '<span class="tag tag-umbrella">umbrella</span>';
+      if (sourceClass === "machine") return '<span class="tag tag-machine">machine</span>';
+      if (sourceClass === "human") return '<span class="tag tag-human">human</span>';
+      return '<span class="tag">unknown</span>';
+    }
+
+    function blockedReason(transition, pack) {
+      const reqs = transition.evidence.map(e =>
+        `at least ${e.min_count} validated <span class="ev-type">${e.type}</span> (${e.source_class})`
+      ).join(" and ");
+      return `This transition from <strong>${transition.from}</strong> to <strong>${transition.to}</strong> stays blocked until the State Engine sees ${reqs}. EvidenceSubmitted alone never satisfies gates — each type must appear as EvidenceValidated from an authorized validator before TransitionRequested can succeed with StateAdvanced.`;
+    }
+
+    function renderPath() {
+      const pack = PACKS[currentPack];
+      const pathEl = document.getElementById("state-path");
+      pathEl.innerHTML = "";
+
+      pack.states.forEach((state, i) => {
+        const node = document.createElement("div");
+        node.className = "state-node";
+        node.setAttribute("role", "listitem");
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "state-btn" + (pack.terminal_states.includes(state) ? " terminal" : "");
+        if (selection.kind === "state" && selection.id === state) btn.classList.add("active");
+        btn.textContent = state;
+        btn.setAttribute("aria-label", "State: " + state);
+        btn.addEventListener("click", () => {
+          selection = { kind: "state", id: state };
+          renderPath();
+          renderDetail();
+        });
+        node.appendChild(btn);
+        pathEl.appendChild(node);
+
+        if (i < pack.states.length - 1) {
+          const t = pack.transitions.find(tr => tr.from === state && tr.to === pack.states[i + 1]);
+          const seg = document.createElement("div");
+          seg.className = "transition-seg";
+          seg.setAttribute("role", "listitem");
+
+          const arrow = document.createElement("span");
+          arrow.className = "arrow";
+          arrow.setAttribute("aria-hidden", "true");
+          arrow.textContent = "→";
+          seg.appendChild(arrow);
+
+          if (t) {
+            const tbtn = document.createElement("button");
+            tbtn.type = "button";
+            tbtn.className = "transition-btn";
+            if (selection.kind === "transition" && selection.id === t.id) tbtn.classList.add("active");
+            tbtn.textContent = t.id.replace(/_/g, " ");
+            tbtn.setAttribute("aria-label", `Transition from ${t.from} to ${t.to}`);
+            tbtn.addEventListener("click", () => {
+              selection = { kind: "transition", id: t.id };
+              renderPath();
+              renderDetail();
+            });
+            seg.appendChild(tbtn);
+          }
+          pathEl.appendChild(seg);
+        }
+      });
+    }
+
+    function renderDetail() {
+      const pack = PACKS[currentPack];
+      const panel = document.getElementById("detail-panel");
+      let html = "";
+
+      if (selection.kind === "state") {
+        const state = selection.id;
+        html += `<span class="kind-badge kind-state">State</span>`;
+        html += `<h3>${state}</h3>`;
+        html += `<p>${STATE_MEANINGS[state] || "Named discrete condition in the equipment state machine."}</p>`;
+        const incoming = pack.transitions.filter(t => t.to === state);
+        const outgoing = pack.transitions.filter(t => t.from === state);
+        if (incoming.length) {
+          html += `<h3>Arrives from</h3><ul>`;
+          incoming.forEach(t => {
+            html += `<li><button type="button" class="transition-btn" data-tid="${t.id}">${t.from} → ${t.to}</button></li>`;
+          });
+          html += `</ul>`;
+        }
+        if (outgoing.length) {
+          html += `<h3>May advance to</h3><ul>`;
+          outgoing.forEach(t => {
+            html += `<li><button type="button" class="transition-btn" data-tid="${t.id}">${t.to}</button> — see transition for evidence</li>`;
+          });
+          html += `</ul>`;
+        }
+        if (pack.terminal_states.includes(state)) {
+          html += `<p><em>Terminal state for this machine definition.</em></p>`;
+        }
+      } else {
+        const t = pack.transitions.find(tr => tr.id === selection.id);
+        if (!t) return;
+        html += `<span class="kind-badge kind-transition">Transition</span>`;
+        html += `<h3>${t.from} → ${t.to}</h3>`;
+        html += `<p><code>${t.id}</code></p>`;
+        html += `<h3>Required evidence</h3><ul class="evidence-list">`;
+        t.evidence.forEach(e => {
+          html += `<li>
+            <span class="ev-type">${e.type}</span>
+            ${tagHtml(e.source_class, e.umbrella)}
+            <span>min count: ${e.min_count}</span>
+          </li>`;
+        });
+        html += `</ul>`;
+        html += `<div class="blocked-note">${blockedReason(t, pack)}</div>`;
+        if (currentPack === "canonical" && t.id === "ready_to_commissioned") {
+          html += `<p style="margin-top:0.75rem;font-size:0.88rem;color:var(--muted)">
+            <strong>SatSuitePass</strong> is an umbrella term. BESS packs use concrete types like CellVoltageInBand; solar packs use GridVoltageInBand, AntiIslandingOk, etc. — resolved via sat_gate_map.json in architecture packs.
+          </p>`;
+        }
+      }
+      panel.innerHTML = html;
+      panel.querySelectorAll("button[data-tid]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selection = { kind: "transition", id: btn.dataset.tid };
+          renderPath();
+          renderDetail();
+        });
+      });
+    }
+
+    function renderGlossary() {
+      const grid = document.getElementById("glossary-grid");
+      const terms = Object.keys(EVIDENCE_GLOSSARY).filter(key => {
+        const g = EVIDENCE_GLOSSARY[key];
+        if (currentPack === "canonical") return g.packs.includes("canonical");
+        return g.packs.includes(currentPack) || g.packs.includes("canonical");
+      });
+
+      grid.innerHTML = terms.map(key => {
+        const g = EVIDENCE_GLOSSARY[key];
+        return `<article class="glossary-card">
+          <h4>${key}</h4>
+          <p>${g.description}</p>
+          <div class="card-meta">
+            ${tagHtml(g.source_class, g.umbrella)}
+            ${g.umbrella ? '<span class="tag tag-umbrella">catalog umbrella</span>' : ""}
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+    function renderEvents() {
+      const list = document.getElementById("event-list");
+      list.innerHTML = CORE_EVENTS.map(ev => `
+        <article class="event-item${ev.authoritative ? " authoritative" : ""}">
+          <h4>${ev.type}</h4>
+          <p>${ev.description}</p>
+        </article>
+      `).join("");
+
+      document.getElementById("event-distinction").innerHTML =
+        `<strong>Important distinction:</strong> <code>EvidenceSubmitted</code> alone never advances state.
+        The State Engine counts only <code>EvidenceValidated</code> evidence toward gates.
+        After a <code>TransitionRequested</code>, success is recorded exclusively as <code>StateAdvanced</code> (ADR-0002).
+        Failed attempts append <code>TransitionRejected</code>; the current state does not change.`;
+    }
+
+    function renderTimeline(scenario) {
+      const entries = TIMELINES[scenario];
+      const el = document.getElementById("timeline");
+      el.innerHTML = entries.map(e => {
+        const cls = [
+          "timeline-entry",
+          e.fail ? "fail" : "",
+          e.authority ? "success-authority" : ""
+        ].filter(Boolean).join(" ");
+        return `<article class="${cls}">
+          <div class="evt-type">${e.type}</div>
+          <div class="evt-time">${e.time}</div>
+          <p>${e.detail}</p>
+        </article>`;
+      }).join("");
+    }
+
+    function updatePackLabels() {
+      document.querySelectorAll(".pack-selector label").forEach(l => l.classList.remove("selected"));
+      document.getElementById("label-" + currentPack).classList.add("selected");
+      const pack = PACKS[currentPack];
+      document.getElementById("pack-meta").innerHTML =
+        `Machine <code>${pack.id}</code> · ${pack.pack_note} · Source: ${pack.source}`;
+    }
+
+    function switchPack(packKey) {
+      currentPack = packKey;
+      const pack = PACKS[packKey];
+      selection = { kind: "state", id: pack.initial_state };
+      updatePackLabels();
+      renderPath();
+      renderDetail();
+      renderGlossary();
+    }
+
+    document.querySelectorAll('input[name="pack"]').forEach(input => {
+      input.addEventListener("change", () => {
+        if (input.checked) switchPack(input.value);
+      });
+    });
+
+    document.getElementById("btn-happy").addEventListener("click", function () {
+      this.classList.add("active");
+      this.setAttribute("aria-selected", "true");
+      document.getElementById("btn-fail").classList.remove("active");
+      document.getElementById("btn-fail").setAttribute("aria-selected", "false");
+      renderTimeline("happy");
+    });
+
+    document.getElementById("btn-fail").addEventListener("click", function () {
+      this.classList.add("active");
+      this.setAttribute("aria-selected", "true");
+      document.getElementById("btn-happy").classList.remove("active");
+      document.getElementById("btn-happy").setAttribute("aria-selected", "false");
+      renderTimeline("fail");
+    });
+
+    switchPack("canonical");
+    renderEvents();
+    renderTimeline("happy");
+  </script>
+</body>
+</html>
