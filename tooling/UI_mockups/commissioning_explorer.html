@@ -542,19 +542,16 @@
     const EVIDENCE_GLOSSARY = {
       DeliveryAccepted: {
         source_class: "human",
-        umbrella: true,
         description: "Receiving inspection or bill-of-lading acceptance confirms the asset arrived as procured; unlocks Procured→Delivered.",
         packs: ["canonical"]
       },
       MechanicalInstallComplete: {
         source_class: "human",
-        umbrella: true,
         description: "Mechanical placement, anchorage, and install walkdown are complete; unlocks Delivered→Installed.",
         packs: ["canonical"]
       },
       PreCommissionChecksPass: {
         source_class: "human",
-        umbrella: true,
         description: "Pre-commission checklist (clearances, labeling, bonding themes) recorded before SAT suite entry; unlocks Installed→ReadyForCommission.",
         packs: ["canonical"]
       },
@@ -566,7 +563,6 @@
       },
       EnergizationClearance: {
         source_class: "human",
-        umbrella: true,
         description: "Energization clearance after Commissioned; unlocks Commissioned→Energized. Never granted by assist alone.",
         packs: ["canonical"]
       },
