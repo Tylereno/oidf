@@ -2,7 +2,7 @@
 
 Focused engineering backlog for **format/contracts work only** in this repo. Runtime, product UI, and global platform live elsewhere.
 
-**Last reviewed:** 2026-08-10 · **main:** `9e01d89` (`feat(oidf): canonical registry + translator with full dictionary`)
+**Last reviewed:** 2026-08-18 · **main:** `781d295` (`Merge OIDF TODO documentation`)
 
 ---
 
@@ -25,17 +25,16 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 
 ## Now
 
-### 1. Review and merge commissioning explorer PR #32
+### 1. Commissioning explorer PR #32 — complete
 
-- **Work:** Review [`PR #32`](https://github.com/Tylereno/oidf/pull/32) (`cursor/oidf-commissioning-explorer-1c3b`) — read-only HTML explorer under `tooling/UI_mockups/commissioning_explorer.html` for founder/product vocabulary conversations.
+- **Status:** Merged to `main`. [`PR #32`](https://github.com/Tylereno/oidf/pull/32) (`cursor/oidf-commissioning-explorer-1c3b`) adds the read-only HTML explorer under `tooling/UI_mockups/commissioning_explorer.html` for founder/product vocabulary conversations.
 - **Checks:** No state advancement or event emission; vocabulary matches normative schemas/catalogs; guardrails in `tooling/UI_mockups/README.md` are accurate.
-- **Done when:** PR merged to `main`; JSON Schema CI green on merge commit.
-- **Evidence:** Merge commit on `main`; [`json-schema.yml`](.github/workflows/json-schema.yml) run success on that commit.
+- **Evidence:** Explorer commit `f5ed41a` is an ancestor of `main`; [`tooling/UI_mockups/README.md`](tooling/UI_mockups/README.md) documents the read-only boundary.
 
-### 2. Fix gitleaks workflow permissions (if still failing)
+### 2. Confirm gitleaks workflow after permission fix
 
-- **Work:** [`gitleaks.yml`](.github/workflows/gitleaks.yml) currently sets `permissions: contents: read` only. `gitleaks-action@v2` calls `GET /repos/.../pulls/{n}/commits` on `pull_request` events and returns **403 Resource not accessible by integration** (observed on PR #32, run `31381827281`).
-- **Fix:** Add `pull-requests: read` (or equivalent minimal scope) at workflow or job level; re-run on an open PR to confirm.
+- **Work:** [`gitleaks.yml`](.github/workflows/gitleaks.yml) now grants `pull-requests: read` alongside `contents: read`. `gitleaks-action@v2` previously returned **403 Resource not accessible by integration** on `pull_request` events (observed on PR #32, run `31381827281`).
+- **Next check:** Re-run on an open PR to confirm the permission fix.
 - **Done when:** Secret scan workflow completes successfully on a `pull_request` event without 403.
 - **Evidence:** Green [`gitleaks.yml`](.github/workflows/gitleaks.yml) run on PR #32 or a follow-up test PR.
 
