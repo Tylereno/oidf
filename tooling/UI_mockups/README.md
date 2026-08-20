@@ -24,6 +24,11 @@ python3 -m http.server 8765
 
 Open [http://localhost:8765/commissioning_explorer.html](http://localhost:8765/commissioning_explorer.html).
 
+The same read-only conversation surface is published with the EnoTech product
+front door at <https://enotech.systems/commissioning-explorer/> when Pages is
+deployed. The hosted page is a presentation of the vocabulary, not a runtime
+state engine.
+
 **Purpose:** Help non-developers understand what words like `CellVoltageInBand`, `SatSuitePass`, and `StateAdvanced` mean, and how pack machines relate to the canonical equipment lifecycle — without reading raw JSON/YAML.
 
 **Normative authority:** OIDF schemas (`core_schemas/`, evidence catalogs, IDL) remain the source of truth for vocabulary and contracts. **Keel** remains the runtime authority for state advancement, evidence validation, and event append. This HTML mockup does not implement, simulate, or replace either layer; it cannot advance an asset or emit an event.
