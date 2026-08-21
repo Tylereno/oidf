@@ -2,9 +2,12 @@
 
 OIDF is the **format**. Changes here redefine contracts that Keel and field tooling must obey.
 
-## Governance (benevolent dictator)
+## Governance
 
-Until a public standards body exists, the founder accepts or rejects contract changes. Prefer small, evidence-backed PRs.
+OIDF is currently maintained by Tyler Eno under EnoTech and is being prepared
+for possible OpenLexicon stewardship. Until independent maintainers and a
+neutral governance process exist, the provisional maintainer accepts or rejects
+contract changes. Prefer small, evidence-backed PRs.
 
 ## Format-only repo rules
 
@@ -36,6 +39,7 @@ Every PR should include:
 - Safety/state impact for any state machine, evidence type, ledger, SAT, or gate change
 - Proof that schema CI is green, or the exact local validator output if CI is unavailable
 - Links to Keel follow-up PRs/issues when runtime behavior must consume the new format
+- A DCO sign-off (`Signed-off-by`) on each commit; no CLA is required at this stage
 
 ## Running validation locally
 

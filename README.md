@@ -14,6 +14,7 @@ docs/                 # Wiki front-end (why + how)
 core_schemas/         # Machine-readable contracts (physics & state)
 architectures/        # Deliverable-centric blueprints
 tooling/              # Field execution helpers (open wedge)
+tooling/UI_mockups/    # Read-only commissioning explorer
 .github/              # Issue / PR templates
 ```
 
@@ -40,6 +41,14 @@ Normative RFCs and JSON Schema IDL that Keel consumes live under `docs/normative
 - Keel lighthouse e2e: runs from **`Tylereno/keel`**, pinned to this repo’s contracts
 - Not a SaaS, not Procore, not VITO
 
+## Public transition
+
+OIDF is being prepared for possible OpenLexicon stewardship. The static
+commissioning explorer can be hosted through GitHub Pages from
+`tooling/UI_mockups/`, but the repository transfer, visibility, domain, and
+governance decisions remain separate founder actions.
+
 ## License
 
-Apache 2.0 — see [`LICENSE`](./LICENSE). Repo remains **private** until the founder flips visibility.
+Apache 2.0 — see [`LICENSE`](./LICENSE). The repository remains private until
+the founder completes the public-transition review.
