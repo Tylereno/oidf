@@ -11,7 +11,7 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 | Area | Status |
 |---|---|
 | **Role** | OIDF is the **format** — schemas, ledgers, SAT gates, architecture blueprints, and field tooling. Keel is the **runtime** that implements it ([`Tylereno/keel`](https://github.com/Tylereno/keel)). |
-| **Baseline** | `KEEL-SPEC-BASELINE-2026.07.20` — normative RFCs + IDL under `docs/normative/` and `core_schemas/idl/` |
+| **Baseline** | `KEEL-SPEC-BASELINE-2026.07.21.1` — normative RFCs + IDL under `docs/normative/` and `core_schemas/idl/`; matches Keel's pin (`c801337`) |
 | **Front-door schemas** | `handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, `equipment_state.yaml` — `$id` under `https://oidf.dev/schemas/…` |
 | **IDL** | Full JSON Schema 2020-12 set under `core_schemas/idl/` — `$id` remains `https://keel.dev/schemas/…` (alias map in [`docs/normative/SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md); unification deferred until coordinated Keel pin migration) |
 | **Evidence catalogs** | `equipment-lifecycle` + BESS, solar, and three architecture-pack-local catalogs under `core_schemas/evidence-catalog/`; additive/deprecation rules in [`docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md`](docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md) |
