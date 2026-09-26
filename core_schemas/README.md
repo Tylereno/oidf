@@ -24,7 +24,7 @@ Front-door schemas for field and runtime consumers. Deep IDL (JSON Schema Draft 
 ## Schema `$id` namespace
 
 Every schema in this directory uses one authority host —
-`https://openlexicon.github.io/oidf/schemas/…` — served by GitHub Pages from this repository,
+`https://tylereno.me/oidf/schemas/…` — served by GitHub Pages from this repository,
 so each `$id` dereferences to the file that declares it.
 
 | Artifact | On-disk path | `$id` suffix |

@@ -11,7 +11,7 @@ hosts were unregistered; see *Migration record* below.
 Every OIDF schema `$id` uses:
 
 ```
-https://openlexicon.github.io/oidf/schemas/…
+https://tylereno.me/oidf/schemas/…
 ```
 
 served by GitHub Pages directly from this repository, so each `$id` dereferences to the file that
@@ -25,8 +25,25 @@ staging is defined by [`.github/workflows/pages.yml`](../../.github/workflows/pa
 - The two-host split had already broken in tree: 18 IDL files carried `oidf.dev` while
   `state/transition_requested.json` and `sync/sync_batch.json` still carried `keel.dev`.
   A single host removes the ambiguity that produced it.
-- The `github.io` path is free and HTTPS, and needs no domain or DNS operation. A vanity domain
-  added later MUST **mirror this path**, never replace it — see *Frozen identifiers*.
+- `tylereno.me` is a **Pages custom domain the account already owns and serves over HTTPS** — no
+  registration, no DNS work, no new spend. `tylereno.github.io/oidf/…` 301-redirects to it, so the
+  domain spelling is the canonical, redirect-free form.
+- The pages job publishes the format tree **from a private repository**: the site is public, the
+  source is not. Repository visibility is a separate decision and is not implied by publishing.
+
+### Host stability constraint (read before moving the repository)
+
+The `$id` base is bound to **who serves the Pages site**. `tylereno.me/oidf/…` is served because this
+repository lives in the `Tylereno` account, whose Pages site claims that domain. Moving the
+repository to a different owner moves the base path:
+
+- Into the **`OpenLexicon` org** → served at `https://openlexicon.github.io/oidf/…`; that org is on the
+  **free** plan, where Pages requires a **public** repository.
+- A custom domain on the destination **mirrors** the path; it never renames identifiers.
+
+Consequence: **settle the long-term owner before the first tagged release.** Until a release exists a
+base-host change is a mechanical rewrite ([`tooling/repoint_to_live_host.py`](../../tooling/repoint_to_live_host.py))
+with no consumer impact. After it, the procedure under *Frozen identifiers* applies.
 
 ## Served paths
 
@@ -43,19 +60,20 @@ withdrawn `…/schemas/idl/…` alias is not resurrected.
 
 | Step | State |
 |---|---|
-| Replace dead hosts with the Pages host in tree | **Done** — 30 files, `cursor/pages-namespace-1c3b` |
-| Publish the schema tree on Pages so every `$id` dereferences | **This change** (`.github/workflows/pages.yml` + `verify_pages_ids.py`) |
+| Replace the dead `oidf.dev` / `keel.dev` hosts in tree | **Done** — 30 files |
+| Bind the base to the account's live Pages host (`tylereno.me/oidf`) | **Done** — 32 files, `tooling/repoint_to_live_host.py` |
+| Publish the format tree on Pages so every `$id` dereferences | **This change** (`.github/workflows/pages.yml` + `verify_pages_ids.py`) |
 | Keel pin accepts the new host | **Open — required before Keel's next pin bump** |
 
 **Keel follow-up.** Keel consumes OIDF by submodule/`OIDF_ROOT` and pins this repo's baseline, with
 resolution tests asserting RFC 0015 URIs. Keel is a private consumer and its current pin is
-unaffected, but before it re-pins it must accept `https://openlexicon.github.io/oidf/schemas/…`,
-either by re-pinning past this change or by dual-loading both hosts. This is the coordinated
-consumer step the previous policy deferred; it is now a tracked follow-up rather than a blocker.
+unaffected, but before it re-pins it must accept `https://tylereno.me/oidf/schemas/…`, either by
+re-pinning past this change or by dual-loading both hosts. This is the coordinated consumer step the
+previous policy deferred; it is now a tracked follow-up rather than a blocker.
 
 ## Frozen identifiers
 
 An `$id` that has been published is a **frozen identifier**. Do not rename `$id` values ad hoc; a
 change requires the same three-step migration (serve the new host → consumer dual-loads → a
 baseline-tagged in-repo rewrite). Adding a vanity domain does not rename anything: point it at the
-same served paths and keep the `github.io` `$id` canonical.
+served paths and keep the authority host's spelling canonical.

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openlexicon.github.io/oidf/schemas/cdo/canonical_deployment_object.json",
+  "$id": "https://tylereno.me/oidf/schemas/cdo/canonical_deployment_object.json",
   "title": "CanonicalDeploymentObject",
   "x-keel-schema-version": "1.0.0",
   "type": "object",

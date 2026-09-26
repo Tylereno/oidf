@@ -23,7 +23,7 @@ import json
 import sys
 from pathlib import Path
 
-BASE = "https://openlexicon.github.io/oidf/schemas/"
+BASE = "https://tylereno.me/oidf/schemas/"
 DEFAULT_ROOT = Path("core_schemas")
 STAGED_SUFFIXES = (".json", ".yaml", ".yml")
 

@@ -7,7 +7,7 @@ All notable OIDF format changes are recorded here.
 ### Format namespace — single authority host
 
 - **Breaking (identifier) change:** all schema `$id` values move to one authority host,
-  `https://openlexicon.github.io/oidf/schemas/…`, served by GitHub Pages from this
+  `https://tylereno.me/oidf/schemas/…`, served by GitHub Pages from this
   repository. The previous `oidf.dev` and `keel.dev` hosts are unregistered; the split had
   already broken in tree (18 IDL files on `oidf.dev`, two on `keel.dev`). See
   [`docs/normative/SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md).

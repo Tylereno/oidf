@@ -28,7 +28,7 @@ Define strict, technology-agnostic interface schemas for Keel Core contracts. No
 3. Required fields SHALL be listed in `required`.
 4. Nullable fields SHALL use type unions including `"null"` only when null is meaningful; prefer omission + required rules.
 5. Every Event payload type in the normative set SHALL have a schema.
-6. Schema `$id` values SHALL be stable URIs under `https://openlexicon.github.io/oidf/schemas/`.
+6. Schema `$id` values SHALL be stable URIs under `https://tylereno.me/oidf/schemas/`.
 
 ## Layout
 

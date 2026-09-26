@@ -19,7 +19,7 @@ This repository was branded “ARK (Autonomous Resilient Kernel).” That name:
 3. **VITO** remains a **separate** product in `ark-node` and is not an alias for Keel or OIDF.
 4. **ARK** is deprecated. Do not use it in new prose.
 5. Repository GitHub name stays `oidf`.
-6. In-repo directory and package prefixes are **`keel-*` / `keel_*`** (migrated from `ark-*` / `ark_*`). Baseline id string is `KEEL-SPEC-BASELINE-…`. Schema `$id` host is `https://openlexicon.github.io/oidf/schemas/…`. Extension field is `x-keel-schema-version`.
+6. In-repo directory and package prefixes are **`keel-*` / `keel_*`** (migrated from `ark-*` / `ark_*`). Baseline id string is `KEEL-SPEC-BASELINE-…`. Schema `$id` host is `https://tylereno.me/oidf/schemas/…`. Extension field is `x-keel-schema-version`.
 
 ## Consequences
 

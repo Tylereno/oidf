@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openlexicon.github.io/oidf/schemas/site_event_log.json",
+  "$id": "https://tylereno.me/oidf/schemas/site_event_log.json",
   "title": "OIDFSiteEventLog",
   "description": "Append-only operational event log for a sovereign OT/DDIL edge site (OIDF sovereign-node profile).",
   "type": "object",

@@ -12,8 +12,8 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 |---|---|
 | **Role** | OIDF is the **format** — schemas, ledgers, SAT gates, architecture blueprints, and field tooling. Keel is the **runtime** that implements it ([`Tylereno/keel`](https://github.com/Tylereno/keel)). |
 | **Baseline** | `KEEL-SPEC-BASELINE-2026.07.21.1` — normative RFCs + IDL under `docs/normative/` and `core_schemas/idl/`; matches Keel's pin (`c801337`) |
-| **Front-door schemas** | `handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, `equipment_state.yaml` — `$id` under `https://openlexicon.github.io/oidf/schemas/…` |
-| **IDL** | Full JSON Schema 2020-12 set under `core_schemas/idl/` — same single authority host `https://openlexicon.github.io/oidf/schemas/…`; policy in [`docs/normative/SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md). Keel pin follow-up tracked in Next 5. |
+| **Front-door schemas** | `handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, `equipment_state.yaml` — `$id` under `https://tylereno.me/oidf/schemas/…` |
+| **IDL** | Full JSON Schema 2020-12 set under `core_schemas/idl/` — same single authority host `https://tylereno.me/oidf/schemas/…`; policy in [`docs/normative/SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md). Keel pin follow-up tracked in Next 5. |
 | **Evidence catalogs** | `equipment-lifecycle` + BESS, solar, and three architecture-pack-local catalogs under `core_schemas/evidence-catalog/`; additive/deprecation rules in [`docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md`](docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md) |
 | **Architecture packs** | Three lab blueprints (`ev_fleet_btm`, `hyperscale_island`, `remote_resilient_microgrid`) with SAT gate maps, redacted examples, and CI validation via `tooling/validate_architecture_examples.py` |
 | **ADR-0019** | Accepted — AI assistive, not authoritative; `site_state` / `site_event_log` are front-door contracts for sovereign-node OT/DDIL truth |
@@ -47,8 +47,8 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 
 ### 4. Publish the format surface to GitHub Pages
 
-- **Work:** Dead `$id` hosts (`oidf.dev`, `keel.dev`) replaced with the single Pages authority host `https://openlexicon.github.io/oidf/schemas/…`; `pages.yml` stages the schema tree so each published `$id` resolves; `tooling/verify_pages_ids.py` asserts the mapping and the staged artifact.
-- **Done when:** Pages deploy is green, `https://openlexicon.github.io/oidf/schemas/handoff_ledger.json` returns 200, and `tooling/verify_pages_ids.py --public public` passes in CI.
+- **Work:** Dead `$id` hosts (`oidf.dev`, `keel.dev`) replaced with the single Pages authority host `https://tylereno.me/oidf/schemas/…`; `pages.yml` stages the schema tree so each published `$id` resolves; `tooling/verify_pages_ids.py` asserts the mapping and the staged artifact.
+- **Done when:** Pages deploy is green, `https://tylereno.me/oidf/schemas/handoff_ledger.json` returns 200, and `tooling/verify_pages_ids.py --public public` passes in CI.
 - **Evidence:** Green `pages.yml` deploy run; HTTP 200 on a front-door `$id` and an IDL `$id`; validator output attached to the PR.
 - **Not in this task:** repository transfer, visibility change, and vanity-domain decisions — separate founder actions.
 
@@ -59,7 +59,7 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 ### 5. Coordinate baseline changes with Keel before merge
 
 - **Work:** Any change to IDL `$id` hosts, evidence catalog semantics (non-additive), machine-definition shapes, or baseline register entries must be paired with a Keel pin/update plan per [`core_schemas/README.md`](core_schemas/README.md) and [`EVIDENCE-CATALOG-COMPATIBILITY.md`](docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md).
-- **Open follow-up from Now 4:** Keel's resolution tests assert RFC 0015 URIs. Keel is a private consumer and its current pin is unaffected, but **before its next pin bump** it must accept `https://openlexicon.github.io/oidf/schemas/…` (re-pin past this change, or dual-load both hosts).
+- **Open follow-up from Now 4:** Keel's resolution tests assert RFC 0015 URIs. Keel is a private consumer and its current pin is unaffected, but **before its next pin bump** it must accept `https://tylereno.me/oidf/schemas/…` (re-pin past this change, or dual-load both hosts).
 - **Done when:** OIDF PR checklist marks Keel follow-up linked or explicitly not needed; Keel repo records new pin if required.
 - **Evidence:** Linked Keel PR/issue or PR template checkbox with rationale; updated pin commit hash in Keel if applicable.
 

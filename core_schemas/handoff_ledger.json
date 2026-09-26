@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openlexicon.github.io/oidf/schemas/handoff_ledger.json",
+  "$id": "https://tylereno.me/oidf/schemas/handoff_ledger.json",
   "title": "OIDFHandoffLedger",
   "description": "Immutable digital as-built / handoff package for an asset or deployment.",
   "type": "object",

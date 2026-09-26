@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openlexicon.github.io/oidf/schemas/common/timestamp.json",
+  "$id": "https://tylereno.me/oidf/schemas/common/timestamp.json",
   "title": "ArkTimestamp",
   "description": "RFC 3339 timestamp in UTC.",
   "x-keel-schema-version": "1.0.0",
