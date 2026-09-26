@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/state/machine_definition.json",
+  "$id": "https://openlexicon.github.io/oidf/schemas/state/machine_definition.json",
   "title": "MachineDefinition",
   "description": "Deterministic finite state machine definition (RFC 0005).",
   "x-keel-schema-version": "1.0.0",

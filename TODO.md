@@ -2,7 +2,7 @@
 
 Focused engineering backlog for **format/contracts work only** in this repo. Runtime, product UI, and global platform live elsewhere.
 
-**Last reviewed:** 2026-08-18 · **main:** `781d295` (`Merge OIDF TODO documentation`)
+**Last reviewed:** 2026-09-26 · **branch:** `cursor/pages-namespace-1c3b` (Pages namespace + publish)
 
 ---
 
@@ -12,14 +12,15 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 |---|---|
 | **Role** | OIDF is the **format** — schemas, ledgers, SAT gates, architecture blueprints, and field tooling. Keel is the **runtime** that implements it ([`Tylereno/keel`](https://github.com/Tylereno/keel)). |
 | **Baseline** | `KEEL-SPEC-BASELINE-2026.07.21.1` — normative RFCs + IDL under `docs/normative/` and `core_schemas/idl/`; matches Keel's pin (`c801337`) |
-| **Front-door schemas** | `handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, `equipment_state.yaml` — `$id` under `https://oidf.dev/schemas/…` |
-| **IDL** | Full JSON Schema 2020-12 set under `core_schemas/idl/` — `$id` remains `https://keel.dev/schemas/…` (alias map in [`docs/normative/SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md); unification deferred until coordinated Keel pin migration) |
+| **Front-door schemas** | `handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, `equipment_state.yaml` — `$id` under `https://openlexicon.github.io/oidf/schemas/…` |
+| **IDL** | Full JSON Schema 2020-12 set under `core_schemas/idl/` — same single authority host `https://openlexicon.github.io/oidf/schemas/…`; policy in [`docs/normative/SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md). Keel pin follow-up tracked in Next 5. |
 | **Evidence catalogs** | `equipment-lifecycle` + BESS, solar, and three architecture-pack-local catalogs under `core_schemas/evidence-catalog/`; additive/deprecation rules in [`docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md`](docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md) |
 | **Architecture packs** | Three lab blueprints (`ev_fleet_btm`, `hyperscale_island`, `remote_resilient_microgrid`) with SAT gate maps, redacted examples, and CI validation via `tooling/validate_architecture_examples.py` |
 | **ADR-0019** | Accepted — AI assistive, not authoritative; `site_state` / `site_event_log` are front-door contracts for sovereign-node OT/DDIL truth |
 | **Canonical dictionary + translator** | `core_schemas/canonical/dictionary.yaml` (322 elements, 6 domains) + `tooling/oidf_registry.py` / `tooling/oidf_translator.py`; unit tests in `tooling/test_oidf_canonical.py` |
 | **Keel pin relationship** | Keel consumes OIDF via submodule or `OIDF_ROOT`; pins `baseline_id`, `catalog_id`, and catalog `version` in machine/project config. OIDF does not ship runtime. Any IDL `$id` or catalog breaking change requires explicit Keel follow-up before merge. |
-| **CI** | `json-schema.yml` validates IDL, front-door schemas, architecture examples, field tooling, and canonical/translator tests. `gitleaks.yml` secret scan — **failing on PRs** (permission gap; see Now). |
+| **Published surface** | `pages.yml` publishes the schema tree + commissioning explorer to GitHub Pages, so every `$id` dereferences. Mapping enforced by `tooling/verify_pages_ids.py` in both `json-schema.yml` and `pages.yml`. |
+| **CI** | `json-schema.yml` validates IDL, front-door schemas, architecture examples, field tooling, canonical/translator tests, and the published-`$id` mapping. `gitleaks.yml` secret scan — **failing on PRs** (permission gap; see Now 2). |
 
 ---
 
@@ -44,23 +45,31 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 - **Done when:** Explorer state/evidence/event terms match `core_schemas/` and pack `sat_gate_map.json` files at pinned `main`; no orphan vocabulary.
 - **Evidence:** Diff in schema/catalog PR includes explorer updates where terms changed; local smoke (`python3 -m http.server 8765` in `tooling/UI_mockups/`) shows updated labels.
 
+### 4. Publish the format surface to GitHub Pages
+
+- **Work:** Dead `$id` hosts (`oidf.dev`, `keel.dev`) replaced with the single Pages authority host `https://openlexicon.github.io/oidf/schemas/…`; `pages.yml` stages the schema tree so each published `$id` resolves; `tooling/verify_pages_ids.py` asserts the mapping and the staged artifact.
+- **Done when:** Pages deploy is green, `https://openlexicon.github.io/oidf/schemas/handoff_ledger.json` returns 200, and `tooling/verify_pages_ids.py --public public` passes in CI.
+- **Evidence:** Green `pages.yml` deploy run; HTTP 200 on a front-door `$id` and an IDL `$id`; validator output attached to the PR.
+- **Not in this task:** repository transfer, visibility change, and vanity-domain decisions — separate founder actions.
+
 ---
 
 ## Next
 
-### 4. Coordinate baseline changes with Keel before merge
+### 5. Coordinate baseline changes with Keel before merge
 
 - **Work:** Any change to IDL `$id` hosts, evidence catalog semantics (non-additive), machine-definition shapes, or baseline register entries must be paired with a Keel pin/update plan per [`core_schemas/README.md`](core_schemas/README.md) and [`EVIDENCE-CATALOG-COMPATIBILITY.md`](docs/normative/EVIDENCE-CATALOG-COMPATIBILITY.md).
+- **Open follow-up from Now 4:** Keel's resolution tests assert RFC 0015 URIs. Keel is a private consumer and its current pin is unaffected, but **before its next pin bump** it must accept `https://openlexicon.github.io/oidf/schemas/…` (re-pin past this change, or dual-load both hosts).
 - **Done when:** OIDF PR checklist marks Keel follow-up linked or explicitly not needed; Keel repo records new pin if required.
 - **Evidence:** Linked Keel PR/issue or PR template checkbox with rationale; updated pin commit hash in Keel if applicable.
 
-### 5. Decide whether canonical Jira/Asana/GitHub translator has a buyer
+### 6. Decide whether canonical Jira/Asana/GitHub translator has a buyer
 
 - **Work:** Dictionary + translator exist on `main` (`9e01d89`). Before expanding provider mappings, registry entries, or export surfaces, confirm an external or Keel-integrated consumer (buyer/use case). No scope expansion without that decision.
 - **Done when:** Written decision (issue, ADR note, or Keel backlog item): **adopt** (name consumer + minimal MVP) or **hold** (maintain tests only, no new providers).
 - **Evidence:** GitHub issue or linked Keel task with decision date and named stakeholder.
 
-### 6. Maintain schema/catalog CI on every contract change
+### 7. Maintain schema/catalog CI on every contract change
 
 - **Work:** Keep `json-schema.yml` green for all touches to `core_schemas/`, `architectures/`, and `tooling/` validators. Run locally before push:
   ```bash
@@ -68,14 +77,16 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
   python tooling/validate_json_schemas.py core_schemas/idl
   python tooling/validate_front_door_schemas.py
   python tooling/validate_architecture_examples.py
+  python tooling/verify_pages_ids.py
   python -m unittest tooling.test_field_tooling tooling.test_oidf_canonical -v
   ```
 - **Done when:** Every contract PR passes CI; no skipped validators.
 - **Evidence:** Green JSON Schema CI run attached to PR; local command output matches CI job steps.
 
-### 7. Publish/adoption work only with external users
+### 8. Publish/adoption work only with external users
 
-- **Work:** Repo visibility, public docs polish, outreach, or “production-ready” claims wait until a named external adopter (EPC, AHJ pilot, Keel lighthouse operator) is committed. Internal/founder use does not trigger publish scope.
+- **Work:** Public docs polish, outreach, "production-ready" claims, and onboarding commitments wait until a named external adopter (EPC, AHJ pilot, Keel lighthouse operator) is committed. Internal/founder use does not trigger *adoption* scope.
+- **Note (2026-09-26):** founder directive supersedes this gate for the **format-surface publish** only — Pages + the single `$id` namespace are founder-directed (Now 4). Adoption claims and adopter-specific commitments remain gated.
 - **Done when:** Named adopter + minimal success criteria documented; publish checklist executed only for that engagement.
 - **Evidence:** Signed-off adoption brief (issue or private doc link in PR); no premature public claims in README or docs.
 
@@ -87,10 +98,10 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 |---|---|
 | **Runtime / state engine / event append** | Keel — OIDF defines contracts only |
 | **Field UI runtime, click-through prototypes, state-advance simulators** | Keel or product demos — `tooling/UI_mockups/` stays static/read-only |
-| **Global platform (SaaS, multi-tenant ops, arbitrary integrations)** | Out of scope — not OIDF’s charter |
+| **Global platform (SaaS, multi-tenant ops, arbitrary integrations)** | Out of scope — not OIDF's charter |
 | **Arbitrary new standards or greenfield RFCs** | Require constitution/baseline amendment; no drive-by specs |
-| **Unrequested translator scope** (new PM providers, bidirectional sync, production ETL) | Blocked until task 5 buyer decision |
-| **IDL `$id` host collapse (`keel.dev` → `oidf.dev`)** | Coordinated Keel migration — see [`SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md) |
+| **Unrequested translator scope** (new PM providers, bidirectional sync, production ETL) | Blocked until task 6 buyer decision |
+| **Vanity domain for schema `$id`s** | Not required — the Pages host is the frozen authority host; a domain may later mirror the same paths (see `SCHEMA-ID-NAMESPACES.md`). Domain purchase is a founder decision. |
 | **VITO / sovereign-node product implementation** | `ark-node` — OIDF supplies `site_state` / `site_event_log` shapes only |
 
 ---
@@ -103,7 +114,15 @@ pip install jsonschema pyyaml
 python tooling/validate_json_schemas.py core_schemas/idl
 python tooling/validate_front_door_schemas.py
 python tooling/validate_architecture_examples.py
+python tooling/verify_pages_ids.py
 python -m unittest tooling.test_field_tooling tooling.test_oidf_canonical -v
+
+# Pages artifact rehearsal (same staging as .github/workflows/pages.yml)
+rm -rf public && mkdir -p public/schemas
+cp tooling/UI_mockups/commissioning_explorer.html public/index.html
+cp core_schemas/*.json core_schemas/*.yaml public/schemas/
+cp -R core_schemas/idl/. public/schemas/
+python tooling/verify_pages_ids.py --public public
 
 # Commissioning explorer preview (post–PR #32)
 cd tooling/UI_mockups && python3 -m http.server 8765

@@ -42,14 +42,26 @@ jobs:
           python tooling/validate_architecture_examples.py
           python -m unittest tooling.test_field_tooling tooling.test_oidf_canonical -v
 
-      - name: Stage explorer-only artifact
+      - name: Stage explorer + published format tree
         run: |
           set -euo pipefail
-          mkdir -p public
+          mkdir -p public/schemas
           cp tooling/UI_mockups/commissioning_explorer.html public/index.html
+          # Publish the whole format tree (schemas, IDL, evidence catalogs,
+          # canonical dictionary, redacted examples) so every $id resolves.
+          cp -R core_schemas/. public/schemas/
+          # IDL $ids carry no "idl/" segment (SCHEMA-ID-NAMESPACES.md):
+          # flatten the segment away, then drop the leftover directory.
+          cp -R core_schemas/idl/. public/schemas/
+          rm -rf public/schemas/idl
+          find public/schemas -name README.md -delete
           test -f public/index.html
-          test ! -e public/core_schemas
+          test ! -e public/schemas/idl
+          test ! -e public/schemas/README.md
           test ! -e public/NOTICE
+
+      - name: Verify every published $id dereferences
+        run: python tooling/verify_pages_ids.py --public public
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

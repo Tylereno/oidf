@@ -1,39 +1,61 @@
-# Schema `$id` namespaces (alias map)
+# Schema `$id` namespaces (single authority host)
 
-**Status:** Accepted documentation (unification deferred)  
-**Baseline:** `KEEL-SPEC-BASELINE-2026.07.20`  
-**Related:** [RFC 0015](./0015-INTERFACE-DEFINITIONS.md), [RFC 0022](./0022-PRODUCT-NAMING.md), [`core_schemas/README.md`](../../core_schemas/README.md)
+**Status:** Accepted — single authority host
+**Supersedes:** the two-host `oidf.dev` / `keel.dev` split (unification deferred). Both prior
+hosts were unregistered; see *Migration record* below.
+**Related:** [RFC 0015](./0015-INTERFACE-DEFINITIONS.md), [RFC 0022](./0022-PRODUCT-NAMING.md),
+[`core_schemas/README.md`](../../core_schemas/README.md)
 
-## Two authority hosts today
+## One authority host
 
-| Host | Where used | Consumer expectation |
+Every OIDF schema `$id` uses:
+
+```
+https://openlexicon.github.io/oidf/schemas/…
+```
+
+served by GitHub Pages directly from this repository, so each `$id` dereferences to the file that
+declares it. CI enforces this with [`tooling/verify_pages_ids.py`](../../tooling/verify_pages_ids.py);
+staging is defined by [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml).
+
+### Why this host
+
+- `oidf.dev`, `openeno.dev`, and `keel.dev` are **not registered** — the previous namespaces were
+  dead identifiers, not just unreachable ones.
+- The two-host split had already broken in tree: 18 IDL files carried `oidf.dev` while
+  `state/transition_requested.json` and `sync/sync_batch.json` still carried `keel.dev`.
+  A single host removes the ambiguity that produced it.
+- The `github.io` path is free and HTTPS, and needs no domain or DNS operation. A vanity domain
+  added later MUST **mirror this path**, never replace it — see *Frozen identifiers*.
+
+## Served paths
+
+| Artifact | On-disk path | Served path (`$id` suffix) |
 |---|---|---|
-| `https://oidf.dev/schemas/…` | Front-door artifacts under `core_schemas/` (`handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, `architecture_sat_gate_map`) | Field/AHJ-facing packages and architecture packs |
-| `https://keel.dev/schemas/…` | Normative IDL under `core_schemas/idl/` | Keel runtime and other consumers that pin RFC 0015 URIs |
+| Front-door contracts | `core_schemas/<name>.json` | `schemas/<name>.json` |
+| Normative IDL | `core_schemas/idl/<sub>/<name>.json` | `schemas/<sub>/<name>.json` |
 
-This split is intentional for P1.A. Front-door contracts are OIDF-branded; IDL `$id` values remain stable under `keel.dev` so existing Keel pins keep resolving.
+The `idl/` path segment is **not part of the ID namespace**: IDL `$id` values have always read
+`…/schemas/<sub>/<name>.json`. Pages staging therefore flattens `idl/` away to match, and the
+withdrawn `…/schemas/idl/…` alias is not resurrected.
 
-## Alias table (non-breaking)
+## Migration record
 
-Aliases are **documentation and adapter hints only**. They do not change on-disk `$id` strings and MUST NOT be treated as a second registry (see ADR-0018 §6).
+| Step | State |
+|---|---|
+| Replace dead hosts with the Pages host in tree | **Done** — 30 files, `cursor/pages-namespace-1c3b` |
+| Publish the schema tree on Pages so every `$id` dereferences | **This change** (`.github/workflows/pages.yml` + `verify_pages_ids.py`) |
+| Keel pin accepts the new host | **Open — required before Keel's next pin bump** |
 
-| Conceptual artifact | Canonical `$id` today | Documented alias / future host |
-|---|---|---|
-| Handoff ledger | `https://oidf.dev/schemas/handoff_ledger.json` | (already oidf.dev) |
-| SAT event log | `https://oidf.dev/schemas/sat_event_log.json` | (already oidf.dev) |
-| Site state / site event log | `https://oidf.dev/schemas/site_*.json` | (already oidf.dev) |
-| Architecture SAT gate map | `https://oidf.dev/schemas/architecture_sat_gate_map.json` | (already oidf.dev) |
-| Machine definition (IDL) | `https://keel.dev/schemas/state/machine_definition.json` | `https://oidf.dev/schemas/idl/state/machine_definition.json` (not published; do not rewrite until Keel migrates) |
-| Other IDL envelopes | `https://keel.dev/schemas/…` | `https://oidf.dev/schemas/idl/…` path-preserving alias (deferred) |
+**Keel follow-up.** Keel consumes OIDF by submodule/`OIDF_ROOT` and pins this repo's baseline, with
+resolution tests asserting RFC 0015 URIs. Keel is a private consumer and its current pin is
+unaffected, but before it re-pins it must accept `https://openlexicon.github.io/oidf/schemas/…`,
+either by re-pinning past this change or by dual-loading both hosts. This is the coordinated
+consumer step the previous policy deferred; it is now a tracked follow-up rather than a blocker.
 
-Front-door YAML `equipment_state.yaml` is not itself a JSON Schema `$id`; its normative shape is the IDL `MachineDefinition` above, and its Evidence names resolve via `evidence-catalog/equipment-lifecycle.json`.
+## Frozen identifiers
 
-## Unification policy (deferred)
-
-Collapsing to a single authority host requires a coordinated Keel pin update:
-
-1. Publish oidf.dev mirrors or redirect rules for every `keel.dev` IDL `$id`.
-2. Bump Keel / vendor pins to accept the new host (or dual-load both).
-3. Only then rewrite in-repo IDL `$id` values in a baseline-tagged PR.
-
-Until that migration lands, **do not** rename IDL `$id` ad hoc. Prefer this alias document and consumer-side dual registration if a tool must accept both hosts.
+An `$id` that has been published is a **frozen identifier**. Do not rename `$id` values ad hoc; a
+change requires the same three-step migration (serve the new host → consumer dual-loads → a
+baseline-tagged in-repo rewrite). Adding a vanity domain does not rename anything: point it at the
+same served paths and keep the `github.io` `$id` canonical.

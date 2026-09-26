@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://keel.dev/schemas/sync/sync_batch.json",
+  "$id": "https://openlexicon.github.io/oidf/schemas/sync/sync_batch.json",
   "title": "SyncBatch",
   "x-keel-schema-version": "1.0.0",
   "type": "object",

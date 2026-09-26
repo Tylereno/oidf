@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/common/identifier.json",
+  "$id": "https://openlexicon.github.io/oidf/schemas/common/identifier.json",
   "title": "ArkIdentifier",
   "description": "Opaque stable identifier within a trust domain.",
   "x-keel-schema-version": "1.0.0",

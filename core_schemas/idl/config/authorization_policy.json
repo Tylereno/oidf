@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/config/authorization_policy.json",
+  "$id": "https://openlexicon.github.io/oidf/schemas/config/authorization_policy.json",
   "title": "AuthorizationPolicyBody",
   "description": "ConfigurationDocument.body when domain=AuthorizationPolicy",
   "x-keel-schema-version": "1.0.0",
