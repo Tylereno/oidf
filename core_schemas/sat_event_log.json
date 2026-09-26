@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/sat_event_log.json",
+  "$id": "https://tylereno.me/oidf/schemas/sat_event_log.json",
   "title": "OIDFSatEventLog",
   "description": "Schema for logging pass/fail Site Acceptance Test gates.",
   "type": "object",

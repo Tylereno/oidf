@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/site_state.json",
+  "$id": "https://tylereno.me/oidf/schemas/site_state.json",
   "title": "OIDFSiteState",
   "description": "Durable operational state for a sovereign OT/DDIL edge site (OIDF sovereign-node profile).",
   "type": "object",

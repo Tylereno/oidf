@@ -43,12 +43,16 @@ Normative RFCs and JSON Schema IDL that Keel consumes live under `docs/normative
 
 ## Public transition
 
-OIDF is being prepared for possible OpenLexicon stewardship. The static
-commissioning explorer can be hosted through GitHub Pages from
-`tooling/UI_mockups/`, but the repository transfer, visibility, domain, and
-governance decisions remain separate founder actions.
+OIDF is being prepared for OpenLexicon stewardship. The format surface — the schema tree
+and the read-only commissioning explorer — is published to **GitHub Pages** from this
+repository by [`.github/workflows/pages.yml`](.github/workflows/pages.yml), so schema `$id`
+values dereference against the public host `https://tylereno.me/oidf/`.
+
+Repository ownership transfer, visibility, and onboarding of any external adopter remain
+separate founder actions; this repository stays private until they complete.
 
 ## License
 
-Apache 2.0 — see [`LICENSE`](./LICENSE). The repository remains private until
-the founder completes the public-transition review.
+Apache 2.0 — see [`LICENSE`](./LICENSE), [`NOTICE`](./NOTICE). The license governs the format
+and tooling in this repository regardless of hosting; only the repository's visibility is a
+pending founder decision.

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/event/envelope.json",
+  "$id": "https://tylereno.me/oidf/schemas/event/envelope.json",
   "title": "EventEnvelope",
   "description": "Canonical Keel Event envelope (RFC 0006).",
   "x-keel-schema-version": "1.0.0",

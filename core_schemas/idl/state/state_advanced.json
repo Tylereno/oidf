@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/state/state_advanced.json",
+  "$id": "https://tylereno.me/oidf/schemas/state/state_advanced.json",
   "title": "StateAdvancedPayload",
   "x-keel-schema-version": "1.0.0",
   "type": "object",

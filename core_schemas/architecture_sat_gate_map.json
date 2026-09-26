@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/architecture_sat_gate_map.json",
+  "$id": "https://tylereno.me/oidf/schemas/architecture_sat_gate_map.json",
   "title": "OIDFArchitectureSatGateMap",
   "description": "Machine-readable mapping from architecture-pack safety gates to SAT gate_id values and expected Evidence.",
   "type": "object",

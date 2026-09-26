@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/security/authorize_response.json",
+  "$id": "https://tylereno.me/oidf/schemas/security/authorize_response.json",
   "title": "AuthorizeResponse",
   "x-keel-schema-version": "1.0.0",
   "type": "object",

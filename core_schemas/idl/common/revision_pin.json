@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oidf.dev/schemas/common/revision_pin.json",
+  "$id": "https://tylereno.me/oidf/schemas/common/revision_pin.json",
   "title": "RevisionPin",
   "description": "Evaluate-time pins for deterministic replay (ADR-0008).",
   "x-keel-schema-version": "1.0.0",

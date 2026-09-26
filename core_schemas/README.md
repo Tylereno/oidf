@@ -21,10 +21,20 @@ Front-door schemas for field and runtime consumers. Deep IDL (JSON Schema Draft 
 **Schema `$id` namespaces:** [`../docs/normative/SCHEMA-ID-NAMESPACES.md`](../docs/normative/SCHEMA-ID-NAMESPACES.md)
 **Keel consumption:** pin this commit or an annotated baseline tag via submodule or `OIDF_ROOT`, then record the `baseline_id`, `catalog_id`, and catalog `version` in the project/machine configuration.
 
-## Schema `$id` namespaces (alias documented; unification deferred)
+## Schema `$id` namespace
 
-Front-door artifacts in this directory use `https://oidf.dev/schemas/…` (`handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, gate maps). Normative IDL under [`idl/`](./idl/) remains on `https://keel.dev/schemas/…` per [RFC 0015](../docs/normative/0015-INTERFACE-DEFINITIONS.md).
+Every schema in this directory uses one authority host —
+`https://tylereno.me/oidf/schemas/…` — served by GitHub Pages from this repository,
+so each `$id` dereferences to the file that declares it.
 
-**Alias map:** see [SCHEMA-ID-NAMESPACES.md](../docs/normative/SCHEMA-ID-NAMESPACES.md) for the non-breaking oidf.dev ↔ keel.dev correspondence.
+| Artifact | On-disk path | `$id` suffix |
+|---|---|---|
+| Front-door contracts | `core_schemas/<name>.json` | `schemas/<name>.json` |
+| Normative IDL | `core_schemas/idl/<sub>/<name>.json` | `schemas/<sub>/<name>.json` |
 
-**Deferred:** collapsing to a single authority host. Renaming IDL `$id` values would break Keel and other consumers that pin `keel.dev` URIs. Track as a coordinated migration with Keel pin updates; do not rewrite `$id` ad hoc.
+The `idl/` segment is not part of the ID namespace; Pages staging flattens it away to match.
+CI enforces the mapping with [`../tooling/verify_pages_ids.py`](../tooling/verify_pages_ids.py).
+
+**Policy and rationale:** [`../docs/normative/SCHEMA-ID-NAMESPACES.md`](../docs/normative/SCHEMA-ID-NAMESPACES.md)
+(single authority host; published `$id` values are frozen identifiers).
+
