@@ -7,7 +7,7 @@
 
 Machine-readable IDL and evidence catalogs: [`../../core_schemas/`](../../core_schemas/).  
 Human wiki front door: [`../index.md`](../index.md).  
-Runtime: [`Tylereno/keel`](https://github.com/Tylereno/keel).
+Runtime: `Tylereno/keel` (separate repo, not published here).
 
 ## Index
 

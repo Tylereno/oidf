@@ -20,6 +20,8 @@ detail:
 
 ## Scope
 
-This policy applies to all branches and private product repos in the EnoTech
-stack. Shared handling rules live in `enotech-site/docs/OPSEC.md`.
+This policy applies to this repository and all of its branches. Report a suspected
+leak of credentials or customer data through a private security advisory on this
+repository; if that channel is unavailable, contact a maintainer listed in
+[`GOVERNANCE.md`](./GOVERNANCE.md). Do not open a public issue for a suspected leak.
 

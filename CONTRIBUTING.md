@@ -18,7 +18,7 @@ This repository contains the OIDF contract surface:
 - Architecture packs and examples in `architectures/`
 - Small artifact tooling used to validate or generate OIDF files in `tooling/`
 
-It does **not** contain runtime implementations. Do not add daemons, control loops, device adapters, persistence layers, network services, or product UI here. Runtime code belongs in [`Tylereno/keel`](https://github.com/Tylereno/keel). VITO / crew edge runtime work belongs in `ark-node`.
+It does **not** contain runtime implementations. Do not add daemons, control loops, device adapters, persistence layers, network services, or product UI here. Runtime code belongs in `Tylereno/keel` (separate repo, not published here). VITO / crew edge runtime work belongs in `ark-node`.
 
 ## Contribution rules
 
