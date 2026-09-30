@@ -1,0 +1,32 @@
+{
+  "projectId": "10001",
+  "summary": "Implement OIDF canonical schema",
+  "description": "Create unified data dictionary for PM platform integration",
+  "issuetype": "Story",
+  "status": {
+    "name": "In Progress",
+    "statusCategory": "indeterminate"
+  },
+  "priority": {
+    "name": "High"
+  },
+  "assignee": {
+    "accountId": "5b10a2d44c8b490b0079425f",
+    "displayName": "Tyler Eno"
+  },
+  "reporter": {
+    "accountId": "5b10a2d44c8b490b0079425f",
+    "displayName": "Tyler Eno"
+  },
+  "created": "2026-07-29T15:30:00.000Z",
+  "updated": "2026-07-29T16:45:00.000Z",
+  "duedate": "2026-08-15",
+  "customfield_10002": "8",
+  "labels": ["oidf", "canonical", "schema"],
+  "components": [
+    {"name": "Backend"}
+  ],
+  "fixVersions": [
+    {"name": "1.0.0", "releaseDate": "2026-08-01"}
+  ]
+}
