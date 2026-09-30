@@ -16,7 +16,7 @@
 | **Keel** | Runtime / product | Microkernel that enforces OIDF: state engine, evidence gates, sync, plugins | **`Tylereno/keel`** → `keel-core/`, SDK, plugins, examples |
 | **VITO** | Edge platform | Sovereign DDIL node (power governor, crew/agents, dashboard) | GitHub `ark-node` → `vito-update/` |
 | **Sunwave** | Hardware division | Expedition / off-grid power, MRP platforms | GitHub `sunwave` |
-| **EnoTech** | Company | Company wrapper / OPSEC-minimal public footprint | `enotech-site` → enotech.systems |
+| **EnoTech** | Company | Umbrella company for the products above | `enotech-site` → enotech.systems |
 | **Sentinel** | Situational awareness | Mission monitoring — open feeds only | `Sentinel` |
 
 ## Deprecated

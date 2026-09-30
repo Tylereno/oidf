@@ -2,7 +2,7 @@
 
 **OIDF is the format.** Schemas, ledgers, SAT gates, and architecture blueprints for evidence-gated commissioning.
 
-Runtime that *implements* OIDF lives in a separate repo: **[`Tylereno/keel`](https://github.com/Tylereno/keel)**.  
+Runtime that *implements* OIDF lives in a separate repo: **`Tylereno/keel`** (not published here).  
 VITO (sovereign edge node) lives in `ark-node`. VITO ≠ Keel ≠ OIDF.
 
 > Progress only when the plant proves it.

@@ -10,7 +10,7 @@ Focused engineering backlog for **format/contracts work only** in this repo. Run
 
 | Area | Status |
 |---|---|
-| **Role** | OIDF is the **format** — schemas, ledgers, SAT gates, architecture blueprints, and field tooling. Keel is the **runtime** that implements it ([`Tylereno/keel`](https://github.com/Tylereno/keel)). |
+| **Role** | OIDF is the **format** — schemas, ledgers, SAT gates, architecture blueprints, and field tooling. Keel is the **runtime** that implements it (`Tylereno/keel`). |
 | **Baseline** | `KEEL-SPEC-BASELINE-2026.07.21.1` — normative RFCs + IDL under `docs/normative/` and `core_schemas/idl/`; matches Keel's pin (`c801337`) |
 | **Front-door schemas** | `handoff_ledger`, `sat_event_log`, `site_state`, `site_event_log`, `equipment_state.yaml` — `$id` under `https://tylereno.me/oidf/schemas/…` |
 | **IDL** | Full JSON Schema 2020-12 set under `core_schemas/idl/` — same single authority host `https://tylereno.me/oidf/schemas/…`; policy in [`docs/normative/SCHEMA-ID-NAMESPACES.md`](docs/normative/SCHEMA-ID-NAMESPACES.md). Keel pin follow-up tracked in Next 5. |
